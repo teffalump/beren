@@ -10,7 +10,7 @@ Import the pre-defined client and pass the server details
     orthanc = Orthanc(scheme='http', domain='localhost', port=8042)
 
     # Get list of patients
-    orthance.patients()
+    orthanc.patients()
 
 There are other preconfigured endpoints.
 
