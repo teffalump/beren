@@ -5,6 +5,7 @@ from urllib.parse import urlunparse
 
 __all__=['Orthanc']
 
+
 class OrthancService(Service):
     def __init__(self, *args, **kwargs):
         scheme = kwargs.pop('scheme', 'http')
@@ -24,7 +25,7 @@ class OrthancService(Service):
     instance_tag = JsonEndpoint(path='/instances/{id}/simplified-tags')
     changes = JsonEndpoint(path='/changes')
     queries = JsonEndpoint(path='/queries')
-    find = JsonEndpoint(path='/tools/find', default_method='POST', required_params=['Level'])
+    find = JsonEndpoint(path='/tools/find', default_method='POST')
 
 class Orthanc:
     """Interface to apiron
@@ -75,4 +76,4 @@ class Orthanc:
         return ServiceCaller.call(self.service, self.service.queries)
 
     def find(self, level):
-        return ServiceCaller.call(self.service, self.service.find, data={'Level': level})
+        return ServiceCaller.call(self.service, self.service.find, data={'Level': level, 'Query': {}})
