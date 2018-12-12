@@ -1,6 +1,6 @@
 # Orthanc REST client
 
-Provides a mostly pre-configured class, wrapping an [apiron](https://github.com/ithaka/apiron) instance, targeted at [Orthanc](https://www.orthanc-server.com) REST endpoints.
+Provides a REST client, based on [apiron](https://github.com/ithaka/apiron), targeted at [Orthanc](https://www.orthanc-server.com) REST endpoints.
 
 ### How to use
 

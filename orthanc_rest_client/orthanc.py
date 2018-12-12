@@ -15,7 +15,7 @@ class OrthancService(Service):
         super(*args, **kwargs)
 
     patients = JsonEndpoint(path='/patients')
-    patient = JsonEndpoint(path='/patient/{id}')
+    patient = JsonEndpoint(path='/patients/{id}')
     studies = JsonEndpoint(path='/studies')
     study = JsonEndpoint(path='/studies/{id}')
     series = JsonEndpoint(path='/series')
@@ -42,38 +42,38 @@ class Orthanc:
     def __repr__(self):
         return '<Orthanc server at {}>'.format(self.service.domain)
 
-    def patients(self):
-        return ServiceCaller.call(self.service, self.service.patients)
+    def patients(self, **kwargs):
+        return ServiceCaller.call(self.service, self.service.patients, **kwargs)
 
-    def patient(self, id_):
-        return ServiceCaller.call(self.service, self.service.patient, path_kwargs={'id': id_})
+    def patient(self, id_, **kwargs):
+        return ServiceCaller.call(self.service, self.service.patient, path_kwargs={'id': id_}, **kwargs)
 
-    def studies(self):
-        return ServiceCaller.call(self.service, self.service.studies)
+    def studies(self, **kwargs):
+        return ServiceCaller.call(self.service, self.service.studies, **kwargs)
 
-    def study(self, id_):
-        return ServiceCaller.call(self.service, self.service.study, path_kwargs={'id': id_})
+    def study(self, id_, **kwargs):
+        return ServiceCaller.call(self.service, self.service.study, path_kwargs={'id': id_}, **kwargs)
 
-    def series(self):
-        return ServiceCaller.call(self.service, self.service.series)
+    def series(self, **kwargs):
+        return ServiceCaller.call(self.service, self.service.series, **kwargs)
 
-    def part(self, id_):
-        return ServiceCaller.call(self.service, self.service.part, path_kwargs={'id': id_})
+    def part(self, id_, **kwargs):
+        return ServiceCaller.call(self.service, self.service.part, path_kwargs={'id': id_}, **kwargs)
 
-    def instances(self):
-        return ServiceCaller.call(self.service, self.service.instances)
+    def instances(self, **kwargs):
+        return ServiceCaller.call(self.service, self.service.instances, **kwargs)
 
-    def instance(self, id_):
-        return ServiceCaller.call(self.service, self.service.instance, path_kwargs={'id': id_})
+    def instance(self, id_, **kwargs):
+        return ServiceCaller.call(self.service, self.service.instance, path_kwargs={'id': id_}, **kwargs)
 
-    def instance_tag(self, id_):
-        return ServiceCaller.call(self.service, self.service.instance_tag, path_kwargs={'id': id_})
+    def instance_tag(self, id_, **kwargs):
+        return ServiceCaller.call(self.service, self.service.instance_tag, path_kwargs={'id': id_}, **kwargs)
 
-    def changes(self):
-        return ServiceCaller.call(self.service, self.service.changes)
+    def changes(self, **kwargs):
+        return ServiceCaller.call(self.service, self.service.changes, **kwargs)
 
-    def queries(self):
-        return ServiceCaller.call(self.service, self.service.queries)
+    def queries(self, ** kwargs):
+        return ServiceCaller.call(self.service, self.service.queries, **kwargs)
 
-    def find(self, level):
-        return ServiceCaller.call(self.service, self.service.find, data={'Level': level, 'Query': {}})
+    def find(self, query, **kwargs):
+        return ServiceCaller.call(self.service, self.service.find, data=query, **kwargs)
