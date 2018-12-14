@@ -42,29 +42,30 @@ class Orthanc:
     def __repr__(self):
         return '<Orthanc server at {}>'.format(self.service.domain)
 
-    def patients(self, **kwargs):
-        return ServiceCaller.call(self.service, self.service.patients, **kwargs)
+    def patients(self, id_=None, **kwargs):
+        if id_:
+            return ServiceCaller.call(self.service, self.service.patient, path_kwargs={'id': id_}, **kwargs)
+        else:
+            return ServiceCaller.call(self.service, self.service.patients, **kwargs)
 
-    def patient(self, id_, **kwargs):
-        return ServiceCaller.call(self.service, self.service.patient, path_kwargs={'id': id_}, **kwargs)
 
-    def studies(self, **kwargs):
-        return ServiceCaller.call(self.service, self.service.studies, **kwargs)
+    def studies(self, id_=None, **kwargs):
+        if id_:
+            return ServiceCaller.call(self.service, self.service.study, path_kwargs={'id': id_}, **kwargs)
+        else:
+            return ServiceCaller.call(self.service, self.service.studies, **kwargs)
 
-    def study(self, id_, **kwargs):
-        return ServiceCaller.call(self.service, self.service.study, path_kwargs={'id': id_}, **kwargs)
+    def series(self, id_=None, **kwargs):
+        if id_:
+            return ServiceCaller.call(self.service, self.service.part, path_kwargs={'id': id_}, **kwargs)
+        else:
+            return ServiceCaller.call(self.service, self.service.series, **kwargs)
 
-    def series(self, **kwargs):
-        return ServiceCaller.call(self.service, self.service.series, **kwargs)
-
-    def part(self, id_, **kwargs):
-        return ServiceCaller.call(self.service, self.service.part, path_kwargs={'id': id_}, **kwargs)
-
-    def instances(self, **kwargs):
-        return ServiceCaller.call(self.service, self.service.instances, **kwargs)
-
-    def instance(self, id_, **kwargs):
-        return ServiceCaller.call(self.service, self.service.instance, path_kwargs={'id': id_}, **kwargs)
+    def instances(self, id_=None, **kwargs):
+        if id_:
+            return ServiceCaller.call(self.service, self.service.instance, path_kwargs={'id': id_}, **kwargs)
+        else:
+            return ServiceCaller.call(self.service, self.service.instances, **kwargs)
 
     def instance_tag(self, id_, **kwargs):
         return ServiceCaller.call(self.service, self.service.instance_tag, path_kwargs={'id': id_}, **kwargs)
@@ -84,10 +85,10 @@ class Orthanc:
         return ServiceCaller.call(self.service, self.service.patient, path_kwargs={'id': id_}, **kwargs).get('MainDicomTags').get('PatientID')
 
     def get_all_studies_from_id(self, id_, **kwargs):
-        return [self.study(study, **kwargs) for study in self.patient(id_, **kwargs).get('Studies')]
+        return [self.studies(study, **kwargs) for study in self.patients(id_, **kwargs).get('Studies')]
 
     def get_all_studies_from_patient_id(self, id_, **kwargs):
-        return [self.study(study, **kwargs) for study in self.find({'Level': 'Study', 'Query': {'PatientID': id_}}, **kwargs)]
+        return [self.studies(study, **kwargs) for study in self.find({'Level': 'Study', 'Query': {'PatientID': id_}}, **kwargs)]
 
     def get_patients_with_name(self, search, **kwargs):
-        return [self.patient(patient, **kwargs) for patient in self.find({'Level': 'Patient', 'CaseSensitive': False, 'Query': {'PatientName': search}})]
+        return [self.patients(patient, **kwargs) for patient in self.find({'Level': 'Patient', 'CaseSensitive': False, 'Query': {'PatientName': search}})]
