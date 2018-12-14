@@ -72,8 +72,22 @@ class Orthanc:
     def changes(self, **kwargs):
         return ServiceCaller.call(self.service, self.service.changes, **kwargs)
 
-    def queries(self, ** kwargs):
+    def queries(self, **kwargs):
         return ServiceCaller.call(self.service, self.service.queries, **kwargs)
 
     def find(self, query, **kwargs):
         return ServiceCaller.call(self.service, self.service.find, data=query, **kwargs)
+
+
+    ### Specific functions
+    def get_patient_id_from_id(self, id_, **kwargs):
+        return ServiceCaller.call(self.service, self.service.patient, path_kwargs={'id': id_}, **kwargs).get('MainDicomTags').get('PatientID')
+
+    def get_all_studies_from_id(self, id_, **kwargs):
+        return [self.study(study, **kwargs) for study in self.patient(id_, **kwargs).get('Studies')]
+
+    def get_all_studies_from_patient_id(self, id_, **kwargs):
+        return [self.study(study, **kwargs) for study in self.find({'Level': 'Study', 'Query': {'PatientID': id_}}, **kwargs)]
+
+    def get_patients_with_name(self, search, **kwargs):
+        return [self.patient(patient, **kwargs) for patient in self.find({'Level': 'Patient', 'CaseSensitive': False, 'Query': {'PatientName': search}})]
