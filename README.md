@@ -7,7 +7,7 @@ Provides a REST client, based on [apiron](https://github.com/ithaka/apiron), tar
 Import the pre-defined client and pass the server details
 
     from orthanc_rest_client import Orthanc
-    orthanc = Orthanc(scheme='http', domain='localhost', port=8042)
+    orthanc = Orthanc(scheme='http', domain='localhost', port=8042, path='')
 
     # Get patient(s)
     orthanc.patients(<id or not>)
