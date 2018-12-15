@@ -1,53 +1,35 @@
 from apiron.service.base import Service
 from apiron.endpoint import JsonEndpoint
 from apiron.client import ServiceCaller
-from urllib.parse import urlunparse
+from urllib.parse import urlparse
 
 __all__=['Orthanc']
 
 
 class OrthancService(Service):
-    def __init__(self, *args, **kwargs):
-        scheme = kwargs.pop('scheme', 'http')
-        domain = kwargs.pop('domain', 'localhost')
-        port = kwargs.pop('port', 8042)
-        self.path = kwargs.pop('path', '')
-        self.domain = urlunparse((scheme, ':'.join((domain, str(port))), self.path, '', '', ''))
-        self._endpoints()
+    def __init__(self, domain, *args, **kwargs):
+        self.domain = domain if domain.endswith('/') else '/'.join((domain, ''))
         super(*args, **kwargs)
 
-    def _add_base_to_path(self, addition):
-        return '/'.join((self.path.rstrip('/'), addition.lstrip('/'))) if self.path else addition
+    patients = JsonEndpoint(path='patients')
+    patient = JsonEndpoint(path='patients/{id}')
+    studies = JsonEndpoint(path='studies')
+    study = JsonEndpoint(path='studies/{id}')
+    series = JsonEndpoint(path='series')
+    part = JsonEndpoint(path='series/{id}')
+    instances = JsonEndpoint(path='instances')
+    instance = JsonEndpoint(path='instances/{id}')
+    instance_tag = JsonEndpoint(path='instances/{id}/simplified-tags')
+    changes = JsonEndpoint(path='changes')
+    queries = JsonEndpoint(path='queries')
+    find = JsonEndpoint(path='tools/find', default_method='POST')
+    shutdown = JsonEndpoint(path='tools/shutdown', default_method='POST')
 
-    def _endpoints(self):
-        self.patients = JsonEndpoint(path=self._add_base_to_path('/patients'))
-        self.patient = JsonEndpoint(path=self._add_base_to_path('/patients/{id}'))
-        self.studies = JsonEndpoint(path=self._add_base_to_path('/studies'))
-        self.study = JsonEndpoint(path=self._add_base_to_path('/studies/{id}'))
-        self.series = JsonEndpoint(path=self._add_base_to_path('/series'))
-        self.part = JsonEndpoint(path=self._add_base_to_path('/series/{id}'))
-        self.instances = JsonEndpoint(path=self._add_base_to_path('/instances'))
-        self.instance = JsonEndpoint(path=self._add_base_to_path('/instances/{id}'))
-        self.instance_tag = JsonEndpoint(path=self._add_base_to_path('/instances/{id}/simplified-tags'))
-        self.changes = JsonEndpoint(path=self._add_base_to_path('/changes'))
-        self.queries = JsonEndpoint(path=self._add_base_to_path('/queries'))
-        self.find = JsonEndpoint(path=self._add_base_to_path('/tools/find'), default_method='POST')
-        self.shutdown = JsonEndpoint(path=self._add_base_to_path('tools/shutdown'), default_method='POST')
 
 class Orthanc:
     """REST client for Orthanc REST endpoints
 
-    :param scheme: http or https, default 'http'
-    :type scheme: str
-    :param domain: server domain (e.g., localhost, example.com/orthanc, etc), default 'localhost'
-    :type domain: str
-    :param port: port number, default 80
-    :type port: int
-    :param path: path (e.g., '/orthanc/rest'), default ''
-    :type path: str
-
     .. NOTE: Can pass other keyword arguments through to <apiron.service.base.Service>
-
     """
 
     def __init__(self, *args, **kwargs):
