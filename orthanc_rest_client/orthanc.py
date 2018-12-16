@@ -1,7 +1,6 @@
 from apiron.service.base import Service
-from apiron.endpoint import JsonEndpoint
+from apiron.endpoint import JsonEndpoint, StreamingEndpoint, Endpoint
 from apiron.client import ServiceCaller
-from urllib.parse import urlparse
 
 __all__=['Orthanc']
 
@@ -11,25 +10,51 @@ class OrthancService(Service):
         self.domain = domain if domain.endswith('/') else '/'.join((domain, ''))
         super(*args, **kwargs)
 
-    patients = JsonEndpoint(path='patients')
-    patient = JsonEndpoint(path='patients/{id}')
-    studies = JsonEndpoint(path='studies')
-    study = JsonEndpoint(path='studies/{id}')
-    series = JsonEndpoint(path='series')
-    part = JsonEndpoint(path='series/{id}')
-    instances = JsonEndpoint(path='instances')
-    instance = JsonEndpoint(path='instances/{id}')
-    instance_tag = JsonEndpoint(path='instances/{id}/simplified-tags')
-    changes = JsonEndpoint(path='changes')
-    queries = JsonEndpoint(path='queries')
-    find = JsonEndpoint(path='tools/find', default_method='POST')
-    shutdown = JsonEndpoint(path='tools/shutdown', default_method='POST')
+    #### PATIENTS
+    patients = JsonEndpoint(path='patients/')
+    patient = JsonEndpoint(path='patients/{id}/')
+    studies_of_patient = JsonEndpoint(path='patients/{id}/studies/')
+    statistics_of_patient = JsonEndpoint(path='patients/{id}/statistics/')
 
+    #### STUDIES
+    studies = JsonEndpoint(path='studies/')
+    archive = StreamingEndpoint(path='studies/{id}/archive/')
+    study = JsonEndpoint(path='studies/{id}/')
+    all_series_from_study = JsonEndpoint(path='studies/{id}/series/')
+    patient_from_study = JsonEndpoint(path='studies/{id}/patient/')
+    statistics_of_study = JsonEndpoint(path='studies/{id}/statistics/')
+
+    #### SERIES
+    series = JsonEndpoint(path='series/')
+    specific_series = JsonEndpoint(path='series/{id}/')
+    statistics_of_series = JsonEndpoint(path='series/{id}/statistics/')
+
+    #### INSTANCES
+    instances = JsonEndpoint(path='instances/')
+    instance = JsonEndpoint(path='instances/{id}/')
+    instance_tag = JsonEndpoint(path='instances/{id}/simplified-tags/')
+    statistics_of_instance = JsonEndpoint(path='series/{id}/statistics/')
+
+    #### OTHER
+    statistics = JsonEndpoint(path='statistics/')
+    changes = JsonEndpoint(path='changes/')
+    queries = JsonEndpoint(path='queries/')
+    find = JsonEndpoint(path='tools/find/', default_method='POST')
+
+    #### SERVER-RELATED
+    shutdown = JsonEndpoint(path='tools/shutdown/', default_method='POST')
+    reset = JsonEndpoint(path='tools/reset/', default_method='POST')
+    conformance = Endpoint(path='tools/dicom-conformance/')
 
 class Orthanc:
     """REST client for Orthanc REST endpoints
 
-    .. NOTE: Can pass other keyword arguments through to <apiron.service.base.Service>
+    :param domain: Full domain of the server (e.g., https://example.com:8888/orthanc/rest)
+    :type domain: str
+    :return: Interface to apiron
+    :rtype: :class:`Orthanc`
+
+    .. NOTE: Can pass other keyword arguments through to `apiron.service.base.Service`
     """
 
     def __init__(self, *args, **kwargs):
@@ -54,9 +79,12 @@ class Orthanc:
         else:
             return ServiceCaller.call(self.service, self.service.studies, **kwargs)
 
+    def archive(self, id_, **kwargs):
+        return ServiceCaller.call(self.service, self.service.archive, path_kwargs={'id': id_}, **kwargs)
+
     def series(self, id_=None, **kwargs):
         if id_:
-            return ServiceCaller.call(self.service, self.service.part, path_kwargs={'id': id_}, **kwargs)
+            return ServiceCaller.call(self.service, self.service.specific_series, path_kwargs={'id': id_}, **kwargs)
         else:
             return ServiceCaller.call(self.service, self.service.series, **kwargs)
 
@@ -91,16 +119,43 @@ class Orthanc:
     def shutdown(self, **kwargs):
         return ServiceCaller.call(self.service, self.service.shutdown, **kwargs)
 
+    def conformance(self, **kwargs):
+        return ServiceCaller.call(self.service, self.service.conformance, **kwargs)
 
-    ### Specific functions
+    def reset(self, **kwargs):
+        return ServiceCaller.call(self.service, self.service.reset, **kwargs)
+
+    def statistics(self, endpoint=None, id_=None, **kwargs):
+        router = {
+                'Patient': self.service.statistics_of_patient,
+                'Study': self.service.statistics_of_study,
+                'Series': self.service.statistics_of_series,
+                'Instance': self.service.statistics_of_instance
+                }
+        if endpoint in router and id_ is not None:
+            return ServiceCaller.call(self.service, router[endpoint], path_kwargs={'id': id_}, **kwargs)
+        else:
+            return ServiceCaller.call(self.service, self.service.statistics, **kwargs)
+
+
+    ### More specific functions
     def get_patient_id_from_id(self, id_, **kwargs):
         return ServiceCaller.call(self.service, self.service.patient, path_kwargs={'id': id_}, **kwargs).get('MainDicomTags').get('PatientID')
 
-    def get_all_studies_from_id(self, id_, **kwargs):
-        return [self.studies(study, **kwargs) for study in self.patients(id_, **kwargs).get('Studies')]
+    def get_all_studies_from_patient_uuid(self, id_, **kwargs):
+        return ServiceCaller.call(self.service, self.service.studies_of_patient, path_kwargs={'id': id_}, **kwargs)
 
     def get_all_studies_from_patient_id(self, id_, **kwargs):
-        return [self.studies(study, **kwargs) for study in self.find({'Level': 'Study', 'Query': {'PatientID': id_}}, **kwargs)]
+        try:
+            return [self.get_all_studies_from_patient_uuid(patient) for patient in self.find({'Level': 'Patient', 'Limit': 1, 'Query': {'ID': id_}}, **kwargs)][0]
+        except:
+            return []
 
     def get_patients_with_name(self, search, **kwargs):
         return [self.patients(patient, **kwargs) for patient in self.find({'Level': 'Patient', 'CaseSensitive': False, 'Query': {'PatientName': search}})]
+
+    def get_all_series_from_study(self, id_, **kwargs):
+        return ServiceCaller.call(self.service, self.service.all_series_from_study, path_kwargs={'id': id_}, **kwargs)
+
+    def get_patient_from_study(self, id_, **kwargs):
+        return ServiceCaller.call(self.service, self.service.patient_from_study, path_kwargs={'id': id_}, **kwargs)
