@@ -4,7 +4,6 @@ from apiron.client import ServiceCaller
 
 __all__=['Orthanc']
 
-
 class OrthancService(Service):
     def __init__(self, domain, *args, **kwargs):
         self.domain = domain if domain.endswith('/') else '/'.join((domain, ''))
@@ -15,25 +14,29 @@ class OrthancService(Service):
     patient = JsonEndpoint(path='patients/{id}/')
     studies_of_patient = JsonEndpoint(path='patients/{id}/studies/')
     statistics_of_patient = JsonEndpoint(path='patients/{id}/statistics/')
+    anonymize_patient = JsonEndpoint(path='patients/{id}/anonymize/')
 
     #### STUDIES
     studies = JsonEndpoint(path='studies/')
-    archive = StreamingEndpoint(path='studies/{id}/archive/')
     study = JsonEndpoint(path='studies/{id}/')
+    archive = StreamingEndpoint(path='studies/{id}/archive/')
     all_series_from_study = JsonEndpoint(path='studies/{id}/series/')
     patient_from_study = JsonEndpoint(path='studies/{id}/patient/')
     statistics_of_study = JsonEndpoint(path='studies/{id}/statistics/')
+    anonymize_study = JsonEndpoint(path='studies/{id}/anonymize/')
 
     #### SERIES
     series = JsonEndpoint(path='series/')
     specific_series = JsonEndpoint(path='series/{id}/')
     statistics_of_series = JsonEndpoint(path='series/{id}/statistics/')
+    anonymize_series = JsonEndpoint(path='series/{id}/anonymize/')
 
     #### INSTANCES
     instances = JsonEndpoint(path='instances/')
     instance = JsonEndpoint(path='instances/{id}/')
     instance_tag = JsonEndpoint(path='instances/{id}/simplified-tags/')
-    statistics_of_instance = JsonEndpoint(path='series/{id}/statistics/')
+    statistics_of_instance = JsonEndpoint(path='instances/{id}/statistics/')
+    anonymize_instance = JsonEndpoint(path='instances/{id}/anonymize/')
 
     #### OTHER
     statistics = JsonEndpoint(path='statistics/')
@@ -45,6 +48,10 @@ class OrthancService(Service):
     shutdown = JsonEndpoint(path='tools/shutdown/', default_method='POST')
     reset = JsonEndpoint(path='tools/reset/', default_method='POST')
     conformance = Endpoint(path='tools/dicom-conformance/')
+    system = JsonEndpoint(path='system/')
+    plugins = JsonEndpoint(path='plugins')
+    plugin_info = JsonEndpoint(path='plugins/{id}')
+    plugins_js = JsonEndpoint(path='plugins/explorer.js')
 
 class Orthanc:
     """REST client for Orthanc REST endpoints
@@ -125,6 +132,18 @@ class Orthanc:
     def reset(self, **kwargs):
         return ServiceCaller.call(self.service, self.service.reset, **kwargs)
 
+    def system(self, **kwargs):
+        return ServiceCaller.call(self.service, self.service.system, **kwargs)
+
+    def plugins(self, **kwargs):
+        return ServiceCaller.call(self.service, self.service.plugins, **kwargs)
+
+    def plugin_info(self, id_, **kwargs):
+        return ServiceCaller.call(self.service, self.service.plugin_info, path_kwargs={'id': id_}, **kwargs)
+
+    def plugins_js(self, **kwargs):
+        return ServiceCaller.call(self.service, self.service.plugins_js, **kwargs)
+
     def statistics(self, endpoint=None, id_=None, **kwargs):
         router = {
                 'Patient': self.service.statistics_of_patient,
@@ -137,6 +156,14 @@ class Orthanc:
         else:
             return ServiceCaller.call(self.service, self.service.statistics, **kwargs)
 
+    def anonymize(self, endpoint, id_, **kwargs):
+        router = {
+                'Patient': self.service.anonymize_patient,
+                'Study': self.service.anonymize_study,
+                'Series': self.service.anonymize_series,
+                'Instance': self.service.anonymize_instance,
+                }
+        return ServiceCaller.call(self.service, router[endpoint], path_kwargs={'id': id_}, **kwargs)
 
     ### More specific functions
     def get_patient_id_from_id(self, id_, **kwargs):
