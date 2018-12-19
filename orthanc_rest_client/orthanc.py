@@ -49,16 +49,16 @@ class OrthancService(Service):
     reset = JsonEndpoint(path='tools/reset/', default_method='POST')
     conformance = Endpoint(path='tools/dicom-conformance/')
     system = JsonEndpoint(path='system/')
-    plugins = JsonEndpoint(path='plugins')
-    plugin_info = JsonEndpoint(path='plugins/{id}')
-    plugins_js = JsonEndpoint(path='plugins/explorer.js')
+    plugins = JsonEndpoint(path='plugins/')
+    plugin_info = JsonEndpoint(path='plugins/{id}/')
+    plugins_js = Endpoint(path='plugins/explorer.js/')
 
 class Orthanc:
     """REST client for Orthanc REST endpoints
 
-    :param domain: Full domain of the server (e.g., https://example.com:8888/orthanc/rest)
+    :param domain: Full url of the Orthanc REST endpoint (e.g., https://example.com:8888/orthanc/rest)
     :type domain: str
-    :return: Interface to apiron
+    :return: Orthanc REST client
     :rtype: :class:`Orthanc`
 
     .. NOTE: Can pass other keyword arguments through to `apiron.service.base.Service`
@@ -146,10 +146,10 @@ class Orthanc:
 
     def statistics(self, endpoint=None, id_=None, **kwargs):
         router = {
-                'Patient': self.service.statistics_of_patient,
-                'Study': self.service.statistics_of_study,
-                'Series': self.service.statistics_of_series,
-                'Instance': self.service.statistics_of_instance
+                    'Patient': self.service.statistics_of_patient,
+                    'Study': self.service.statistics_of_study,
+                    'Series': self.service.statistics_of_series,
+                    'Instance': self.service.statistics_of_instance
                 }
         if endpoint in router and id_ is not None:
             return ServiceCaller.call(self.service, router[endpoint], path_kwargs={'id': id_}, **kwargs)
@@ -158,10 +158,10 @@ class Orthanc:
 
     def anonymize(self, endpoint, id_, **kwargs):
         router = {
-                'Patient': self.service.anonymize_patient,
-                'Study': self.service.anonymize_study,
-                'Series': self.service.anonymize_series,
-                'Instance': self.service.anonymize_instance,
+                    'Patient': self.service.anonymize_patient,
+                    'Study': self.service.anonymize_study,
+                    'Series': self.service.anonymize_series,
+                    'Instance': self.service.anonymize_instance,
                 }
         return ServiceCaller.call(self.service, router[endpoint], path_kwargs={'id': id_}, **kwargs)
 
