@@ -2,6 +2,10 @@
 
 Provides a REST client, based on [apiron](https://github.com/ithaka/apiron), targeted at [Orthanc](https://www.orthanc-server.com) REST endpoints.
 
+### Install
+
+    pip install orthanc_rest_client
+
 ### How to use
 
 Import the pre-defined client and pass the server details
