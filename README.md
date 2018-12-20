@@ -4,7 +4,7 @@ Provides a REST client, based on [apiron](https://github.com/ithaka/apiron), tar
 
 ### Install
 
-    pip install orthanc_rest_client
+    pip install orthanc-rest-client
 
 ### How to use
 
