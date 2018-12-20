@@ -39,6 +39,14 @@ Import the pre-defined client and pass the server details
 
 There are other preconfigured endpoints.
 
+### Authenticated Endpoints
+
+Pass valid Request auth objects:
+
+    from requests.auth import HTTPBasicAuth
+    orthanc.reset(auth=HTTPBasicAuth('orthanc', 'orthanc'))
+
+
 For further help:
 - [apiron](https://github.com/ithaka/apiron)
 - [Orthanc documentation](http://book.orthanc-server.com)
