@@ -67,6 +67,6 @@ class OrthancPatients:
 
     def get_all_studies_from_patient_id(self, id_, **kwargs):
         try:
-            return [self.get_studies_from_patient_uuid(patient['ID']) for patient in self.find({'Level': 'Patient', 'Limit': 1, 'Query': {'PatientID': id_}}, **kwargs)][0]
+            return [self.get_studies_from_patient_uuid(patient) for patient in self.find({'Level': 'Patient', 'Limit': 1, 'Query': {'PatientID': id_}}, **kwargs)][0]
         except:
             return []
