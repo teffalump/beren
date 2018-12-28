@@ -1,6 +1,8 @@
 # Orthanc REST client
 
-Provides a REST client, based on [apiron](https://github.com/ithaka/apiron), targeted at [Orthanc](https://www.orthanc-server.com) REST endpoints.
+Provides a REST client targeted at [Orthanc](https://www.orthanc-server.com) REST endpoints.
+
+Based on the excellent [apiron](https://github.com/ithaka/apiron) library.
 
 ### Install
 
@@ -13,20 +15,25 @@ Import the pre-defined client and pass the server details
     from orthanc_rest_client import Orthanc
     orthanc = Orthanc('http://localhost:8042')
 
-    # Get patient(s)
-    orthanc.patients(<id or not>)
+    # Patient endpoints
+    orthanc.patients.get_patients()
+    orthanc.patients.get_patient(id)
+    ...and so on
 
-    # Get studies/study
-    orthanc.studies(<id or not>)
+    # Study endpoints
+    orthanc.studies.get_studies()
+    orthanc.studies.get_study(id)
+    ...and so on
 
-    # Get series/part
-    orthanc.series(<id or not>)
+    # Series endpoints
+    orthanc.series.get_studies()
+    orthanc.series.get_study()
+    ...and so on
 
-    # Get instances/instance
-    orthanc.instances(<id or not>)
-
-    # Get tags
-    orthanc.instance_tag(id)
+    # Instances endpoints
+    orthanc.instances.get_instances()
+    orthanc.instances.get_instance(id)
+    ...and so on
 
     # Get changes
     orthanc.changes()
@@ -46,7 +53,6 @@ Pass valid Request auth objects:
     from requests.auth import HTTPBasicAuth
     orthanc.reset(auth=HTTPBasicAuth('orthanc', 'orthanc'))
 
-
 For further help:
 - [apiron](https://github.com/ithaka/apiron)
-- [Orthanc documentation](http://book.orthanc-server.com)
+- [Orthanc documentation](http://book.orthanc-server.com) and [Orthanc REST API](https://docs.google.com/spreadsheets/d/e/2PACX-1vSBEymDKGZgskFEFF6yzge5JovGHPK_FIbEnW5a6SWUbPkX06tkoObUHh6T1XQhgj-HqFd0AWSnVFOv/pubhtml?gid=1094535210&single=true)
