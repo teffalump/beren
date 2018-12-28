@@ -42,49 +42,49 @@ class OrthancSeries(BaseCaller):
         self.service = OrthancSeriesService(*args, **kwargs)
 
     def get_series(self, **kwargs):
-        return ServiceCaller(self.service, self.service.series, **kwargs)
+        return ServiceCaller.call(self.service, self.service.series, **kwargs)
 
     def get_one_series(self, id_, **kwargs):
-        return ServiceCaller(self.service, self.service.part, path_kwargs={'id': id_}, **kwargs)
+        return ServiceCaller.call(self.service, self.service.part, path_kwargs={'id': id_}, **kwargs)
 
     def delete_series(self, id_, **kwargs):
-        return ServiceCaller(self.service, self.service.del_part, path_kwargs={'id': id_}, **kwargs)
+        return ServiceCaller.call(self.service, self.service.del_part, path_kwargs={'id': id_}, **kwargs)
 
     def anonymize_series(self, id_, **kwargs):
-        return ServiceCaller(self.service, self.service.anonymize, path_kwargs={'id': id_}, **kwargs)
+        return ServiceCaller.call(self.service, self.service.anonymize, path_kwargs={'id': id_}, **kwargs)
 
     def get_series_archive(self, id_, **kwargs):
-        return ServiceCaller(self.service, self.service.archive, path_kwargs={'id': id_}, **kwargs)
+        return ServiceCaller.call(self.service, self.service.archive, path_kwargs={'id': id_}, **kwargs)
 
     def get_series_instances(self, id_, **kwargs):
-        return ServiceCaller(self.service, self.service.instances, path_kwargs={'id': id_}, **kwargs)
+        return ServiceCaller.call(self.service, self.service.instances, path_kwargs={'id': id_}, **kwargs)
 
     def get_series_instances_tags(self, id_, **kwargs):
-        return ServiceCaller(self.service, self.service.instances_tags, path_kwargs={'id': id_}, **kwargs)
+        return ServiceCaller.call(self.service, self.service.instances_tags, path_kwargs={'id': id_}, **kwargs)
 
     def get_series_media(self, id_, **kwargs):
-        return ServiceCaller(self.service, self.service.media, path_kwargs={'id': id_}, **kwargs)
+        return ServiceCaller.call(self.service, self.service.media, path_kwargs={'id': id_}, **kwargs)
 
     def modify_series(self, id_, **kwargs):
-        return ServiceCaller(self.service, self.service.modify, path_kwargs={'id': id_}, **kwargs)
+        return ServiceCaller.call(self.service, self.service.modify, path_kwargs={'id': id_}, **kwargs)
 
     def get_series_module(self, id_, **kwargs):
-        return ServiceCaller(self.service, self.service.module, path_kwargs={'id': id_}, **kwargs)
+        return ServiceCaller.call(self.service, self.service.module, path_kwargs={'id': id_}, **kwargs)
 
     def get_series_ordered_slices(self, id_, **kwargs):
-        return ServiceCaller(self.service, self.service.ordered_slices, path_kwargs={'id': id_}, **kwargs)
+        return ServiceCaller.call(self.service, self.service.ordered_slices, path_kwargs={'id': id_}, **kwargs)
 
     def get_series_patient(self, id_, **kwargs):
-        return ServiceCaller(self.service, self.service.patient, path_kwargs={'id': id_}, **kwargs)
+        return ServiceCaller.call(self.service, self.service.patient, path_kwargs={'id': id_}, **kwargs)
 
     def reconstruct_series(self, id_, **kwargs):
-        return ServiceCaller(self.service, self.service.reconstruct, path_kwargs={'id': id_}, **kwargs)
+        return ServiceCaller.call(self.service, self.service.reconstruct, path_kwargs={'id': id_}, **kwargs)
 
     def get_series_shared_tags(self, id_, **kwargs):
-        return ServiceCaller(self.service, self.service.shared_tags, path_kwargs={'id': id_}, **kwargs)
+        return ServiceCaller.call(self.service, self.service.shared_tags, path_kwargs={'id': id_}, **kwargs)
 
     def get_series_statistics(self, id_, **kwargs):
-        return ServiceCaller(self.service, self.service.statistics, path_kwargs={'id': id_}, **kwargs)
+        return ServiceCaller.call(self.service, self.service.statistics, path_kwargs={'id': id_}, **kwargs)
 
     def get_series_study(self, id_, **kwargs):
-        return ServiceCaller(self.service, self.service.study, path_kwargs={'id': id_}, **kwargs)
+        return ServiceCaller.call(self.service, self.service.study, path_kwargs={'id': id_}, **kwargs)
