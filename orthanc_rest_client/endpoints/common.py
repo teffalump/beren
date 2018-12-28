@@ -22,11 +22,11 @@ class BaseService(Service):
         self.domain = domain if domain.endswith('/') else '/'.join((domain, ''))
         super(*args, **kwargs)
 
-    find = JsonEndpoint(path='tools/find/', default_method=['POST'])
+    # find = JsonEndpoint(path='tools/find/', default_method=['POST'])
 
 class BaseCaller:
     def __init__(self):
         raise NotImplemented
 
-    def find(self, query, **kwargs):
-        return ServiceCaller(self.service, self.service.find, data=query, **kwargs)
+    # def find(self, query, **kwargs):
+        # return ServiceCaller(self.service, self.service.find, data=query, **kwargs)

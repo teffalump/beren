@@ -11,7 +11,13 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-from orthanc_rest_client.endpoints import OrthancPatients, OrthancInstances, OrthancSeries, OrthancStudies
+from orthanc_rest_client.endpoints import (
+                                        OrthancPatients,
+                                        OrthancInstances,
+                                        OrthancSeries,
+                                        OrthancStudies,
+                                        OrthancQueries,
+                                        )
 
 __all__=['Orthanc']
 
@@ -21,3 +27,4 @@ class Orthanc:
         self.instances = OrthancInstances(server, *args, **kwargs)
         self.series = OrthancSeries(server, *args, **kwargs)
         self.studies = OrthancStudies(server, *args, **kwargs)
+        self.queries = OrthancQueries(server, *args, **kwargs)
