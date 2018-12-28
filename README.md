@@ -1,6 +1,6 @@
 # Orthanc REST client
 
-Provides a REST client targeted at [Orthanc](https://www.orthanc-server.com) REST endpoints.
+Provides a REST client targeted at [Orthanc](https://www.orthanc-server.com) REST API endpoints.
 
 Based on the excellent [apiron](https://github.com/ithaka/apiron) library.
 
