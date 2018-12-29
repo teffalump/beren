@@ -20,6 +20,7 @@ from orthanc_rest_client.endpoints import (
                                         OrthancServerService,
                                         )
 from apiron.client import ServiceCaller
+from json import dumps
 
 __all__=['Orthanc']
 
@@ -31,6 +32,10 @@ class Orthanc:
         self.studies = OrthancStudiesService(server, *args, **kwargs)
         self.queries = OrthancQueriesService(server, *args, **kwargs)
         self.server = OrthancServerService(server, *args, **kwargs)
+
+    @staticmethod
+    def convert_to_json(data, **kwargs):
+        return dumps(data, **kwargs)
 
     #### INSTANCES
     def get_instances(self, **kwargs):
@@ -266,17 +271,17 @@ class Orthanc:
     def get_job(self, id_, **kwargs):
         return ServiceCaller.call(self.server, self.server.job, path_kwargs={'id': id_}, **kwargs)
 
-    def cancel_job(self, id_, data={}, **kwargs):
-        return ServiceCaller.call(self.server, self.server.cancel_job, path_kwargs={'id': id_}, data=data, **kwargs)
+    def cancel_job(self, id_, **kwargs):
+        return ServiceCaller.call(self.server, self.server.cancel_job, path_kwargs={'id': id_}, data={}, **kwargs)
 
-    def pause_job(self, id_, data={}, **kwargs):
-        return ServiceCaller.call(self.server, self.server.pause_job, path_kwargs={'id': id_}, data=data, **kwargs)
+    def pause_job(self, id_,  **kwargs):
+        return ServiceCaller.call(self.server, self.server.pause_job, path_kwargs={'id': id_}, data={}, **kwargs)
 
-    def resubmit_job(self, id_, data={}, **kwargs):
-        return ServiceCaller.call(self.server, self.server.resubmit_job, path_kwargs={'id': id_}, data=data, **kwargs)
+    def resubmit_job(self, id_, **kwargs):
+        return ServiceCaller.call(self.server, self.server.resubmit_job, path_kwargs={'id': id_}, data={}, **kwargs)
 
-    def resume_job(self, id_, data={}, **kwargs):
-        return ServiceCaller.call(self.server, self.server.resume_job, path_kwargs={'id': id_}, data=data, **kwargs)
+    def resume_job(self, id_, **kwargs):
+        return ServiceCaller.call(self.server, self.server.resume_job, path_kwargs={'id': id_}, data={}, **kwargs)
 
     def get_peers(self, **kwargs):
         return ServiceCaller.call(self.server, self.server.peers, **kwargs)
@@ -330,10 +335,12 @@ class Orthanc:
         return ServiceCaller.call(self.server, self.server.tools_dicom_conformance, **kwargs)
 
     def execute_script(self, script, **kwargs):
-        return ServiceCaller.call(self.server, self.server.tools_execute_script, data=script, **kwargs)
+        j = self.convert_to_json(script)
+        return ServiceCaller.call(self.server, self.server.tools_execute_script, data=j, **kwargs)
 
     def find(self, query, **kwargs):
-        return ServiceCaller.call(self.server, self.server.tools_find, data=query, **kwargs)
+        j = self.convert_to_json(query)
+        return ServiceCaller.call(self.server, self.server.tools_find, data=j, **kwargs)
 
     def generate_uid(self, **kwargs):
         return ServiceCaller.call(self.server, self.server.tools_generate_uid, **kwargs)
@@ -350,8 +357,8 @@ class Orthanc:
     def get_now_local(self, **kwargs):
         return ServiceCaller.call(self.server, self.server.tools_now_local, **kwargs)
 
-    def reset(self, data={}, **kwargs):
-        return ServiceCaller.call(self.server, self.server.tools_reset, data=data, **kwargs)
+    def reset(self, **kwargs):
+        return ServiceCaller.call(self.server, self.server.tools_reset, data={}, **kwargs)
 
-    def shutdown(self, data={}, **kwargs):
-        return ServiceCaller.call(self.server, self.server.tools_shutdown, data=data, **kwargs)
+    def shutdown(self, **kwargs):
+        return ServiceCaller.call(self.server, self.server.tools_shutdown, data={}, **kwargs)
