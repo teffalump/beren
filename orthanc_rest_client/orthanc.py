@@ -26,12 +26,16 @@ __all__=['Orthanc']
 
 class Orthanc:
     def __init__(self, server, *args, **kwargs):
+        self._server = server
         self.instances = OrthancInstancesService(server, *args, **kwargs)
         self.patients = OrthancPatientsService(server, *args, **kwargs)
         self.series = OrthancSeriesService(server, *args, **kwargs)
         self.studies = OrthancStudiesService(server, *args, **kwargs)
         self.queries = OrthancQueriesService(server, *args, **kwargs)
         self.server = OrthancServerService(server, *args, **kwargs)
+
+    def __repr__(self):
+        return '<Client for Orthanc REST API at {}>'.format(self._server)
 
     @staticmethod
     def convert_to_json(data, **kwargs):
