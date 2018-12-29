@@ -51,7 +51,8 @@ class Orthanc:
         return ServiceCaller.call(self.instances, self.instances.del_instance, path_kwargs={'id': id_}, **kwargs)
 
     def anonymize_instance(self, id_, data={}, **kwargs):
-        return ServiceCaller.call(self.instances, self.instances.del_instance, path_kwargs={'id': id_}, data=data, **kwargs)
+        j = Orthanc.convert_to_json(data)
+        return ServiceCaller.call(self.instances, self.instances.del_instance, path_kwargs={'id': id_}, data=j, **kwargs)
 
     def get_instance_patient(self, id_, **kwargs):
         return ServiceCaller.call(self.instances, self.instances.instance_patient, path_kwargs={'id': id_}, **kwargs)
@@ -72,8 +73,9 @@ class Orthanc:
     def delete_patient(self, id_, **kwargs):
         return ServiceCaller.call(self.patients, self.patients.del_patient, path_kwargs={'id': id_}, **kwargs)
 
-    def anonymize_patient(self, id_, **kwargs):
-        return ServiceCaller.call(self.patients, self.patients.anonymize, path_kwargs={'id': id_}, **kwargs)
+    def anonymize_patient(self, id_, data={}, **kwargs):
+        j = Orthanc.convert_to_json(data)
+        return ServiceCaller.call(self.patients, self.patients.anonymize, path_kwargs={'id': id_}, data=j, **kwargs)
 
     def archive_patient(self, id_, **kwargs):
         return ServiceCaller.call(self.patients, self.service.archive, path_kwargs={'id': id_}, **kwargs)
@@ -85,7 +87,8 @@ class Orthanc:
         return ServiceCaller.call(self.patients, self.service.instances_tags, path_kwargs={'id': id_}, **kwargs)
 
     def modify_patient(self, id_, data, **kwargs):
-        return ServiceCaller.call(self.patients, self.patients.modify, path_kwargs={'id': id_}, data=data, **kwargs)
+        j = Orthanc.convert_to_json(data)
+        return ServiceCaller.call(self.patients, self.patients.modify, path_kwargs={'id': id_}, data=j, **kwargs)
 
     def get_patient_module(self, id_, **kwargs):
         return ServiceCaller.call(self.patients, self.patients.module, path_kwargs={'id': id_}, **kwargs)
@@ -164,8 +167,9 @@ class Orthanc:
     def delete_series(self, id_, **kwargs):
         return ServiceCaller.call(self.series, self.series.del_part, path_kwargs={'id': id_}, **kwargs)
 
-    def anonymize_series(self, id_, **kwargs):
-        return ServiceCaller.call(self.series, self.series.anonymize, path_kwargs={'id': id_}, **kwargs)
+    def anonymize_series(self, id_, data={}, **kwargs):
+        j = Orthanc.convert_to_json(data)
+        return ServiceCaller.call(self.series, self.series.anonymize, path_kwargs={'id': id_}, data=j, **kwargs)
 
     def get_series_archive(self, id_, **kwargs):
         return ServiceCaller.call(self.series, self.series.archive, path_kwargs={'id': id_}, **kwargs)
@@ -179,8 +183,9 @@ class Orthanc:
     def get_series_media(self, id_, **kwargs):
         return ServiceCaller.call(self.series, self.series.media, path_kwargs={'id': id_}, **kwargs)
 
-    def modify_series(self, id_, **kwargs):
-        return ServiceCaller.call(self.series, self.series.modify, path_kwargs={'id': id_}, **kwargs)
+    def modify_series(self, id_, data, **kwargs):
+        j = Orthanc.convert_to_json(data)
+        return ServiceCaller.call(self.series, self.series.modify, path_kwargs={'id': id_}, data=j, **kwargs)
 
     def get_series_module(self, id_, **kwargs):
         return ServiceCaller.call(self.series, self.series.module, path_kwargs={'id': id_}, **kwargs)
@@ -213,8 +218,9 @@ class Orthanc:
     def delete_study(self, id_, **kwargs):
         return ServiceCaller.call(self.studies, self.studies.del_study, path_kwargs={'id': id_}, **kwargs)
 
-    def anonymize_study(self, id_, **kwargs):
-        return ServiceCaller.call(self.studies, self.studies.anonymize, path_kwargs={'id': id_}, **kwargs)
+    def anonymize_study(self, id_, data={}, **kwargs):
+        j = Orthanc.convert_to_json(data)
+        return ServiceCaller.call(self.studies, self.studies.anonymize, path_kwargs={'id': id_}, data=j, **kwargs)
 
     def get_study_archive(self, id_, **kwargs):
         return ServiceCaller.call(self.studies, self.studies.archive, path_kwargs={'id': id_}, **kwargs)
@@ -228,8 +234,9 @@ class Orthanc:
     def get_study_media(self, id_, **kwargs):
         return ServiceCaller.call(self.studies, self.studies.media, path_kwargs={'id': id_}, **kwargs)
 
-    def modify_study(self, id_, **kwargs):
-        return ServiceCaller.call(self.studies, self.studies.modify, path_kwargs={'id': id_}, **kwargs)
+    def modify_study(self, id_, data, **kwargs):
+        j = Orthanc.convert_to_json(data)
+        return ServiceCaller.call(self.studies, self.studies.modify, path_kwargs={'id': id_}, data=j, **kwargs)
 
     def get_study_module(self, id_, **kwargs):
         return ServiceCaller.call(self.studies, self.studies.module, path_kwargs={'id': id_}, **kwargs)
@@ -256,13 +263,13 @@ class Orthanc:
     def get_changes(self, **kwargs):
         return ServiceCaller.call(self.server, self.server.changes, **kwargs)
 
-    def delete_changes(self, **kwargs):
+    def clear_changes(self, **kwargs):
         return ServiceCaller.call(self.server, self.server.del_changes, **kwargs)
 
     def get_exports(self, **kwargs):
         return ServiceCaller.call(self.server, self.server.exports, **kwargs)
 
-    def delete_exports(self, **kwargs):
+    def clear_exports(self, **kwargs):
         return ServiceCaller.call(self.server, self.server.del_exports, **kwargs)
 
     def get_jobs(self, **kwargs):
