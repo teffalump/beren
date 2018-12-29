@@ -248,3 +248,110 @@ class Orthanc:
         return ServiceCaller.call(self.studies, self.studies.statistics, path_kwargs={'id': id_}, **kwargs)
 
     #### SERVER-RELATED
+    def get_changes(self, **kwargs):
+        return ServiceCaller.call(self.server, self.server.changes, **kwargs)
+
+    def delete_changes(self, **kwargs):
+        return ServiceCaller.call(self.server, self.server.del_changes, **kwargs)
+
+    def get_exports(self, **kwargs):
+        return ServiceCaller.call(self.server, self.server.exports, **kwargs)
+
+    def delete_exports(self, **kwargs):
+        return ServiceCaller.call(self.server, self.server.del_exports, **kwargs)
+
+    def get_jobs(self, **kwargs):
+        return ServiceCaller.call(self.server, self.server.jobs, **kwargs)
+
+    def get_job(self, id_, **kwargs):
+        return ServiceCaller.call(self.server, self.server.job, path_kwargs={'id': id_}, **kwargs)
+
+    def cancel_job(self, id_, data={}, **kwargs):
+        return ServiceCaller.call(self.server, self.server.cancel_job, path_kwargs={'id': id_}, data=data, **kwargs)
+
+    def pause_job(self, id_, data={}, **kwargs):
+        return ServiceCaller.call(self.server, self.server.pause_job, path_kwargs={'id': id_}, data=data, **kwargs)
+
+    def resubmit_job(self, id_, data={}, **kwargs):
+        return ServiceCaller.call(self.server, self.server.resubmit_job, path_kwargs={'id': id_}, data=data, **kwargs)
+
+    def resume_job(self, id_, data={}, **kwargs):
+        return ServiceCaller.call(self.server, self.server.resume_job, path_kwargs={'id': id_}, data=data, **kwargs)
+
+    def get_peers(self, **kwargs):
+        return ServiceCaller.call(self.server, self.server.peers, **kwargs)
+
+    def get_peer(self, peer, **kwargs):
+        return ServiceCaller.call(self.server, self.server.peer, path_kwargs={'peer': peer}, **kwargs)
+
+    def delete_peer(self, peer, **kwargs):
+        return ServiceCaller.call(self.server, self.server.del_peer, path_kwargs={'peer': peer}, **kwargs)
+
+    def put_peer(self, peer, **kwargs):
+        return ServiceCaller.call(self.server, self.server.put_peer, path_kwargs={'peer': peer}, **kwargs)
+
+    def store_peer(self, peer, **kwargs):
+        return ServiceCaller.call(self.server, self.server.store_peer, path_kwargs={'peer': peer}, **kwargs)
+
+    def get_plugins(self, **kwargs):
+        return ServiceCaller.call(self.server, self.server.plugins, **kwargs)
+
+    def get_plugin(self, id_, **kwargs):
+        return ServiceCaller.call(self.server, self.server.plugin, path_kwargs={'id': id_}, **kwargs)
+
+    def get_plugins_js(self, **kwargs):
+        return ServiceCaller.call(self.server, self.server.plugins_js, **kwargs)
+
+    def get_statistics(self, **kwargs):
+        return ServiceCaller.call(self.server, self.server.statistics, **kwargs)
+
+    def get_system(self, **kwargs):
+        return ServiceCaller.call(self.server, self.server.system, **kwargs)
+
+    def create_archive(self, **kwargs):
+        return ServiceCaller.call(self.server, self.server.tools_create_archive, **kwargs)
+
+    def create_dicom(self, **kwargs):
+        return ServiceCaller.call(self.server, self.server.tools_create_dicom, **kwargs)
+
+    def create_media(self, **kwargs):
+        return ServiceCaller.call(self.server, self.server.tools_create_media, **kwargs)
+
+    def create_media_extended(self, **kwargs):
+        return ServiceCaller.call(self.server, self.server.tools_create_media_extended, **kwargs)
+
+    def get_default_encoding(self, **kwargs):
+        return ServiceCaller.call(self.server, self.server.tools_default_encoding, **kwargs)
+
+    def change_default_encoding(self, **kwargs):
+        return ServiceCaller.call(self.server, self.server.tools_post_default_encoding, **kwargs)
+
+    def get_dicom_conformance(self, **kwargs):
+        return ServiceCaller.call(self.server, self.server.tools_dicom_conformance, **kwargs)
+
+    def execute_script(self, script, **kwargs):
+        return ServiceCaller.call(self.server, self.server.tools_execute_script, data=script, **kwargs)
+
+    def find(self, query, **kwargs):
+        return ServiceCaller.call(self.server, self.server.tools_find, data=query, **kwargs)
+
+    def generate_uid(self, **kwargs):
+        return ServiceCaller.call(self.server, self.server.tools_generate_uid, **kwargs)
+
+    def invalidate_tags(self, **kwargs):
+        return ServiceCaller.call(self.server, self.server.tools_invalidate_tags, **kwargs)
+
+    def lookup(self, lookup, **kwargs):
+        return ServiceCaller.call(self.server, self.server.tools_lookup, data=lookup, **kwargs)
+
+    def get_now(self, **kwargs):
+        return ServiceCaller.call(self.server, self.server.tools_now, **kwargs)
+
+    def get_now_local(self, **kwargs):
+        return ServiceCaller.call(self.server, self.server.tools_now_local, **kwargs)
+
+    def reset(self, data={}, **kwargs):
+        return ServiceCaller.call(self.server, self.server.tools_reset, data=data, **kwargs)
+
+    def shutdown(self, data={}, **kwargs):
+        return ServiceCaller.call(self.server, self.server.tools_shutdown, data=data, **kwargs)
