@@ -17,6 +17,7 @@ from apiron.endpoint import JsonEndpoint, StreamingEndpoint, Endpoint
 __all__=['OrthancServerService']
 
 class OrthancServerService(BaseService):
+    '''Server-related endpoints'''
 
     changes = JsonEndpoint(path='changes/')
     del_changes = JsonEndpoint(path='changes/', default_method='DELETE')
@@ -47,12 +48,12 @@ class OrthancServerService(BaseService):
     tools_create_dicom = StreamingEndpoint(path='tools/create-dicom/', default_method='POST')
     tools_create_media = StreamingEndpoint(path='tools/create-media/', default_method='POST')
     tools_create_media_extended = StreamingEndpoint(path='tools/create-media-extended/', default_method='POST')
-    tools_default_encoding = JsonEndpoint(path='tools/default-encoding/')
+    tools_default_encoding = Endpoint(path='tools/default-encoding/')
     tools_post_default_encoding = JsonEndpoint(path='tools/default-encoding/', default_method='POST')
     tools_dicom_conformance = Endpoint(path='tools/dicom-conformance/')
     tools_execute_script = JsonEndpoint(path='tools/execute-script/', default_method='POST')
     tools_find = JsonEndpoint(path='tools/find/', default_method='POST')
-    tools_generate_uid = JsonEndpoint(path='tools/generate-uid/')
+    tools_generate_uid = Endpoint(path='tools/generate-uid/')
     tools_invalidate_tags = JsonEndpoint(path='tools/invalidate-tags/', default_method='POST')
     tools_lookup = JsonEndpoint(path='tools/lookup/', default_method='POST')
     tools_now = Endpoint(path='tools/now/')

@@ -349,8 +349,12 @@ class Orthanc:
         j = self.convert_to_json(query)
         return ServiceCaller.call(self.server, self.server.tools_find, data=j, **kwargs)
 
-    def generate_uid(self, **kwargs):
-        return ServiceCaller.call(self.server, self.server.tools_generate_uid, **kwargs)
+    def generate_uid(self, level, **kwargs):
+        '''
+        Level must be 'patient', 'instance', 'series', or 'study'
+        '''
+        j = self.convert_to_json({'level': level})
+        return ServiceCaller.call(self.server, self.server.tools_generate_uid, data=j, **kwargs)
 
     def invalidate_tags(self, **kwargs):
         return ServiceCaller.call(self.server, self.server.tools_invalidate_tags, **kwargs)
