@@ -19,10 +19,10 @@ __all__=['OrthancInstancesService']
 class OrthancInstancesService(BaseService):
 
     instances = JsonEndpoint(path='instances/')
-    add_instance = JsonEndpoint(path='instances/', default_method=['POST'])
+    add_instance = JsonEndpoint(path='instances/', default_method='POST')
     instance = JsonEndpoint(path='instances/{id}/')
-    del_instance = JsonEndpoint(path='instances/{id}/', default_method=['DELETE'])
-    anonymize_instance = JsonEndpoint(path='instances/{id}/anonymize/', default_method=['POST'])
+    del_instance = JsonEndpoint(path='instances/{id}/', default_method='DELETE')
+    anonymize_instance = JsonEndpoint(path='instances/{id}/anonymize/', default_method='POST')
     instance_patient = JsonEndpoint(path='instances/{id}/patient/')
     statistics = JsonEndpoint(path='instances/{id}/statistics/')
     study = JsonEndpoint(path='instances/{id}/study/')
