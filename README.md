@@ -26,8 +26,8 @@ Import the pre-defined client and pass the server details
     ...and so on
 
     # Series endpoints
-    orthanc.get_studies()
-    orthanc.get_study()
+    orthanc.get_series()
+    orthanc.get_one_series()
     ...and so on
 
     # Instances endpoints
@@ -36,13 +36,13 @@ Import the pre-defined client and pass the server details
     ...and so on
 
     # Get changes
-    orthanc.changes()
+    orthanc.get_changes()
 
     # Find objects by query
     orthanc.find(query)
 
     # Get previous queries
-    orthanc.queries()
+    orthanc.get_queries()
 
 There are other preconfigured endpoints.
 
