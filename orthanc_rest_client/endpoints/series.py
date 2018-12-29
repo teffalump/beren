@@ -11,11 +11,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-from .common import BaseService, BaseCaller
+from .common import BaseService
 from apiron.endpoint import JsonEndpoint, StreamingEndpoint, Endpoint
-from apiron.client import ServiceCaller
 
-__all__=['OrthancSeries']
+__all__=['OrthancSeriesService']
 
 class OrthancSeriesService(BaseService):
 
@@ -35,56 +34,3 @@ class OrthancSeriesService(BaseService):
     shared_tags = JsonEndpoint(path='series/{id}/shared-tags/')
     statistics = JsonEndpoint(path='series/{id}/statistics/')
     study = JsonEndpoint(path='series/{id}/study/')
-
-
-class OrthancSeries(BaseCaller):
-    def __init__(self, *args, **kwargs):
-        self.service = OrthancSeriesService(*args, **kwargs)
-
-    def get_series(self, **kwargs):
-        return ServiceCaller.call(self.service, self.service.series, **kwargs)
-
-    def get_one_series(self, id_, **kwargs):
-        return ServiceCaller.call(self.service, self.service.part, path_kwargs={'id': id_}, **kwargs)
-
-    def delete_series(self, id_, **kwargs):
-        return ServiceCaller.call(self.service, self.service.del_part, path_kwargs={'id': id_}, **kwargs)
-
-    def anonymize_series(self, id_, **kwargs):
-        return ServiceCaller.call(self.service, self.service.anonymize, path_kwargs={'id': id_}, **kwargs)
-
-    def get_series_archive(self, id_, **kwargs):
-        return ServiceCaller.call(self.service, self.service.archive, path_kwargs={'id': id_}, **kwargs)
-
-    def get_series_instances(self, id_, **kwargs):
-        return ServiceCaller.call(self.service, self.service.instances, path_kwargs={'id': id_}, **kwargs)
-
-    def get_series_instances_tags(self, id_, **kwargs):
-        return ServiceCaller.call(self.service, self.service.instances_tags, path_kwargs={'id': id_}, **kwargs)
-
-    def get_series_media(self, id_, **kwargs):
-        return ServiceCaller.call(self.service, self.service.media, path_kwargs={'id': id_}, **kwargs)
-
-    def modify_series(self, id_, **kwargs):
-        return ServiceCaller.call(self.service, self.service.modify, path_kwargs={'id': id_}, **kwargs)
-
-    def get_series_module(self, id_, **kwargs):
-        return ServiceCaller.call(self.service, self.service.module, path_kwargs={'id': id_}, **kwargs)
-
-    def get_series_ordered_slices(self, id_, **kwargs):
-        return ServiceCaller.call(self.service, self.service.ordered_slices, path_kwargs={'id': id_}, **kwargs)
-
-    def get_series_patient(self, id_, **kwargs):
-        return ServiceCaller.call(self.service, self.service.patient, path_kwargs={'id': id_}, **kwargs)
-
-    def reconstruct_series(self, id_, **kwargs):
-        return ServiceCaller.call(self.service, self.service.reconstruct, path_kwargs={'id': id_}, **kwargs)
-
-    def get_series_shared_tags(self, id_, **kwargs):
-        return ServiceCaller.call(self.service, self.service.shared_tags, path_kwargs={'id': id_}, **kwargs)
-
-    def get_series_statistics(self, id_, **kwargs):
-        return ServiceCaller.call(self.service, self.service.statistics, path_kwargs={'id': id_}, **kwargs)
-
-    def get_series_study(self, id_, **kwargs):
-        return ServiceCaller.call(self.service, self.service.study, path_kwargs={'id': id_}, **kwargs)

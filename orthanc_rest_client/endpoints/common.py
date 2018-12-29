@@ -13,20 +13,10 @@
 
 from apiron.service.base import Service
 from apiron.endpoint import JsonEndpoint, StreamingEndpoint, Endpoint
-from apiron.client import ServiceCaller
 
-__all__=['BaseService', 'BaseCaller']
+__all__=['BaseService']
 
 class BaseService(Service):
     def __init__(self, domain, *args, **kwargs):
         self.domain = domain if domain.endswith('/') else '/'.join((domain, ''))
         super(*args, **kwargs)
-
-    # find = JsonEndpoint(path='tools/find/', default_method=['POST'])
-
-class BaseCaller:
-    def __init__(self):
-        raise NotImplemented
-
-    # def find(self, query, **kwargs):
-        # return ServiceCaller(self.service, self.service.find, data=query, **kwargs)

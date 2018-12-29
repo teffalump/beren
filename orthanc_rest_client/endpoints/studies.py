@@ -11,11 +11,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-from .common import BaseService, BaseCaller
+from .common import BaseService
 from apiron.endpoint import JsonEndpoint, StreamingEndpoint, Endpoint
-from apiron.client import ServiceCaller
 
-__all__=['OrthancStudies']
+__all__=['OrthancStudiesService']
 
 class OrthancStudiesService(BaseService):
 
@@ -35,56 +34,3 @@ class OrthancStudiesService(BaseService):
     series = JsonEndpoint(path='studies/{id}/series/')
     shared_tags = JsonEndpoint(path='studies/{id}/shared-tags/')
     statistics = JsonEndpoint(path='studies/{id}/statistics/')
-
-
-class OrthancStudies(BaseCaller):
-    def __init__(self, *args, **kwargs):
-        self.service = OrthancStudiesService(*args, **kwargs)
-
-    def get_studies(self, **kwargs):
-        return ServiceCaller.call(self.service, self.service.studies, **kwargs)
-
-    def get_study(self, id_, **kwargs):
-        return ServiceCaller.call(self.service, self.service.sudy, path_kwargs={'id': id_}, **kwargs)
-
-    def delete_study(self, id_, **kwargs):
-        return ServiceCaller.call(self.service, self.service.del_study, path_kwargs={'id': id_}, **kwargs)
-
-    def anonymize_study(self, id_, **kwargs):
-        return ServiceCaller.call(self.service, self.service.anonymize, path_kwargs={'id': id_}, **kwargs)
-
-    def get_study_archive(self, id_, **kwargs):
-        return ServiceCaller.call(self.service, self.service.archive, path_kwargs={'id': id_}, **kwargs)
-
-    def get_study_instances(self, id_, **kwargs):
-        return ServiceCaller.call(self.service, self.service.instances, path_kwargs={'id': id_}, **kwargs)
-
-    def get_study_instances_tags(self, id_, **kwargs):
-        return ServiceCaller.call(self.service, self.service.instances_tags, path_kwargs={'id': id_}, **kwargs)
-
-    def get_study_media(self, id_, **kwargs):
-        return ServiceCaller.call(self.service, self.service.media, path_kwargs={'id': id_}, **kwargs)
-
-    def modify_study(self, id_, **kwargs):
-        return ServiceCaller.call(self.service, self.service.modify, path_kwargs={'id': id_}, **kwargs)
-
-    def get_study_module(self, id_, **kwargs):
-        return ServiceCaller.call(self.service, self.service.module, path_kwargs={'id': id_}, **kwargs)
-
-    def get_study_module_patient(self, id_, **kwargs):
-        return ServiceCaller.call(self.service, self.service.module_patient, path_kwargs={'id': id_}, **kwargs)
-
-    def get_study_patient(self, id_, **kwargs):
-        return ServiceCaller.call(self.service, self.service.patient, path_kwargs={'id': id_}, **kwargs)
-
-    def reconstruct_study(self, id_, **kwargs):
-        return ServiceCaller.call(self.service, self.service.reconstruct, path_kwargs={'id': id_}, **kwargs)
-
-    def get_study_series(self, id_, **kwargs):
-        return ServiceCaller.call(self.service, self.service.series, path_kwargs={'id': id_}, **kwargs)
-
-    def get_study_shared_tags(self, id_, **kwargs):
-        return ServiceCaller.call(self.service, self.service.shared_tags, path_kwargs={'id': id_}, **kwargs)
-
-    def get_study_statistics(self, id_, **kwargs):
-        return ServiceCaller.call(self.service, self.service.statistics, path_kwargs={'id': id_}, **kwargs)

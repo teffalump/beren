@@ -16,23 +16,23 @@ Import the pre-defined client and pass the server details
     orthanc = Orthanc('http://localhost:8042')
 
     # Patient endpoints
-    orthanc.patients.get_patients()
-    orthanc.patients.get_patient(id)
+    orthanc.get_patients()
+    orthanc.get_patient(id)
     ...and so on
 
     # Study endpoints
-    orthanc.studies.get_studies()
-    orthanc.studies.get_study(id)
+    orthanc.get_studies()
+    orthanc.get_study(id)
     ...and so on
 
     # Series endpoints
-    orthanc.series.get_studies()
-    orthanc.series.get_study()
+    orthanc.get_studies()
+    orthanc.get_study()
     ...and so on
 
     # Instances endpoints
-    orthanc.instances.get_instances()
-    orthanc.instances.get_instance(id)
+    orthanc.get_instances()
+    orthanc.get_instance(id)
     ...and so on
 
     # Get changes
