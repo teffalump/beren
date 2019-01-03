@@ -56,7 +56,7 @@ class Orthanc:
 
     def anonymize_instance(self, id_, data={}, **kwargs):
         j = Orthanc.convert_to_json(data)
-        return ServiceCaller.call(self.instances, self.instances.del_instance, path_kwargs={'id': id_}, data=j, **kwargs)
+        return ServiceCaller.call(self.instances, self.instances.anonymize_instance, path_kwargs={'id': id_}, data=j, **kwargs)
 
     def get_instance_patient(self, id_, **kwargs):
         return ServiceCaller.call(self.instances, self.instances.instance_patient, path_kwargs={'id': id_}, **kwargs)
@@ -82,13 +82,13 @@ class Orthanc:
         return ServiceCaller.call(self.patients, self.patients.anonymize, path_kwargs={'id': id_}, data=j, **kwargs)
 
     def archive_patient(self, id_, **kwargs):
-        return ServiceCaller.call(self.patients, self.service.archive, path_kwargs={'id': id_}, **kwargs)
+        return ServiceCaller.call(self.patients, self.patients.archive, path_kwargs={'id': id_}, **kwargs)
 
     def get_patient_instances(self, id_, **kwargs):
-        return ServiceCaller.call(self.patients, self.service.instances, path_kwargs={'id': id_}, **kwargs)
+        return ServiceCaller.call(self.patients, self.patients.instances, path_kwargs={'id': id_}, **kwargs)
 
     def get_patient_instance_tags(self, id_, **kwargs):
-        return ServiceCaller.call(self.patients, self.service.instances_tags, path_kwargs={'id': id_}, **kwargs)
+        return ServiceCaller.call(self.patients, self.patients.instances_tags, path_kwargs={'id': id_}, **kwargs)
 
     def modify_patient(self, id_, data, **kwargs):
         j = Orthanc.convert_to_json(data)
