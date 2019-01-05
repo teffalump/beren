@@ -27,10 +27,10 @@ Import the pre-defined client and pass the server details
 
     # Series endpoints
     orthanc.get_series()
-    orthanc.get_one_series()
+    orthanc.get_one_series(id)
     ...and so on
 
-    # Instances endpoints
+    # Instance endpoints
     orthanc.get_instances()
     orthanc.get_instance(id)
     ...and so on
