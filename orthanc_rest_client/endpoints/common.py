@@ -12,7 +12,6 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 from apiron.service.base import Service
-from apiron.endpoint import JsonEndpoint, StreamingEndpoint, Endpoint
 
 __all__=['BaseService']
 
