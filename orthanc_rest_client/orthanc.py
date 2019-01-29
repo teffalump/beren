@@ -11,14 +11,14 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-from orthanc_rest_client.endpoints import (
-                                        OrthancPatientsService,
-                                        OrthancInstancesService,
-                                        OrthancSeriesService,
-                                        OrthancStudiesService,
-                                        OrthancQueriesService,
-                                        OrthancServerService,
-                                        )
+from .endpoints import (
+                    OrthancPatientsService,
+                    OrthancInstancesService,
+                    OrthancSeriesService,
+                    OrthancStudiesService,
+                    OrthancQueriesService,
+                    OrthancServerService,
+                    )
 from apiron.client import ServiceCaller
 from json import dumps
 
