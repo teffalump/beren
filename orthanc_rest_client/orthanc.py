@@ -217,7 +217,7 @@ class Orthanc:
         return ServiceCaller.call(self.studies, self.studies.studies, **kwargs)
 
     def get_study(self, id_, **kwargs):
-        return ServiceCaller.call(self.studies, self.studies.sudy, path_kwargs={'id': id_}, **kwargs)
+        return ServiceCaller.call(self.studies, self.studies.study, path_kwargs={'id': id_}, **kwargs)
 
     def delete_study(self, id_, **kwargs):
         return ServiceCaller.call(self.studies, self.studies.del_study, path_kwargs={'id': id_}, **kwargs)
