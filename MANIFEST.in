@@ -1,1 +1,2 @@
 include README.md
+recursive-include orthanc_rest_client *.py
