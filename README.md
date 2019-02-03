@@ -48,10 +48,13 @@ There are other preconfigured endpoints.
 
 ### Authenticated Endpoints
 
-Pass valid Request auth objects:
+Pass valid auth object:
 
     from requests.auth import HTTPBasicAuth
-    orthanc.reset(auth=HTTPBasicAuth('orthanc', 'orthanc'))
+    auth = HTTPBasicAuth('orthanc', 'orthanc')
+    orthanc = Orthanc('https://test.server.com', auth=auth)
+
+Then call functions normally (the auth object is passed automatically).
 
 For further help:
 - [apiron](https://github.com/ithaka/apiron)
