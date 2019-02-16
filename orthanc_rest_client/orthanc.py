@@ -21,19 +21,25 @@ from .endpoints import (
                     )
 from apiron.client import ServiceCaller
 from json import dumps
+from functools import partial
 
 __all__=['Orthanc']
 
 class Orthanc:
     def __init__(self, server, auth=None, *args, **kwargs):
-        self._server = server
+        self._target = server
         self._auth = auth
-        self.instances = OrthancInstancesService(server, *args, **kwargs)
-        self.patients = OrthancPatientsService(server, *args, **kwargs)
-        self.series = OrthancSeriesService(server, *args, **kwargs)
-        self.studies = OrthancStudiesService(server, *args, **kwargs)
-        self.queries = OrthancQueriesService(server, *args, **kwargs)
-        self.server = OrthancServerService(server, *args, **kwargs)
+        self._instances = OrthancInstancesService(server, *args, **kwargs)
+        self._patients = OrthancPatientsService(server, *args, **kwargs)
+        self._series = OrthancSeriesService(server, *args, **kwargs)
+        self._studies = OrthancStudiesService(server, *args, **kwargs)
+        self._queries = OrthancQueriesService(server, *args, **kwargs)
+        self._server = OrthancServerService(server, *args, **kwargs)
+        self.instances = partial(ServiceCaller.call, self._instances, auth=self._auth)
+        self.patients = partial(ServiceCaller.call, self._patients, auth=self._auth)
+        self.series = partial(ServiceCaller.call, self._series, auth=self._auth)
+        self.queries = partial(ServiceCaller.call, self._queries, auth=self._auth)
+        self.server = partial(ServiceCaller.call, self._server, auth=self._auth)
 
     def __repr__(self):
         return '<Client for Orthanc REST API at {}>'.format(self._server)
@@ -44,225 +50,225 @@ class Orthanc:
 
     #### INSTANCES
     def get_instances(self, **kwargs):
-        return ServiceCaller.call(self.instances, self.instances.instances, auth=self._auth, **kwargs)
+        return self.instances(self._instances.instances, **kwargs)
 
     def add_instance(self, dicom, **kwargs):
-        return ServiceCaller.call(self.instances, self.instances.add_instance, data=dicom, auth=self._auth, **kwargs)
+        return self.instances(self._instances.add_instance, data=dicom, **kwargs)
 
     def get_instance(self, id_, **kwargs):
-        return ServiceCaller.call(self.instances, self.instances.instance, path_kwargs={'id': id_}, auth=self._auth, **kwargs)
+        return self.instances(self._instances.instance, path_kwargs={'id': id_}, **kwargs)
 
     def delete_instance(self, id_, **kwargs):
-        return ServiceCaller.call(self.instances, self.instances.del_instance, path_kwargs={'id': id_}, auth=self._auth, **kwargs)
+        return self.instances(self._instances.del_instance, path_kwargs={'id': id_}, **kwargs)
 
     def anonymize_instance(self, id_, data={}, **kwargs):
         j = self.convert_to_json(data)
-        return ServiceCaller.call(self.instances, self.instances.anonymize_instance, path_kwargs={'id': id_}, data=j, auth=self._auth, **kwargs)
+        return self.instances(self._instances.anonymize_instance, path_kwargs={'id': id_}, data=j, **kwargs)
 
     def get_instance_patient(self, id_, **kwargs):
-        return ServiceCaller.call(self.instances, self.instances.instance_patient, path_kwargs={'id': id_}, auth=self._auth, **kwargs)
+        return self.instances(self._instances.instance_patient, path_kwargs={'id': id_}, **kwargs)
 
     def get_instance_statistics(self, id_, **kwargs):
-        return ServiceCaller.call(self.instances, self.instances.statistics, path_kwargs={'id': id_}, auth=self._auth, **kwargs)
+        return self.instances(self._instances.statistics, path_kwargs={'id': id_}, **kwargs)
 
     def get_instance_study(self, id_, **kwargs):
-        return ServiceCaller.call(self.instances, self.instances.study, path_kwargs={'id': id_}, auth=self._auth, **kwargs)
+        return self.instances(self._instances.study, path_kwargs={'id': id_}, **kwargs)
 
     #### PATIENTS
     def get_patients(self, **kwargs):
-        return ServiceCaller.call(self.patients, self.patients.patients, auth=self._auth, **kwargs)
+        return self.patients(self._patients.patients, **kwargs)
 
     def get_patient(self, id_, **kwargs):
-        return ServiceCaller.call(self.patients, self.patients.patient, path_kwargs={'id': id_}, auth=self._auth, **kwargs)
+        return self.patients(self._patients.patient, path_kwargs={'id': id_}, **kwargs)
 
     def delete_patient(self, id_, **kwargs):
-        return ServiceCaller.call(self.patients, self.patients.del_patient, path_kwargs={'id': id_}, auth=self._auth, **kwargs)
+        return self.patients(self._patients.del_patient, path_kwargs={'id': id_}, **kwargs)
 
     def anonymize_patient(self, id_, data={}, **kwargs):
         j = self.convert_to_json(data)
-        return ServiceCaller.call(self.patients, self.patients.anonymize, path_kwargs={'id': id_}, data=j, auth=self._auth, **kwargs)
+        return self.patients(self._patients.anonymize, path_kwargs={'id': id_}, data=j, **kwargs)
 
     def archive_patient(self, id_, **kwargs):
-        return ServiceCaller.call(self.patients, self.patients.archive, path_kwargs={'id': id_}, auth=self._auth, **kwargs)
+        return self.patients(self._patients.archive, path_kwargs={'id': id_}, **kwargs)
 
     def get_patient_instances(self, id_, **kwargs):
-        return ServiceCaller.call(self.patients, self.patients.instances, path_kwargs={'id': id_}, auth=self._auth, **kwargs)
+        return self.patients(self._patients.instances, path_kwargs={'id': id_}, **kwargs)
 
     def get_patient_instance_tags(self, id_, **kwargs):
-        return ServiceCaller.call(self.patients, self.patients.instances_tags, path_kwargs={'id': id_}, auth=self._auth, **kwargs)
+        return self.patients(self._patients.instances_tags, path_kwargs={'id': id_}, **kwargs)
 
     def modify_patient(self, id_, data, **kwargs):
         j = self.convert_to_json(data)
-        return ServiceCaller.call(self.patients, self.patients.modify, path_kwargs={'id': id_}, data=j, auth=self._auth, **kwargs)
+        return self.patients(self._patients.modify, path_kwargs={'id': id_}, data=j, **kwargs)
 
     def get_patient_module(self, id_, **kwargs):
-        return ServiceCaller.call(self.patients, self.patients.module, path_kwargs={'id': id_}, auth=self._auth, **kwargs)
+        return self.patients(self._patients.module, path_kwargs={'id': id_}, **kwargs)
 
     def get_patient_media(self, id_, **kwargs):
-        return ServiceCaller.call(self.patients, self.patients.media, path_kwargs={'id': id_}, auth=self._auth, **kwargs)
+        return self.patients(self._patients.media, path_kwargs={'id': id_}, **kwargs)
 
     def get_patient_protected(self, id_, **kwargs):
-        return ServiceCaller.call(self.patients, self.patients.protected, path_kwargs={'id': id_}, auth=self._auth, **kwargs)
+        return self.patients(self._patients.protected, path_kwargs={'id': id_}, **kwargs)
 
     def put_patient_protected(self, id_, data={}, **kwargs):
-        return ServiceCaller.call(self.patients, self.patients.put_protected, path_kwargs={'id': id_}, data=data, auth=self._auth, **kwargs)
+        return self.patients(self._patients.put_protected, path_kwargs={'id': id_}, data=data, **kwargs)
 
     def reconstruct_patient(self, id_, data={}, **kwargs):
-        return ServiceCaller.call(self.patients, self.patients.protected, path_kwargs={'id': id_}, data=data, auth=self._auth, **kwargs)
+        return self.patients(self._patients.protected, path_kwargs={'id': id_}, data=data, **kwargs)
 
     def get_patient_series(self, id_, **kwargs):
-        return ServiceCaller.call(self.patients, self.patients.series, path_kwargs={'id': id_}, auth=self._auth, **kwargs)
+        return self.patients(self._patients.series, path_kwargs={'id': id_}, **kwargs)
 
     def get_patient_shared_tags(self, id_, **kwargs):
-        return ServiceCaller.call(self.patients, self.patients.shared_tags, path_kwargs={'id': id_}, auth=self._auth, **kwargs)
+        return self.patients(self._patients.shared_tags, path_kwargs={'id': id_}, **kwargs)
 
     def get_patient_statistics(self, id_, **kwargs):
-        return ServiceCaller.call(self.patients, self.patients.statistics, path_kwargs={'id': id_}, auth=self._auth, **kwargs)
+        return self.patients(self._patients.statistics, path_kwargs={'id': id_}, **kwargs)
 
     def get_patient_studies(self, id_, **kwargs):
-        return ServiceCaller.call(self.patients, self.patients.studies, path_kwargs={'id': id_}, auth=self._auth, **kwargs)
+        return self.patients(self._patients.studies, path_kwargs={'id': id_}, **kwargs)
 
     def get_patient_id_from_uuid(self, id_, **kwargs):
-        return ServiceCaller.call(self.patients, self.patients.patient, path_kwargs={'id': id_}, auth=self._auth, **kwargs).get('MainDicomTags').get('PatientID')
+        return self.patients(self._patients.patient, path_kwargs={'id': id_}, **kwargs).get('MainDicomTags').get('PatientID')
 
     def get_patient_studies_from_id(self, id_, **kwargs):
         try:
-            return [self.get_patient_studies(patient) for patient in self.find({'Level': 'Patient', 'Limit': 1, 'Query': {'PatientID': id_}}, auth=self._auth, **kwargs)][0]
+            return [self.get_patient_studies(patient) for patient in self.find({'Level': 'Patient', 'Limit': 1, 'Query': {'PatientID': id_}}, **kwargs)][0]
         except:
             return []
 
     #### QUERIES
     def get_queries(self, **kwargs):
-        return ServiceCaller.call(self.queries, self.queries.queries, auth=self._auth, **kwargs)
+        return self.queries(self._queries.queries, **kwargs)
 
     def get_query(self, id_, **kwargs):
-        return ServiceCaller.call(self.queries, self.queries.query, path_kwargs={'id': id_}, auth=self._auth, **kwargs)
+        return self.queries(self._queries.query, path_kwargs={'id': id_}, **kwargs)
 
     def delete_query(self, id_, **kwargs):
-        return ServiceCaller.call(self.queries, self.queries.del_query, path_kwargs={'id': id_}, auth=self._auth, **kwargs)
+        return self.queries(self._queries.del_query, path_kwargs={'id': id_}, **kwargs)
 
     def get_query_answers(self, id_, **kwargs):
-        return ServiceCaller.call(self.queries, self.queries.query, path_kwargs={'id': id_}, auth=self._auth, **kwargs)
+        return self.queries(self._queries.query, path_kwargs={'id': id_}, **kwargs)
 
     def get_query_answers_content(self, id_, index, **kwargs):
-        return ServiceCaller.call(self.queries, self.queries.answers_content, path_kwargs={'id': id_, 'index': index}, auth=self._auth, **kwargs)
+        return self.queries(self._queries.answers_content, path_kwargs={'id': id_, 'index': index}, **kwargs)
 
     def post_query_answers_retrieve(self, id_, index, **kwargs):
-        return ServiceCaller.call(self.queries, self.queries.answers_retrieve, path_kwargs={'id': id_, 'index': index}, auth=self._auth, **kwargs)
+        return self.queries(self._queries.answers_retrieve, path_kwargs={'id': id_, 'index': index}, **kwargs)
 
     def get_query_level(self, id_, **kwargs):
-        return ServiceCaller.call(self.queries, self.queries.level, path_kwargs={'id': id_}, auth=self._auth, **kwargs)
+        return self.queries(self._queries.level, path_kwargs={'id': id_}, **kwargs)
 
     def get_query_modality(self, id_, **kwargs):
-        return ServiceCaller.call(self.queries, self.queries.modality, path_kwargs={'id': id_}, auth=self._auth, **kwargs)
+        return self.queries(self._queries.modality, path_kwargs={'id': id_}, **kwargs)
 
     def get_query_query(self, id_, **kwargs):
-        return ServiceCaller.call(self.queries, self.queries.query_query, path_kwargs={'id': id_}, auth=self._auth, **kwargs)
+        return self.queries(self._queries.query_query, path_kwargs={'id': id_}, **kwargs)
 
     def post_query_retrieve(self, id_, **kwargs):
-        return ServiceCaller.call(self.queries, self.queries.retrieve, path_kwargs={'id': id_}, auth=self._auth, **kwargs)
+        return self.queries(self._queries.retrieve, path_kwargs={'id': id_}, **kwargs)
 
     #### SERIES
     def get_series(self, **kwargs):
-        return ServiceCaller.call(self.series, self.series.series, auth=self._auth, **kwargs)
+        return self.series(self._series.series, **kwargs)
 
     def get_one_series(self, id_, **kwargs):
-        return ServiceCaller.call(self.series, self.series.part, path_kwargs={'id': id_}, auth=self._auth, **kwargs)
+        return self.series(self._series.part, path_kwargs={'id': id_}, **kwargs)
 
     def delete_series(self, id_, **kwargs):
-        return ServiceCaller.call(self.series, self.series.del_part, path_kwargs={'id': id_}, auth=self._auth, **kwargs)
+        return self.series(self._series.del_part, path_kwargs={'id': id_}, **kwargs)
 
     def anonymize_series(self, id_, data={}, **kwargs):
         j = self.convert_to_json(data)
-        return ServiceCaller.call(self.series, self.series.anonymize, path_kwargs={'id': id_}, data=j, auth=self._auth, **kwargs)
+        return self.series(self._series.anonymize, path_kwargs={'id': id_}, data=j, **kwargs)
 
     def get_series_archive(self, id_, **kwargs):
-        return ServiceCaller.call(self.series, self.series.archive, path_kwargs={'id': id_}, auth=self._auth, **kwargs)
+        return self.series(self._series.archive, path_kwargs={'id': id_}, **kwargs)
 
     def get_series_instances(self, id_, **kwargs):
-        return ServiceCaller.call(self.series, self.series.instances, path_kwargs={'id': id_}, auth=self._auth, **kwargs)
+        return self.series(self._series.instances, path_kwargs={'id': id_}, **kwargs)
 
     def get_series_instances_tags(self, id_, **kwargs):
-        return ServiceCaller.call(self.series, self.series.instances_tags, path_kwargs={'id': id_}, auth=self._auth, **kwargs)
+        return self.series(self._series.instances_tags, path_kwargs={'id': id_}, **kwargs)
 
     def get_series_media(self, id_, **kwargs):
-        return ServiceCaller.call(self.series, self.series.media, path_kwargs={'id': id_}, auth=self._auth, **kwargs)
+        return self.series(self._series.media, path_kwargs={'id': id_}, **kwargs)
 
     def modify_series(self, id_, data, **kwargs):
         j = self.convert_to_json(data)
-        return ServiceCaller.call(self.series, self.series.modify, path_kwargs={'id': id_}, data=j, auth=self._auth, **kwargs)
+        return self.series(self._series.modify, path_kwargs={'id': id_}, data=j, **kwargs)
 
     def get_series_module(self, id_, **kwargs):
-        return ServiceCaller.call(self.series, self.series.module, path_kwargs={'id': id_}, auth=self._auth, **kwargs)
+        return self.series(self._series.module, path_kwargs={'id': id_}, **kwargs)
 
     def get_series_ordered_slices(self, id_, **kwargs):
-        return ServiceCaller.call(self.series, self.series.ordered_slices, path_kwargs={'id': id_}, auth=self._auth, **kwargs)
+        return self.series(self._series.ordered_slices, path_kwargs={'id': id_}, **kwargs)
 
     def get_series_patient(self, id_, **kwargs):
-        return ServiceCaller.call(self.series, self.series.patient, path_kwargs={'id': id_}, auth=self._auth, **kwargs)
+        return self.series(self._series.patient, path_kwargs={'id': id_}, **kwargs)
 
     def reconstruct_series(self, id_, **kwargs):
-        return ServiceCaller.call(self.series, self.series.reconstruct, path_kwargs={'id': id_}, auth=self._auth, **kwargs)
+        return self.series(self._series.reconstruct, path_kwargs={'id': id_}, **kwargs)
 
     def get_series_shared_tags(self, id_, **kwargs):
-        return ServiceCaller.call(self.series, self.series.shared_tags, path_kwargs={'id': id_}, auth=self._auth, **kwargs)
+        return self.series(self._series.shared_tags, path_kwargs={'id': id_}, **kwargs)
 
     def get_series_statistics(self, id_, **kwargs):
-        return ServiceCaller.call(self.series, self.series.statistics, path_kwargs={'id': id_}, auth=self._auth, **kwargs)
+        return self.series(self._series.statistics, path_kwargs={'id': id_}, **kwargs)
 
     def get_series_study(self, id_, **kwargs):
-        return ServiceCaller.call(self.series, self.series.study, path_kwargs={'id': id_}, auth=self._auth, **kwargs)
+        return self.series(self._series.study, path_kwargs={'id': id_}, **kwargs)
 
     #### STUDIES
     def get_studies(self, **kwargs):
-        return ServiceCaller.call(self.studies, self.studies.studies, auth=self._auth, **kwargs)
+        return self.studies(self._studies.studies, **kwargs)
 
     def get_study(self, id_, **kwargs):
-        return ServiceCaller.call(self.studies, self.studies.study, path_kwargs={'id': id_}, auth=self._auth, **kwargs)
+        return self.studies(self._studies.study, path_kwargs={'id': id_}, **kwargs)
 
     def delete_study(self, id_, **kwargs):
-        return ServiceCaller.call(self.studies, self.studies.del_study, path_kwargs={'id': id_}, auth=self._auth, **kwargs)
+        return self.studies(self._studies.del_study, path_kwargs={'id': id_}, **kwargs)
 
     def anonymize_study(self, id_, data={}, **kwargs):
         j = self.convert_to_json(data)
-        return ServiceCaller.call(self.studies, self.studies.anonymize, path_kwargs={'id': id_}, data=j, auth=self._auth, **kwargs)
+        return self.studies(self._studies.anonymize, path_kwargs={'id': id_}, data=j, **kwargs)
 
     def get_study_archive(self, id_, **kwargs):
-        return ServiceCaller.call(self.studies, self.studies.archive, path_kwargs={'id': id_}, auth=self._auth, **kwargs)
+        return self.studies(self._studies.archive, path_kwargs={'id': id_}, **kwargs)
 
     def get_study_instances(self, id_, **kwargs):
-        return ServiceCaller.call(self.studies, self.studies.instances, path_kwargs={'id': id_}, auth=self._auth, **kwargs)
+        return self.studies(self._studies.instances, path_kwargs={'id': id_}, **kwargs)
 
     def get_study_instances_tags(self, id_, **kwargs):
-        return ServiceCaller.call(self.studies, self.studies.instances_tags, path_kwargs={'id': id_}, auth=self._auth, **kwargs)
+        return self.studies(self._studies.instances_tags, path_kwargs={'id': id_}, **kwargs)
 
     def get_study_media(self, id_, **kwargs):
-        return ServiceCaller.call(self.studies, self.studies.media, path_kwargs={'id': id_}, auth=self._auth, **kwargs)
+        return self.studies(self._studies.media, path_kwargs={'id': id_}, **kwargs)
 
     def modify_study(self, id_, data, **kwargs):
         j = self.convert_to_json(data)
-        return ServiceCaller.call(self.studies, self.studies.modify, path_kwargs={'id': id_}, data=j, auth=self._auth, **kwargs)
+        return self.studies(self._studies.modify, path_kwargs={'id': id_}, data=j, **kwargs)
 
     def get_study_module(self, id_, **kwargs):
-        return ServiceCaller.call(self.studies, self.studies.module, path_kwargs={'id': id_}, auth=self._auth, **kwargs)
+        return self.studies(self._studies.module, path_kwargs={'id': id_}, **kwargs)
 
     def get_study_module_patient(self, id_, **kwargs):
-        return ServiceCaller.call(self.studies, self.studies.module_patient, path_kwargs={'id': id_}, auth=self._auth, **kwargs)
+        return self.studies(self._studies.module_patient, path_kwargs={'id': id_}, **kwargs)
 
     def get_study_patient(self, id_, **kwargs):
-        return ServiceCaller.call(self.studies, self.studies.patient, path_kwargs={'id': id_}, auth=self._auth, **kwargs)
+        return self.studies(self._studies.patient, path_kwargs={'id': id_}, **kwargs)
 
     def reconstruct_study(self, id_, **kwargs):
-        return ServiceCaller.call(self.studies, self.studies.reconstruct, path_kwargs={'id': id_}, auth=self._auth, **kwargs)
+        return self.studies(self._studies.reconstruct, path_kwargs={'id': id_}, **kwargs)
 
     def get_study_series(self, id_, **kwargs):
-        return ServiceCaller.call(self.studies, self.studies.series, path_kwargs={'id': id_}, auth=self._auth, **kwargs)
+        return self.studies(self._studies.series, path_kwargs={'id': id_}, **kwargs)
 
     def get_study_shared_tags(self, id_, **kwargs):
-        return ServiceCaller.call(self.studies, self.studies.shared_tags, path_kwargs={'id': id_}, auth=self._auth, **kwargs)
+        return self.studies(self._studies.shared_tags, path_kwargs={'id': id_}, **kwargs)
 
     def get_study_statistics(self, id_, **kwargs):
-        return ServiceCaller.call(self.studies, self.studies.statistics, path_kwargs={'id': id_}, auth=self._auth, **kwargs)
+        return self.studies(self._studies.statistics, path_kwargs={'id': id_}, **kwargs)
 
     #### SERVER-RELATED
     def get_changes(self, since=0, limit=100, last=False, **kwargs):
@@ -270,115 +276,115 @@ class Orthanc:
             kwargs['params'] = {'last': ''} #overrule
         else:
             kwargs['params'] = {'since': since, 'limit': limit} #overrule
-        return ServiceCaller.call(self.server, self.server.changes, auth=self._auth, **kwargs)
+        return self.server(self._server.changes, **kwargs)
 
     def clear_changes(self, **kwargs):
-        return ServiceCaller.call(self.server, self.server.del_changes, auth=self._auth, **kwargs)
+        return self.server(self._server.del_changes, **kwargs)
 
     def get_exports(self, **kwargs):
-        return ServiceCaller.call(self.server, self.server.exports, auth=self._auth, **kwargs)
+        return self.server(self._server.exports, **kwargs)
 
     def clear_exports(self, **kwargs):
-        return ServiceCaller.call(self.server, self.server.del_exports, auth=self._auth, **kwargs)
+        return self.server(self._server.del_exports, **kwargs)
 
     def get_jobs(self, **kwargs):
-        return ServiceCaller.call(self.server, self.server.jobs, auth=self._auth, **kwargs)
+        return self.server(self._server.jobs, **kwargs)
 
     def get_job(self, id_, **kwargs):
-        return ServiceCaller.call(self.server, self.server.job, path_kwargs={'id': id_}, auth=self._auth, **kwargs)
+        return self.server(self._server.job, path_kwargs={'id': id_}, **kwargs)
 
     def cancel_job(self, id_, **kwargs):
-        return ServiceCaller.call(self.server, self.server.cancel_job, path_kwargs={'id': id_}, data={}, auth=self._auth, **kwargs)
+        return self.server(self._server.cancel_job, path_kwargs={'id': id_}, data={}, **kwargs)
 
     def pause_job(self, id_,  **kwargs):
-        return ServiceCaller.call(self.server, self.server.pause_job, path_kwargs={'id': id_}, data={}, auth=self._auth, **kwargs)
+        return self.server(self._server.pause_job, path_kwargs={'id': id_}, data={}, **kwargs)
 
     def resubmit_job(self, id_, **kwargs):
-        return ServiceCaller.call(self.server, self.server.resubmit_job, path_kwargs={'id': id_}, data={}, auth=self._auth, **kwargs)
+        return self.server(self._server.resubmit_job, path_kwargs={'id': id_}, data={}, **kwargs)
 
     def resume_job(self, id_, **kwargs):
-        return ServiceCaller.call(self.server, self.server.resume_job, path_kwargs={'id': id_}, data={}, auth=self._auth, **kwargs)
+        return self.server(self._server.resume_job, path_kwargs={'id': id_}, data={}, **kwargs)
 
     def get_peers(self, **kwargs):
-        return ServiceCaller.call(self.server, self.server.peers, auth=self._auth, **kwargs)
+        return self.server(self._server.peers, **kwargs)
 
     def get_peer(self, peer, **kwargs):
-        return ServiceCaller.call(self.server, self.server.peer, path_kwargs={'peer': peer}, auth=self._auth, **kwargs)
+        return self.server(self._server.peer, path_kwargs={'peer': peer}, **kwargs)
 
     def delete_peer(self, peer, **kwargs):
-        return ServiceCaller.call(self.server, self.server.del_peer, path_kwargs={'peer': peer}, auth=self._auth, **kwargs)
+        return self.server(self._server.del_peer, path_kwargs={'peer': peer}, **kwargs)
 
     def put_peer(self, peer, **kwargs):
-        return ServiceCaller.call(self.server, self.server.put_peer, path_kwargs={'peer': peer}, auth=self._auth, **kwargs)
+        return self.server(self._server.put_peer, path_kwargs={'peer': peer}, **kwargs)
 
     def store_peer(self, peer, **kwargs):
-        return ServiceCaller.call(self.server, self.server.store_peer, path_kwargs={'peer': peer}, auth=self._auth, **kwargs)
+        return self.server(self._server.store_peer, path_kwargs={'peer': peer}, **kwargs)
 
     def get_plugins(self, **kwargs):
-        return ServiceCaller.call(self.server, self.server.plugins, auth=self._auth, **kwargs)
+        return self.server(self._server.plugins, **kwargs)
 
     def get_plugin(self, id_, **kwargs):
-        return ServiceCaller.call(self.server, self.server.plugin, path_kwargs={'id': id_}, auth=self._auth, **kwargs)
+        return self.server(self._server.plugin, path_kwargs={'id': id_}, **kwargs)
 
     def get_plugins_js(self, **kwargs):
-        return ServiceCaller.call(self.server, self.server.plugins_js, auth=self._auth, **kwargs)
+        return self.server(self._server.plugins_js, **kwargs)
 
     def get_statistics(self, **kwargs):
-        return ServiceCaller.call(self.server, self.server.statistics, auth=self._auth, **kwargs)
+        return self.server(self._server.statistics, **kwargs)
 
     def get_system(self, **kwargs):
-        return ServiceCaller.call(self.server, self.server.system, auth=self._auth, **kwargs)
+        return self.server(self._server.system, **kwargs)
 
     def create_archive(self, **kwargs):
-        return ServiceCaller.call(self.server, self.server.tools_create_archive, auth=self._auth, **kwargs)
+        return self.server(self._server.tools_create_archive, **kwargs)
 
     def create_dicom(self, **kwargs):
-        return ServiceCaller.call(self.server, self.server.tools_create_dicom, auth=self._auth, **kwargs)
+        return self.server(self._server.tools_create_dicom, **kwargs)
 
     def create_media(self, **kwargs):
-        return ServiceCaller.call(self.server, self.server.tools_create_media, auth=self._auth, **kwargs)
+        return self.server(self._server.tools_create_media, **kwargs)
 
     def create_media_extended(self, **kwargs):
-        return ServiceCaller.call(self.server, self.server.tools_create_media_extended, auth=self._auth, **kwargs)
+        return self.server(self._server.tools_create_media_extended, **kwargs)
 
     def get_default_encoding(self, **kwargs):
-        return ServiceCaller.call(self.server, self.server.tools_default_encoding, auth=self._auth, **kwargs)
+        return self.server(self._server.tools_default_encoding, **kwargs)
 
     def change_default_encoding(self, **kwargs):
-        return ServiceCaller.call(self.server, self.server.tools_post_default_encoding, auth=self._auth, **kwargs)
+        return self.server(self._server.tools_post_default_encoding, **kwargs)
 
     def get_dicom_conformance(self, **kwargs):
-        return ServiceCaller.call(self.server, self.server.tools_dicom_conformance, auth=self._auth, **kwargs)
+        return self.server(self._server.tools_dicom_conformance, **kwargs)
 
     def execute_script(self, script, **kwargs):
         j = self.convert_to_json(script)
-        return ServiceCaller.call(self.server, self.server.tools_execute_script, data=j, auth=self._auth, **kwargs)
+        return self.server(self._server.tools_execute_script, data=j, **kwargs)
 
     def find(self, query, **kwargs):
         j = self.convert_to_json(query)
-        return ServiceCaller.call(self.server, self.server.tools_find, data=j, auth=self._auth, **kwargs)
+        return self.server(self._server.tools_find, data=j, **kwargs)
 
     def generate_uid(self, level, **kwargs):
         '''
         Level must be 'patient', 'instance', 'series', or 'study'
         '''
         j = self.convert_to_json({'level': level})
-        return ServiceCaller.call(self.server, self.server.tools_generate_uid, data=j, auth=self._auth, **kwargs)
+        return self.server(self._server.tools_generate_uid, data=j, **kwargs)
 
     def invalidate_tags(self, **kwargs):
-        return ServiceCaller.call(self.server, self.server.tools_invalidate_tags, auth=self._auth, **kwargs)
+        return self.server(self._server.tools_invalidate_tags, **kwargs)
 
     def lookup(self, lookup, **kwargs):
-        return ServiceCaller.call(self.server, self.server.tools_lookup, data=lookup, auth=self._auth, **kwargs)
+        return self.server(self._server.tools_lookup, data=lookup, **kwargs)
 
     def get_now(self, **kwargs):
-        return ServiceCaller.call(self.server, self.server.tools_now, auth=self._auth, **kwargs)
+        return self.server(self._server.tools_now, **kwargs)
 
     def get_now_local(self, **kwargs):
-        return ServiceCaller.call(self.server, self.server.tools_now_local, auth=self._auth, **kwargs)
+        return self.server(self._server.tools_now_local, **kwargs)
 
     def reset(self, **kwargs):
-        return ServiceCaller.call(self.server, self.server.tools_reset, data={}, auth=self._auth, **kwargs)
+        return self.server(self._server.tools_reset, data={}, **kwargs)
 
     def shutdown(self, **kwargs):
-        return ServiceCaller.call(self.server, self.server.tools_shutdown, data={}, auth=self._auth, **kwargs)
+        return self.server(self._server.tools_shutdown, data={}, **kwargs)
