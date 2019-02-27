@@ -19,7 +19,7 @@ __all__=['OrthancModalitiesService']
 class OrthancModalitiesService(BaseService):
 
     modalities = JsonEndpoint('modalities/')
-    get_modality = JsonEndpoint('modalities/{dicom}/', default_method='GET')
+    modality = JsonEndpoint('modalities/{dicom}/')
     del_modality = JsonEndpoint('modalities/{dicom}/', default_method='DELETE')
     put_modality = JsonEndpoint('modalities/{dicom}/', default_method='PUT')
     echo = JsonEndpoint('modalities/{dicom}/echo/', default_method='POST')

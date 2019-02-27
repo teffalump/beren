@@ -350,6 +350,35 @@ class Orthanc:
     def get_study_statistics(self, id_, **kwargs):
         return self.studies(self._studies.statistics, path_kwargs={'id': id_}, **kwargs)
 
+    #### MODALITIES ###
+    def get_modalities(self, **kwargs):
+        return self.modalities(self._modalities.modalities, path_kwargs={'id': id_}, **kwargs)
+
+    def get_modality(self, dicom, **kwargs):
+        return self.modalities(self._modalities.modality, path_kwargs={'dicom': dicom}, **kwargs)
+
+    def delete_modality(self, dicom, **kwargs):
+        return self.modalities(self._modalities.del_modality, path_kwargs={'dicom': dicom}, **kwargs)
+
+    def update_modality(self, dicom, data, **kwargs):
+        j = self.dumps(data)
+        return self.modalities(self._modalities.put_modality, path_kwargs={'dicom': dicom}, data=j, **kwargs)
+
+    def echo_modality(self, dicom, **kwargs):
+        return self.modalities(self._modalities.echo, path_kwargs={'dicom': dicom}, data={}, **kwargs)
+
+    def move_modality(self, dicom, data, **kwargs):
+        j = self.dumps(data)
+        return self.modalities(self._modalities.move, path_kwargs={'dicom': dicom}, data=j, **kwargs)
+
+    def query_modality(self, dicom, data, **kwargs):
+        j = self.dumps(data)
+        return self.modalities(self._modalities.query, path_kwargs={'dicom': dicom}, data=j, **kwargs)
+
+    def store_modality(self, dicom, data, **kwargs):
+        j = self.dumps(data)
+        return self.modalities(self._modalities.store, path_kwargs={'dicom': dicom}, data=j, **kwargs)
+
     #### SERVER-RELATED
     def get_changes(self, since=0, limit=100, last=False, **kwargs):
         if last:
