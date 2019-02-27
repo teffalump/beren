@@ -64,16 +64,92 @@ class Orthanc:
 
     def anonymize_instance(self, id_, data={}, **kwargs):
         j = self.convert_to_json(data)
-        return self.instances(self._instances.anonymize_instance, path_kwargs={'id': id_}, data=j, **kwargs)
+        return self.instances(self._instances.anonymize, path_kwargs={'id': id_}, data=j, **kwargs)
+
+    def get_instance_content(self, id_, **kwargs):
+        return self.instances(self._instances.content, path_kwargs={'id': id_}, **kwargs)
+
+    def get_instance_content_raw_tag(self, id_, **kwargs):
+        return self.instances(self._instances.content_raw_tag, path_kwargs={'id': id_}, **kwargs)
+
+    def export_instance(self, id_, **kwargs):
+        return self.instances(self._instances.export, path_kwargs={'id': id_}, data={}, **kwargs)
+
+    def get_instance_file(self, id_, **kwargs):
+        return self.instances(self._instances.file_, path_kwargs={'id': id_}, **kwargs)
+
+    def get_instance_frames(self, id_, **kwargs):
+        return self.instances(self._instances.frames, path_kwargs={'id': id_}, **kwargs)
+
+    def get_instance_frame_int16(self, id_, frame, **kwargs):
+        return self.instances(self._instances.frame_int16, path_kwargs={'id': id_, 'number': frame}, **kwargs)
+
+    def get_instance_frame_uint16(self, id_, frame, **kwargs):
+        return self.instances(self._instances.frame_uint16, path_kwargs={'id': id_, 'number': frame}, **kwargs)
+
+    def get_instance_frame_uint8(self, id_, frame, **kwargs):
+        return self.instances(self._instances.frame_uint8, path_kwargs={'id': id_, 'number': frame}, **kwargs)
+
+    def get_instance_frame_matlab(self, id_, frame, **kwargs):
+        return self.instances(self._instances.frame_matlab, path_kwargs={'id': id_, 'number': frame}, **kwargs)
+
+    def get_instance_frame_preview(self, id_, frame, **kwargs):
+        return self.instances(self._instances.frame_preview, path_kwargs={'id': id_, 'number': frame}, **kwargs)
+
+    def get_instance_frame_raw(self, id_, frame, **kwargs):
+        return self.instances(self._instances.frame_raw, path_kwargs={'id': id_, 'number': frame}, **kwargs)
+
+    def get_instance_frame_raw_gz(self, id_, frame, **kwargs):
+        return self.instances(self._instances.frame_raw_gz, path_kwargs={'id': id_, 'number': frame}, **kwargs)
+
+
+    def get_instance_header(self, id_, **kwargs):
+        return self.instances(self._instances.header, path_kwargs={'id': id_}, **kwargs)
+
+    def get_instance_int16(self, id_, **kwargs):
+        return self.instances(self._instances.image_int16, path_kwargs={'id': id_}, **kwargs)
+
+    def get_instance_uint16(self, id_, **kwargs):
+        return self.instances(self._instances.image_uint16, path_kwargs={'id': id_}, **kwargs)
+
+    def get_instance_uint8(self, id_, **kwargs):
+        return self.instances(self._instances.image_uint8, path_kwargs={'id': id_}, **kwargs)
+
+    def get_instance_matlab(self, id_, **kwargs):
+        return self.instances(self._instances.matlab, path_kwargs={'id': id_}, **kwargs)
+
+    def modify_instance(self, id_, data, **kwargs):
+        j = self.convert_to_json(data)
+        return self.instances(self._instances.modify, path_kwargs={'id': id_}, data=j, **kwargs)
+
+    def get_instance_module(self, id_, **kwargs):
+        return self.instances(self._instances.module, path_kwargs={'id': id_}, **kwargs)
 
     def get_instance_patient(self, id_, **kwargs):
-        return self.instances(self._instances.instance_patient, path_kwargs={'id': id_}, **kwargs)
+        return self.instances(self._instances.patient, path_kwargs={'id': id_}, **kwargs)
+
+    def get_instance_pdf(self, id_, **kwargs):
+        return self.instances(self._instances.pdf, path_kwargs={'id': id_}, **kwargs)
+
+    def get_instance_preview(self, id_, **kwargs):
+        return self.instances(self._instances.preview, path_kwargs={'id': id_}, **kwargs)
+
+    def reconstruct_instance(self, id_, **kwargs):
+        return self.instances(self._instances.reconstruct, path_kwargs={'id': id_}, data={}, **kwargs)
+    def get_instance_series(self, id_, **kwargs):
+        return self.instances(self._instances.series, path_kwargs={'id': id_}, **kwargs)
+
+    def get_instance_simplified_tags(self, id_, **kwargs):
+        return self.instances(self._instances.simplified_tags, path_kwargs={'id': id_}, **kwargs)
 
     def get_instance_statistics(self, id_, **kwargs):
         return self.instances(self._instances.statistics, path_kwargs={'id': id_}, **kwargs)
 
     def get_instance_study(self, id_, **kwargs):
         return self.instances(self._instances.study, path_kwargs={'id': id_}, **kwargs)
+
+    def get_instance_tags(self, id_, **kwargs):
+        return self.instances(self._instances.tags, path_kwargs={'id': id_}, **kwargs)
 
     #### PATIENTS
     def get_patients(self, **kwargs):
