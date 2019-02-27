@@ -12,12 +12,13 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 from .endpoints import (
-                    OrthancPatientsService,
                     OrthancInstancesService,
-                    OrthancSeriesService,
-                    OrthancStudiesService,
+                    OrthancModalitiesService,
+                    OrthancPatientsService,
                     OrthancQueriesService,
+                    OrthancSeriesService,
                     OrthancServerService,
+                    OrthancStudiesService,
                     )
 from apiron.client import ServiceCaller
 from json import dumps
@@ -30,17 +31,19 @@ class Orthanc:
         self._target = server
         self._auth = auth
         self._instances = OrthancInstancesService(server, *args, **kwargs)
+        self._modalities = OrthancModalitiesService(server, *args, **kwargs)
         self._patients = OrthancPatientsService(server, *args, **kwargs)
-        self._studies = OrthancStudiesService(server, *args, **kwargs)
-        self._series = OrthancSeriesService(server, *args, **kwargs)
         self._queries = OrthancQueriesService(server, *args, **kwargs)
+        self._series = OrthancSeriesService(server, *args, **kwargs)
         self._server = OrthancServerService(server, *args, **kwargs)
+        self._studies = OrthancStudiesService(server, *args, **kwargs)
         self.instances = partial(ServiceCaller.call, self._instances, auth=self._auth)
+        self.modalities = partial(ServiceCaller.call, self._modalities, auth=self._auth)
         self.patients = partial(ServiceCaller.call, self._patients, auth=self._auth)
-        self.studies = partial(ServiceCaller.call, self._studies, auth=self._auth)
-        self.series = partial(ServiceCaller.call, self._series, auth=self._auth)
         self.queries = partial(ServiceCaller.call, self._queries, auth=self._auth)
+        self.series = partial(ServiceCaller.call, self._series, auth=self._auth)
         self.server = partial(ServiceCaller.call, self._server, auth=self._auth)
+        self.studies = partial(ServiceCaller.call, self._studies, auth=self._auth)
 
     def __repr__(self):
         return '<Client for Orthanc REST API at {}>'.format(self._server)
