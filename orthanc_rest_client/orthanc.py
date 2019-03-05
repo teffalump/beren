@@ -46,7 +46,7 @@ class Orthanc:
         self.studies = partial(ServiceCaller.call, self._studies, auth=self._auth)
 
     def __repr__(self):
-        return '<Client for Orthanc REST API at {}>'.format(self._server)
+        return '<Client for Orthanc REST API at {}>'.format(self._target)
 
     @staticmethod
     def convert_to_json(data, **kwargs):
@@ -104,7 +104,6 @@ class Orthanc:
 
     def get_instance_frame_raw_gz(self, id_, frame, **kwargs):
         return self.instances(self._instances.frame_raw_gz, path_kwargs={'id': id_, 'number': frame}, **kwargs)
-
 
     def get_instance_header(self, id_, **kwargs):
         return self.instances(self._instances.header, path_kwargs={'id': id_}, **kwargs)
