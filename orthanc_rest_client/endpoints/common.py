@@ -17,5 +17,5 @@ __all__=['BaseService']
 
 class BaseService(Service):
     def __init__(self, domain, *args, **kwargs):
-        self.domain = domain if domain.endswith('/') else '/'.join((domain, ''))
+        self.domain = ''.join((domain.rstrip('/'), '/'))
         super(*args, **kwargs)
