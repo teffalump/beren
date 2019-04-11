@@ -11,20 +11,22 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-from .common import BaseService
-from apiron.endpoint import JsonEndpoint, StreamingEndpoint, Endpoint
+from apiron import JsonEndpoint, StreamingEndpoint, Endpoint, Service
 
-__all__=['OrthancQueriesService']
+__all__ = ["OrthancQueries"]
 
-class OrthancQueriesService(BaseService):
 
-    queries = JsonEndpoint(path='queries/')
-    query = JsonEndpoint(path='queries/{id}/')
-    del_query = JsonEndpoint(path='queries/{id}/', default_method='DELETE')
-    answers = JsonEndpoint(path='queries/{id}/answers/')
-    answers_content = JsonEndpoint(path='queries/{id}/answers/{index}/content/')
-    answers_retrieve = JsonEndpoint(path='queries/{id}/answers/{index}/retrieve/', default_method='POST')
-    level = JsonEndpoint(path='queries/{id}/level/')
-    modality = JsonEndpoint(path='queries/{id}/modality/')
-    query_query = JsonEndpoint(path='queries/{id}/query/')
-    retrieve = JsonEndpoint(path='queries/{id}/retrieve/', default_method='POST')
+class OrthancQueries(Service):
+
+    queries = JsonEndpoint(path="queries/")
+    query = JsonEndpoint(path="queries/{id}/")
+    del_query = JsonEndpoint(path="queries/{id}/", default_method="DELETE")
+    answers = JsonEndpoint(path="queries/{id}/answers/")
+    answers_content = JsonEndpoint(path="queries/{id}/answers/{index}/content/")
+    answers_retrieve = JsonEndpoint(
+        path="queries/{id}/answers/{index}/retrieve/", default_method="POST"
+    )
+    level = JsonEndpoint(path="queries/{id}/level/")
+    modality = JsonEndpoint(path="queries/{id}/modality/")
+    query_query = JsonEndpoint(path="queries/{id}/query/")
+    retrieve = JsonEndpoint(path="queries/{id}/retrieve/", default_method="POST")

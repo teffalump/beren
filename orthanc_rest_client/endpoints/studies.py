@@ -11,26 +11,26 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-from .common import BaseService
-from apiron.endpoint import JsonEndpoint, StreamingEndpoint, Endpoint
+from apiron import JsonEndpoint, StreamingEndpoint, Endpoint, Service
 
-__all__=['OrthancStudiesService']
+__all__ = ["OrthancStudies"]
 
-class OrthancStudiesService(BaseService):
 
-    studies = JsonEndpoint(path='studies/')
-    study = JsonEndpoint(path='studies/{id}/')
-    del_study = JsonEndpoint(path='studies/{id}/', default_method='DELETE')
-    anonymize = JsonEndpoint(path='studies/{id}/anonymize/', default_method='POST')
-    archive = StreamingEndpoint(path='studies/{id}/archive/')
-    instances = JsonEndpoint(path='studies/{id}/instances/')
-    instances_tags = JsonEndpoint(path='studies/{id}/instances-tags/')
-    media = StreamingEndpoint(path='studies/{id}/media/')
-    modify = JsonEndpoint(path='studies/{id}/modify/', default_method='POST')
-    module = JsonEndpoint(path='studies/{id}/module/')
-    module_patient = JsonEndpoint(path='studies/{id}/module_patient/')
-    patient = JsonEndpoint(path='studies/{id}/patient/')
-    reconstruct = JsonEndpoint(path='studies/{id}/reconstruct/', default_method='POST')
-    series = JsonEndpoint(path='studies/{id}/series/')
-    shared_tags = JsonEndpoint(path='studies/{id}/shared-tags/')
-    statistics = JsonEndpoint(path='studies/{id}/statistics/')
+class OrthancStudies(Service):
+
+    studies = JsonEndpoint(path="/studies/")
+    study = JsonEndpoint(path="/studies/{id}/")
+    del_study = JsonEndpoint(path="/studies/{id}/", default_method="DELETE")
+    anonymize = JsonEndpoint(path="/studies/{id}/anonymize/", default_method="POST")
+    archive = StreamingEndpoint(path="/studies/{id}/archive/")
+    instances = JsonEndpoint(path="/studies/{id}/instances/")
+    instances_tags = JsonEndpoint(path="/studies/{id}/instances-tags/")
+    media = StreamingEndpoint(path="/studies/{id}/media/")
+    modify = JsonEndpoint(path="/studies/{id}/modify/", default_method="POST")
+    module = JsonEndpoint(path="/studies/{id}/module/")
+    module_patient = JsonEndpoint(path="/studies/{id}/module_patient/")
+    patient = JsonEndpoint(path="/studies/{id}/patient/")
+    reconstruct = JsonEndpoint(path="/studies/{id}/reconstruct/", default_method="POST")
+    series = JsonEndpoint(path="/studies/{id}/series/")
+    shared_tags = JsonEndpoint(path="/studies/{id}/shared-tags/")
+    statistics = JsonEndpoint(path="/studies/{id}/statistics/")
