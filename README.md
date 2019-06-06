@@ -39,6 +39,9 @@ Import the pre-defined client and pass the server details
     orthanc.get_changes()
 
     # Find objects by query
+    query = {'Level': 'Patient',
+                'Query': {'PatientName': 'Jon*'},
+            }
     orthanc.find(query)
 
     # Get previous queries

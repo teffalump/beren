@@ -27,8 +27,7 @@ __all__ = ["Orthanc"]
 # Authentication wrapper
 def auth(function):
     def wrap(self, *args, **kwargs):
-        if not kwargs.get("auth"):
-            kwargs["auth"] = self._auth
+        kwargs["auth"] = kwargs.get("auth", self._auth)
         return function(self, *args, **kwargs)
 
     return wrap
@@ -45,13 +44,18 @@ class Orthanc:
         self.series = OrthancSeries
         self.server = OrthancServer
         self.studies = OrthancStudies
-        self.instances.domain = (
-            self.modalities.domain
-        ) = (
-            self.patients.domain
-        ) = (
-            self.queries.domain
-        ) = self.series.domain = self.server.domain = self.studies.domain = self._target
+
+        # Set target for each apiron service
+        for x in [
+            self.instances,
+            self.modalities,
+            self.patients,
+            self.queries,
+            self.series,
+            self.server,
+            self.studies,
+        ]:
+            setattr(x, "domain", self._target)
 
     def __repr__(self):
         return "<Orthanc REST client({})>".format(self._target)
@@ -644,9 +648,7 @@ class Orthanc:
 
     @auth
     def generate_uid(self, level, **kwargs):
-        """
-        Level must be 'patient', 'instance', 'series', or 'study'
-        """
+        """Level must be 'patient', 'instance', 'series', or 'study'"""
         j = self.convert_to_json({"level": level})
         return self.server.tools_generate_uid(data=j, **kwargs)
 
