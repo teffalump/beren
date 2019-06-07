@@ -21,6 +21,8 @@ from .endpoints import (
     OrthancStudies,
 )
 from json import dumps
+from warnings import warn
+from urllib.parse import urlparse
 
 __all__ = ["Orthanc"]
 
@@ -44,6 +46,13 @@ class Orthanc:
         self.series = OrthancSeries
         self.server = OrthancServer
         self.studies = OrthancStudies
+
+        if urlparse(server)[0] == "http":
+            warn(
+                """{} is an unencrypted connection! Strongly consider using an encrypted (https) REST endpoint.""".format(
+                    server
+                )
+            )
 
         # Set target for each apiron service
         for x in [
