@@ -23,6 +23,38 @@ class OrthancInstances(Service):
     instance = JsonEndpoint(path="instances/{id}/")
     del_instance = JsonEndpoint(path="instances/{id}/", default_method="DELETE")
     anonymize = JsonEndpoint(path="instances/{id}/anonymize/", default_method="POST")
+    attachments = JsonEndpoint(path="instances/{id}/attachments")
+    attachment = JsonEndpoint(path="instances/{id}/attachment/{name}/")
+    del_attachment = JsonEndpoint(
+        path="instances/{id}/attachment/{name}/", default_method="DELETE"
+    )
+    put_attachment = JsonEndpoint(
+        path="instances/{id}/attachment/{name}/", default_method="PUT"
+    )
+    compress_attachment = JsonEndpoint(
+        path="instances/{id}/attachment/{name}/compress", default_method="POST"
+    )
+    compressed_attachment_data = JsonEndpoint(
+        path="instances/{id}/attachment/{name}/compressed-data"
+    )
+    compressed_attachment_md5 = JsonEndpoint(
+        path="instances/{id}/attachment/{name}/compressed-md5"
+    )
+    compressed_attachment_size = JsonEndpoint(
+        path="instances/{id}/attachment/{name}/compressed-size"
+    )
+    attachment_data = JsonEndpoint(path="instances/{id}/attachment/{name}/data")
+    attachment_is_compressed = JsonEndpoint(
+        path="instances/{id}/attachment/{name}/is-compressed"
+    )
+    attachment_md5 = JsonEndpoint(path="instances/{id}/attachment/{name}/md5")
+    attachment_size = JsonEndpoint(path="instances/{id}/attachment/{name}/size")
+    uncompress_attachment = JsonEndpoint(
+        path="instances/{id}/attachment/{name}/uncompress", default="POST"
+    )
+    verify_attachment = JsonEndpoint(
+        path="instances/{id}/attachment/{name}/verify-md5", default="POST"
+    )
     content = JsonEndpoint(path="instances/{id}/content")
     content_raw_tag = JsonEndpoint(path="instances/{id}/content/{group}-{element}/")
     # instance_content_raw_seq = JsonEndpoint(path='instances/{id}/content/{group}-{element}/{index}/')
@@ -30,7 +62,9 @@ class OrthancInstances(Service):
     file_ = StreamingEndpoint(path="instances/{id}/file/")
     frames = JsonEndpoint(path="instances/{id}/frames/")
     frame_int16 = StreamingEndpoint(path="instances/{id}/frames/{number}/image-int16/")
-    frame_uint16 = StreamingEndpoint(path="instances/{id}/frames/{number}/image-uint16/")
+    frame_uint16 = StreamingEndpoint(
+        path="instances/{id}/frames/{number}/image-uint16/"
+    )
     frame_uint8 = StreamingEndpoint(path="instances/{id}/frames/{number}/image-uint8/")
     frame_matlab = Endpoint(path="instances/{id}/frames/{number}/matlab/")
     frame_preview = StreamingEndpoint(path="instances/{id}/frames/{number}/preview/")
@@ -41,6 +75,14 @@ class OrthancInstances(Service):
     image_uint16 = StreamingEndpoint(path="instances/{id}/image-uint16/")
     image_uint8 = StreamingEndpoint(path="instances/{id}/image-uint8/")
     matlab = Endpoint(path="instances/{id}/matlab/")
+    list_metadata = JsonEndpoint(path="instances/{id}/metadata/")
+    metadata = JsonEndpoint(path="instances/{id}/metadata/{name}/")
+    del_metadata = JsonEndpoint(
+        path="instances/{id}/metadata/{name}/", default_method="DELETE"
+    )
+    put_metadata = JsonEndpoint(
+        path="instances/{id}/metadata/{name}/", default_method="PUT"
+    )
     modify = JsonEndpoint(path="instances/{id}/modify/", default_method="POST")
     module = JsonEndpoint(path="instances/{id}/module/")
     patient = JsonEndpoint(path="instances/{id}/patient/")

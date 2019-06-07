@@ -58,7 +58,9 @@ class OrthancServer(Service):
         path="tools/create-media-extended/", default_method="POST"
     )
     tools_default_encoding = Endpoint(path="tools/default-encoding/")
-    tools_change_default_encoding = Endpoint(path="tools/default-encoding/", default_method="PUT")
+    tools_change_default_encoding = Endpoint(
+        path="tools/default-encoding/", default_method="PUT"
+    )
     tools_post_default_encoding = JsonEndpoint(
         path="tools/default-encoding/", default_method="POST"
     )

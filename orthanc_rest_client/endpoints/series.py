@@ -23,9 +23,49 @@ class OrthancSeries(Service):
     del_part = JsonEndpoint(path="series/{id}/", default_method="DELETE")
     anonymize = JsonEndpoint(path="series/{id}/anonymize/", default_method="POST")
     archive = StreamingEndpoint(path="series/{id}/archive/")
+    attachments = JsonEndpoint(path="series/{id}/attachments/")
+    attachment = JsonEndpoint(path="series/{id}/attachment/{name}/")
+    del_attachment = JsonEndpoint(
+        path="series/{id}/attachment/{name}/", default_method="DELETE"
+    )
+    put_attachment = JsonEndpoint(
+        path="series/{id}/attachment/{name}/", default_method="PUT"
+    )
+    compress_attachment = JsonEndpoint(
+        path="series/{id}/attachment/{name}/compress/", default_method="POST"
+    )
+    compressed_attachment_data = JsonEndpoint(
+        path="series/{id}/attachment/{name}/compressed-data/"
+    )
+    compressed_attachment_md5 = JsonEndpoint(
+        path="series/{id}/attachment/{name}/compressed-md5/"
+    )
+    compressed_attachment_size = JsonEndpoint(
+        path="series/{id}/attachment/{name}/compressed-size/"
+    )
+    attachment_data = JsonEndpoint(path="series/{id}/attachment/{name}/data")
+    attachment_is_compressed = JsonEndpoint(
+        path="series/{id}/attachment/{name}/is-compressed"
+    )
+    attachment_md5 = JsonEndpoint(path="series/{id}/attachment/{name}/md5")
+    attachment_size = JsonEndpoint(path="series/{id}/attachment/{name}/size")
+    uncompress_attachment = JsonEndpoint(
+        path="series/{id}/attachment/{name}/uncompress", default="POST"
+    )
+    verify_attachment = JsonEndpoint(
+        path="series/{id}/attachment/{name}/verify-md5", default="POST"
+    )
     instances = JsonEndpoint(path="series/{id}/instances/")
     instances_tags = JsonEndpoint(path="series/{id}/instances-tags/")
     media = StreamingEndpoint(path="series/{id}/media/")
+    list_metadata = JsonEndpoint(path="series/{id}/metadata/")
+    metadata = JsonEndpoint(path="series/{id}/metadata/{name}/")
+    del_metadata = JsonEndpoint(
+        path="series/{id}/metadata/{name}/", default_method="DELETE"
+    )
+    put_metadata = JsonEndpoint(
+        path="series/{id}/metadata/{name}/", default_method="PUT"
+    )
     modify = JsonEndpoint(path="series/{id}/modify/", default_method="POST")
     module = JsonEndpoint(path="series/{id}/module/")
     ordered_slices = JsonEndpoint(path="series/{id}/ordered-slices/")

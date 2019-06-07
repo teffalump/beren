@@ -23,8 +23,48 @@ class OrthancPatients(Service):
     del_patient = JsonEndpoint(path="patients/{id}/", default_method="DELETE")
     anonymize = JsonEndpoint(path="patients/{id}/anonymize/", default_method="POST")
     archive = StreamingEndpoint(path="patients/{id}/archive/")
+    attachments = JsonEndpoint(path="patients/{id}/attachments")
+    attachment = JsonEndpoint(path="patients/{id}/attachment/{name}/")
+    del_attachment = JsonEndpoint(
+        path="patients/{id}/attachment/{name}/", default_method="DELETE"
+    )
+    put_attachment = JsonEndpoint(
+        path="patients/{id}/attachment/{name}/", default_method="PUT"
+    )
+    compress_attachment = JsonEndpoint(
+        path="patients/{id}/attachment/{name}/compress", default_method="POST"
+    )
+    compressed_attachment_data = JsonEndpoint(
+        path="patients/{id}/attachment/{name}/compressed-data"
+    )
+    compressed_attachment_md5 = JsonEndpoint(
+        path="patients/{id}/attachment/{name}/compressed-md5"
+    )
+    compressed_attachment_size = JsonEndpoint(
+        path="patients/{id}/attachment/{name}/compressed-size"
+    )
+    attachment_data = JsonEndpoint(path="patients/{id}/attachment/{name}/data")
+    attachment_is_compressed = JsonEndpoint(
+        path="patients/{id}/attachment/{name}/is-compressed"
+    )
+    attachment_md5 = JsonEndpoint(path="patients/{id}/attachment/{name}/md5")
+    attachment_size = JsonEndpoint(path="patients/{id}/attachment/{name}/size")
+    uncompress_attachment = JsonEndpoint(
+        path="patients/{id}/attachment/{name}/uncompress", default="POST"
+    )
+    verify_attachment = JsonEndpoint(
+        path="patients/{id}/attachment/{name}/verify-md5", default="POST"
+    )
     instances = JsonEndpoint(path="patients/{id}/instances/")
     instances_tags = JsonEndpoint(path="patients/{id}/instances-tags/")
+    list_metadata = JsonEndpoint(path="patients/{id}/metadata/")
+    metadata = JsonEndpoint(path="patients/{id}/metadata/{name}/")
+    del_metadata = JsonEndpoint(
+        path="patients/{id}/metadata/{name}/", default_method="DELETE"
+    )
+    put_metadata = JsonEndpoint(
+        path="patients/{id}/metadata/{name}/", default_method="PUT"
+    )
     modify = JsonEndpoint(path="patients/{id}/modify/", default_method="POST")
     module = JsonEndpoint(path="patients/{id}/module/")
     media = StreamingEndpoint(path="patients/{id}/media/")
