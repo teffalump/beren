@@ -26,6 +26,9 @@ class OrthancQueries(Service):
     answers_retrieve = JsonEndpoint(
         path="queries/{id}/answers/{index}/retrieve/", default_method="POST"
     )
+    answers_instances = JsonEndpoint(path="queries/{id}/answers/{index}/query-instances/", default_method="POST")
+    answers_series = JsonEndpoint(path="queries/{id}/answers/{index}/query-series/", default_method="POST")
+    answers_studies = JsonEndpoint(path="queries/{id}/answers/{index}/query-studies/", default_method="POST")
     level = JsonEndpoint(path="queries/{id}/level/")
     modality = JsonEndpoint(path="queries/{id}/modality/")
     query_query = JsonEndpoint(path="queries/{id}/query/")

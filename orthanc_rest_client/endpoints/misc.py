@@ -30,6 +30,7 @@ class OrthancServer(Service):
     pause_job = JsonEndpoint(path="jobs/{id}/pause/", default_method="POST")
     resubmit_job = JsonEndpoint(path="jobs/{id}/resubmit/", default_method="POST")
     resume_job = JsonEndpoint(path="jobs/{id}/resume/", default_method="POST")
+    job_output = JsonEndpoint(path="jobs/{id}/{key}/")
 
     peers = JsonEndpoint(path="peers/")
     peer = JsonEndpoint(path="peers/{peer}/")
@@ -57,6 +58,7 @@ class OrthancServer(Service):
         path="tools/create-media-extended/", default_method="POST"
     )
     tools_default_encoding = Endpoint(path="tools/default-encoding/")
+    tools_change_default_encoding = Endpoint(path="tools/default-encoding/", default_method="PUT")
     tools_post_default_encoding = JsonEndpoint(
         path="tools/default-encoding/", default_method="POST"
     )
@@ -70,6 +72,9 @@ class OrthancServer(Service):
         path="tools/invalidate-tags/", default_method="POST"
     )
     tools_lookup = JsonEndpoint(path="tools/lookup/", default_method="POST")
+    tools_metrics = JsonEndpoint(path="tools/metrics/")
+    tools_change_metrics = JsonEndpoint(path="tools/metrics/", default_method="PUT")
+    tools_metrics_prometheus = JsonEndpoint(path="tools/metrics-prometheus/")
     tools_now = Endpoint(path="tools/now/")
     tools_now_local = Endpoint(path="tools/now-local/")
     tools_reset = JsonEndpoint(path="tools/reset/", default_method="POST")
