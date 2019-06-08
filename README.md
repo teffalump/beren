@@ -63,4 +63,4 @@ Then call functions normally (the auth object is passed automatically).
 
 For further help:
 - [apiron](https://github.com/ithaka/apiron)
-- [Orthanc documentation](http://book.orthanc-server.com) and [Orthanc REST API](https://docs.google.com/spreadsheets/d/e/2PACX-1vSBEymDKGZgskFEFF6yzge5JovGHPK_FIbEnW5a6SWUbPkX06tkoObUHh6T1XQhgj-HqFd0AWSnVFOv/pubhtml?gid=1094535210&single=true)
+- [Orthanc documentation](http://book.orthanc-server.com) and [Orthanc REST API](https://docs.google.com/spreadsheets/d/e/2PACX-1vSBEymDKGZgskFEFF6yzge5JovGHPK_FIbEnW5a6SWUbPkX06tkoObUHh6T1XQhgj-HqFd0AWSnVFOv/pubhtml?gid=654036639&single=true)
