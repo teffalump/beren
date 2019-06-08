@@ -499,7 +499,7 @@ class Orthanc:
 
     @auth
     def update_modality(self, dicom, data, **kwargs):
-        j = self.dumps(data)
+        j = self.convert_to_json(data)
         return self.modalities.put_modality(
             path_kwargs={"dicom": dicom}, data=j, **kwargs
         )
@@ -510,17 +510,17 @@ class Orthanc:
 
     @auth
     def move_modality(self, dicom, data, **kwargs):
-        j = self.dumps(data)
+        j = self.convert_to_json(data)
         return self.modalities.move(path_kwargs={"dicom": dicom}, data=j, **kwargs)
 
     @auth
     def query_modality(self, dicom, data, **kwargs):
-        j = self.dumps(data)
+        j = self.convert_to_json(data)
         return self.modalities.query(path_kwargs={"dicom": dicom}, data=j, **kwargs)
 
     @auth
     def store_modality(self, dicom, data, **kwargs):
-        j = self.dumps(data)
+        j = self.convert_to_json(data)
         return self.modalities.store(path_kwargs={"dicom": dicom}, data=j, **kwargs)
 
     #### SERVER-RELATED
