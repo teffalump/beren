@@ -11,18 +11,18 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-from apiron import JsonEndpoint, StreamingEndpoint, Endpoint, Service
+from apiron import JsonEndpoint, Service
 
 __all__ = ["OrthancModalities"]
 
 
 class OrthancModalities(Service):
 
-    modalities = JsonEndpoint("modalities/")
-    modality = JsonEndpoint("modalities/{dicom}/")
-    del_modality = JsonEndpoint("modalities/{dicom}/", default_method="DELETE")
-    put_modality = JsonEndpoint("modalities/{dicom}/", default_method="PUT")
-    echo = JsonEndpoint("modalities/{dicom}/echo/", default_method="POST")
-    move = JsonEndpoint("modalities/{dicom}/move/", default_method="POST")
-    query = JsonEndpoint("modalities/{dicom}/query/", default_method="POST")
-    store = JsonEndpoint("modalities/{dicom}/store/", default_method="POST")
+    modalities = JsonEndpoint(path="modalities/")
+    modality = JsonEndpoint(path="modalities/{dicom}/")
+    del_modality = JsonEndpoint(path="modalities/{dicom}/", default_method="DELETE")
+    put_modality = JsonEndpoint(path="modalities/{dicom}/", default_method="PUT")
+    echo = JsonEndpoint(path="modalities/{dicom}/echo/", default_method="POST")
+    move = JsonEndpoint(path="modalities/{dicom}/move/", default_method="POST")
+    query = JsonEndpoint(path="modalities/{dicom}/query/", default_method="POST")
+    store = JsonEndpoint(path="modalities/{dicom}/store/", default_method="POST")

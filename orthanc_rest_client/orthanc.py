@@ -20,9 +20,7 @@ from .endpoints import (
     OrthancServer,
     OrthancStudies,
 )
-from apiron.client import ServiceCaller
 from json import dumps
-from functools import partial
 
 __all__ = ["Orthanc"]
 
@@ -244,9 +242,7 @@ class Orthanc:
     @auth
     def modify_patient(self, id_, data, **kwargs):
         j = self.convert_to_json(data)
-        return self.patients(
-            self._patients.modify, path_kwargs={"id": id_}, data=j, **kwargs
-        )
+        return self.patients.modify(path_kwargs={"id": id_}, data=j, **kwargs)
 
     @auth
     def get_patient_module(self, id_, **kwargs):
@@ -487,7 +483,7 @@ class Orthanc:
     #### MODALITIES ###
     @auth
     def get_modalities(self, **kwargs):
-        return self.modalities.modalities(path_kwargs={"id": id_}, **kwargs)
+        return self.modalities.modalities(**kwargs)
 
     @auth
     def get_modality(self, dicom, **kwargs):
@@ -499,7 +495,7 @@ class Orthanc:
 
     @auth
     def update_modality(self, dicom, data, **kwargs):
-        j = self.dumps(data)
+        j = self.convert_to_json(data)
         return self.modalities.put_modality(
             path_kwargs={"dicom": dicom}, data=j, **kwargs
         )
@@ -510,17 +506,17 @@ class Orthanc:
 
     @auth
     def move_modality(self, dicom, data, **kwargs):
-        j = self.dumps(data)
+        j = self.convert_to_json(data)
         return self.modalities.move(path_kwargs={"dicom": dicom}, data=j, **kwargs)
 
     @auth
     def query_modality(self, dicom, data, **kwargs):
-        j = self.dumps(data)
+        j = self.convert_to_json(data)
         return self.modalities.query(path_kwargs={"dicom": dicom}, data=j, **kwargs)
 
     @auth
     def store_modality(self, dicom, data, **kwargs):
-        j = self.dumps(data)
+        j = self.convert_to_json(data)
         return self.modalities.store(path_kwargs={"dicom": dicom}, data=j, **kwargs)
 
     #### SERVER-RELATED
