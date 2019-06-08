@@ -20,9 +20,7 @@ from .endpoints import (
     OrthancServer,
     OrthancStudies,
 )
-from apiron.client import ServiceCaller
 from json import dumps
-from functools import partial
 
 __all__ = ["Orthanc"]
 
