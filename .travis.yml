@@ -1,0 +1,39 @@
+dist: xenial #for 3.7+
+language: python
+cache: pip
+notifications:
+    email: false
+
+python:
+    - '3.7'
+    - '3.6'
+    - '3.5'
+    - '3.4'
+
+install:
+    - pip install -r dev-requirements.txt
+
+script:
+
+
+stages:
+    - lint
+    - test
+    #- name: deploy
+      #if: branch = master AND tag is present
+
+jobs:
+    include:
+        - stage: lint
+          install:
+              - pip install black
+          script:
+              - black --check orthanc_rest_client
+
+#deploy:
+    #- provider: releases
+        #on:
+            #repo: teffalump/orthanc_rest_client
+            #branch: master
+            #tags: true
+    #- provider: pypi
