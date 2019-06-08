@@ -1,5 +1,7 @@
 # Orthanc REST client
 
+[![Build Status](https://travis-ci.com/teffalump/orthanc_rest_client.svg?branch=master)](https://travis-ci.com/teffalump/orthanc_rest_client)
+
 Provides a REST client targeted at [Orthanc](https://www.orthanc-server.com) REST API endpoints.
 
 Based on the excellent [apiron](https://github.com/ithaka/apiron) library.
