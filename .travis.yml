@@ -28,7 +28,7 @@ jobs:
           install:
               - pip install black
           script:
-              - black --check orthanc_rest_client
+              - black --check orthanc_rest_client tests
 
 #deploy:
     #- provider: releases
