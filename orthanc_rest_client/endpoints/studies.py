@@ -50,10 +50,10 @@ class OrthancStudies(Service):
     attachment_md5 = JsonEndpoint(path="studies/{id}/attachment/{name}/md5")
     attachment_size = JsonEndpoint(path="studies/{id}/attachment/{name}/size")
     uncompress_attachment = JsonEndpoint(
-        path="studies/{id}/attachment/{name}/uncompress", default="POST"
+        path="studies/{id}/attachment/{name}/uncompress", default_method="POST"
     )
     verify_attachment = JsonEndpoint(
-        path="studies/{id}/attachment/{name}/verify-md5", default="POST"
+        path="studies/{id}/attachment/{name}/verify-md5", default_method="POST"
     )
     instances = JsonEndpoint(path="/studies/{id}/instances/")
     instances_tags = JsonEndpoint(path="/studies/{id}/instances-tags/")
