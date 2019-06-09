@@ -15,6 +15,7 @@ script:
 stages:
     - lint
     - test
+    - deploy
 jobs:
   include:
       - stage: lint
