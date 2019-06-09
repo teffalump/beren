@@ -34,7 +34,7 @@ class OrthancPatients(Service):
     compress_attachment = JsonEndpoint(
         path="patients/{id}/attachment/{name}/compress", default_method="POST"
     )
-    compressed_attachment_data = JsonEndpoint(
+    compressed_attachment_data = StreamingEndpoint(
         path="patients/{id}/attachment/{name}/compressed-data"
     )
     compressed_attachment_md5 = JsonEndpoint(
@@ -43,7 +43,7 @@ class OrthancPatients(Service):
     compressed_attachment_size = JsonEndpoint(
         path="patients/{id}/attachment/{name}/compressed-size"
     )
-    attachment_data = JsonEndpoint(path="patients/{id}/attachment/{name}/data")
+    attachment_data = StreamingEndpoint(path="patients/{id}/attachment/{name}/data")
     attachment_is_compressed = JsonEndpoint(
         path="patients/{id}/attachment/{name}/is-compressed"
     )
@@ -58,7 +58,7 @@ class OrthancPatients(Service):
     instances = JsonEndpoint(path="patients/{id}/instances/")
     instances_tags = JsonEndpoint(path="patients/{id}/instances-tags/")
     list_metadata = JsonEndpoint(path="patients/{id}/metadata/")
-    metadata = JsonEndpoint(path="patients/{id}/metadata/{name}/")
+    metadata = Endpoint(path="patients/{id}/metadata/{name}/")
     del_metadata = JsonEndpoint(
         path="patients/{id}/metadata/{name}/", default_method="DELETE"
     )
