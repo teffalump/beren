@@ -10,8 +10,8 @@ with open('README.md') as readme:
 with open(os.path.join(NAME, 'VERSION')) as version:
     VERSION = version.readlines()[0].strip()
 
-with open('requirements.txt') as requirements_file:
-    REQUIREMENTS = [line.rstrip() for line in requirements_file if line != '\n']
+with open('requirements.txt') as requirements:
+    REQUIREMENTS = [line.rstrip() for line in requirements if line != '\n']
 
 setup(name = NAME,
         version = VERSION,
