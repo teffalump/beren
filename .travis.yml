@@ -1,39 +1,37 @@
-dist: xenial #for 3.7+
+dist: xenial
 language: python
 cache: pip
 notifications:
-    email: false
-
+  email: false
 python:
     - '3.7'
     - '3.6'
     - '3.5'
     - '3.4'
-
 install:
     - pip install -r dev-requirements.txt
-
 script:
     - pytest
-
 stages:
     - lint
     - test
-    #- name: deploy
-      #if: branch = master AND tag is present
-
 jobs:
-    include:
-        - stage: lint
-          install:
-              - pip install black
-          script:
-              - black --check orthanc_rest_client tests
-
-#deploy:
-    #- provider: releases
-        #on:
-            #repo: teffalump/orthanc_rest_client
-            #branch: master
-            #tags: true
-    #- provider: pypi
+  include:
+      - stage: lint
+        install:
+            - pip install black
+        script:
+            - black --check orthanc_rest_client tests
+      - stage: deploy
+        deploy:
+            - provider: pypi
+              user: "teffalump"
+              password:
+                secure: "R7k/0RoS971glWgrTt1B8JpDGx8J91TBtfgfUOekgeati7rdQgrc+14m6ffGpSNqRx4DgNK9g2J0jSfOFcowVoFpR8VN9btzxplDtHbk4jHnKs491Q+SoF5oQnaB3f22rAwGJ15BKGCOB04jYDCMMNScYgbpN8tLIOOwllY6/KWh2cCWaTnjTshQT5CUQkN8NxtoJBNTFcqFoHnNEe/eP2hauhlNa2RlKwQWzC2MlzDN+0jDc1/LtMnmXzIijj2+Z1sn2zpPyBCa6wKumYmWeW/SbeAYGnc/Cl2AoIsuQkUuYZv89EQypXN003wMHvxX2yhMLfGmEeh+ZneV7NoXAdLnBLiIOZCYgB9S4KJyGKkrJyVDOrjytj5nUhXqYexrgh/n/S6wzJbX/DbVhEV3wIJQvslUn/EtEjTAvnIRcgoQmRzsfxKjccwIwZRKDadWDr0XluXtbzWbWpvY+bVZ0lOemrXX3xR1t/ic1+N3iNN28BORgY58l6UCIKrkWdBWsfbrU2GhfpTRlMxRUdGnGYmnQbubI9b296bz2Yfr891OCj10tyrocH7ZEwRb666TNTZhTB1rMbDUvO1RwOfOX0ta3LoVSlNO39+lVZw3tKsavSbCrdX7hBGVLCsVQ3CDyMs5lT9dFTPiiIvxD5xCnTxAWCo4lC/hSX/grkKmCoM="
+              distributions: "sdist bdist_wheel"
+              skip_cleanup: true
+              skip_existing: true
+              on:
+                repo: teffalump/orthanc_rest_client
+                branch: master
+                tags: true
