@@ -28,7 +28,7 @@ jobs:
             - provider: pypi
               user: teffalump
               password:
-                secure: RAkeeXgtR3QomklZt7BhC5fxIe+NNef/hJL/nm6KuQV2+6mf7sUuSbOVm2ptRlOF9d3cgg8TahUFUni2C2tQB3xcZIaqWUpM/6Nis7YpQDcWmhsPQBDDeWkU2plr4dFPmJDK6HlmV5UgiOQkyJyMa91oUfBkZTRwCtQydr28iiPrN1WBU+mlmU2gqRA3FDLUKcxHwGYscGRMWseTklj1q7eYqLjBQmWJ94TEMLRBcSxJ/K6t/UKQXQPbVOvCGROIS1ubtbrH8h/2mc/p1iTHachvNB3oCJyGMkS/k4mDkifZUcAe9cC7U4Y4qyXTfXV4IQNZUEVrS3F+alXiF2/wDyGmVUkzJtAEk4W7DRw2Lj01Du66plBmpgwzg94nIC+sbEjtdlN/pHFiME0Jwc4tBWH2qZ7ri9CLiYXZrJcHPHwNGAX8CT07YnJJJdREQnFLZL5pnSVcszng3EvIeMqm/XhgAjWUhFtlTHk/4OfarQcgfwoWP16jE4bFEt+go+G3uPhmpdoHhIqDYtoupZBpdoZaj8DSEq5oltAzTnqB7vIdasG4wiNHuMCTJpI+2GDZEZMA3A4L7cAbqzd6JsnFUqzVVqyzvlt0c72+OmfkiKirbhicgFcDzJXE/ZOxhmB7tP/4Mnhc2ZNITlceKJ874thKP+ZsTruBSzsyPnuZZ28=
+                secure: "RAkeeXgtR3QomklZt7BhC5fxIe+NNef/hJL/nm6KuQV2+6mf7sUuSbOVm2ptRlOF9d3cgg8TahUFUni2C2tQB3xcZIaqWUpM/6Nis7YpQDcWmhsPQBDDeWkU2plr4dFPmJDK6HlmV5UgiOQkyJyMa91oUfBkZTRwCtQydr28iiPrN1WBU+mlmU2gqRA3FDLUKcxHwGYscGRMWseTklj1q7eYqLjBQmWJ94TEMLRBcSxJ/K6t/UKQXQPbVOvCGROIS1ubtbrH8h/2mc/p1iTHachvNB3oCJyGMkS/k4mDkifZUcAe9cC7U4Y4qyXTfXV4IQNZUEVrS3F+alXiF2/wDyGmVUkzJtAEk4W7DRw2Lj01Du66plBmpgwzg94nIC+sbEjtdlN/pHFiME0Jwc4tBWH2qZ7ri9CLiYXZrJcHPHwNGAX8CT07YnJJJdREQnFLZL5pnSVcszng3EvIeMqm/XhgAjWUhFtlTHk/4OfarQcgfwoWP16jE4bFEt+go+G3uPhmpdoHhIqDYtoupZBpdoZaj8DSEq5oltAzTnqB7vIdasG4wiNHuMCTJpI+2GDZEZMA3A4L7cAbqzd6JsnFUqzVVqyzvlt0c72+OmfkiKirbhicgFcDzJXE/ZOxhmB7tP/4Mnhc2ZNITlceKJ874thKP+ZsTruBSzsyPnuZZ28="
               distributions: "sdist bdist_wheel"
               skip_cleanup: true
               skip_existing: true
