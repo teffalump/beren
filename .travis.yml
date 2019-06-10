@@ -28,7 +28,7 @@ jobs:
             - provider: pypi
               user: teffalump
               password:
-                secure: "q+9zWwWwHHj67YNtVrmiMmD0OJTRoa8ELc2CVvXTQVue+e5213W5NVz1ERdTp2iW7/bM51zumYsOVOedJLpEryerJASE+jyjTrQtJwJQrWCUdDnPbuxq5eK2sxQkr0wdeLeIn/8gY3HgkaMcQXlNMwvIDLCLcFP0SHaP5fCBMXCyPP1JpjEk0rJUkchOACa7CWdfVy1/RCFAFJ9CWH+W1QZHehAxAPRmlGvqqVQCdDV5YkSClWDvJnPzKygiKZsGz/H/YUgbT6q+T5mmXg4MFJaYhkq437R2bDZZ6jgoDGK8gAgFHS//XcZOCv/P1GZXj6Jrrfx2gHDqiZczGeybUW/LIAy5K/YOOqrXUJEqVLwuPGAkBr/GN9y/6a5H7VIyUiPLQNFZDNuvRRoNSJJzuxwUkX6OO/CaQg/al0/iZuFceuLDPLLnJJ3ee8BWzL79dQiI+D9c6qgWUDiXZ+Ht4NrL26xv0i/dv4pYHS7GWmggjS/siUOLllGtWP+pYjtqNvr79OHsWWYmft9vyze/guzWPcQJUSbl1nu3gj85BLGZzrFf6TG64DPPQf360QUaG44vuJHAeUqbM7q/C4ciBQ2pri6sceirjBvLBWAYBlX3kCEwXfvVxX/NmpKybVrfbU5GR8qqYEzUz9i/sITiTSie5cRQ3QR99/HXaXpQGJE="
+                secure: "ookkR2iddYDA0VfuekP1bWigoA1B2M6RldGHntDVz68htwFbsjQnUEhwFMfQZhZqjSilcb7tEdRhSA3Og+4cbKfecyZsj6/McHUG+SymJC1rkXpnNzcya162urNNIWD0kBqw1P+Qd5vWBxM+DLeT7AUWp67VpB2EqvN3iKsh60DfQbQ2FEV0WQoMFdFkCDbL7jdXiHj+gsh2/BM/UPdpVN01eVLh/uWAZK+MM/fp2d2FmEzBpuztZkwrxJ6e/fqHTvQz+MyVrrIxc2nmmB6JhFfKnaEJzL+erdyWEVZ2hIoXueHCAY6PS6AB32DSpPrcIKi1325dy2yv5MHqbFed7IsZen4igOTY/FxjXdZMxtXgHzRMdb5KfwASb6TWggYJWH+v4m4Df9ZdQdtq4k+X/Scq1svlECogeaR4z7nhqt7j+5Rui4ge9gTrKsyvqm6Ih9FKFqubdJBye8lghpmXkNBoxM5v7KSa3dDx5AafApYihydXF1TxxfaXvitRWPNM6OBr//zDkBsiQ30+DNtzAEpP8JvTEduIBqHMabcOWRmN2c8DE6I3Xl3N0b1Z1d4hp3wcg5OVbODXvMg5mx2w2TwGXu+xjUPbHJqLwe2MIgGS6mUXo2EZzuMqwIShgoV0aeN6l3kQWxmKNtEzyM2JFf2MESUq5lIoXDoa0mlxs/A="
               distributions: "sdist bdist_wheel"
               skip_cleanup: true
               skip_existing: true
