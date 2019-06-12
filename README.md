@@ -51,6 +51,16 @@ Import the pre-defined client and pass the server details
 
 There are other preconfigured endpoints.
 
+### Advanced examples
+
+Save instance file to local directory:
+    
+    def save_dcm_file(instance_id):
+        fileName = '.'.join([instance_id, "dcm"])
+        with open(fileName, 'wb') as dcm:
+            for chunk in orthanc.get_instance_file(instance_id):
+                dcm.write(chunk)
+
 ### Authenticated Endpoints
 
 Pass valid auth object:
