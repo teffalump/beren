@@ -56,7 +56,7 @@ class OrthancInstances(Service):
         path="instances/{id_}/attachment/{name}/verify-md5", default_method="POST"
     )
     content = JsonEndpoint(path="instances/{id_}/content")
-    content_raw_tag = JsonEndpoint(path="instances/{id_}/content/{group}-{element}/")
+    content_raw_tag = Endpoint(path="instances/{id_}/content/{group}-{element}/")
     # instance_content_raw_seq = JsonEndpoint(path='instances/{id_}/content/{group}-{element}/{index}/')
     export = JsonEndpoint(path="instances/{id_}/export/", default_method="POST")
     file_ = StreamingEndpoint(path="instances/{id_}/file/")

@@ -66,15 +66,57 @@ class Orthanc:
         return dumps(data, **kwargs)
 
     #### INSTANCES
-    def get_instances(self, **kwargs):
+    def get_instances(self, expand=False, since=None, limit=None, **kwargs):
+        """Return instance(s) information. No raw file data.
+
+        Use expand keyword argument to retrieve extensive information.
+        Use since and limit keyword arguments to specify group of records.
+
+        :param bool expand:
+            Return verbose information about instances. Default ``False``.
+            By default, returns UUIDs.
+        :param int since:
+            Return since instance number. Optional. Requires limit.
+        :param int limit:
+            Limit to given number. Optional. Requires since.
+        :return:
+            A list of records: either UUIDs or dictionary of information
+        :rtype:
+            list
+        """
+        params = {}
+        if expand == True:
+            params["expand"] = True
+        if limit or since:
+            try:
+                params["since"] = int(since)
+                params["limit"] = int(limit)
+            except:
+                raise TypeError("Must provide valid ints as since and limit")
+        kwargs["params"] = params
         kwargs["auth"] = kwargs.get("auth", self._auth)
         return self.instances.instances(**kwargs)
 
     def add_instance(self, dicom, **kwargs):
+        """Add DICOM instance.
+
+        :param data dicom:
+            The DICOM data
+        :return:
+        """
         kwargs["auth"] = kwargs.get("auth", self._auth)
         return self.instances.add_instance(data=dicom, **kwargs)
 
     def get_instance(self, id_, **kwargs):
+        """Get a single instance information. Equivalent to ``expand``.
+
+        :param str id_:
+            The instance UUID
+        :return:
+            Instance information for the UUID
+        :rtype:
+            Dict
+        """
         kwargs["auth"] = kwargs.get("auth", self._auth)
         return self.instances.instance(id_=id_, **kwargs)
 
@@ -88,22 +130,69 @@ class Orthanc:
         return self.instances.anonymize(id_=id_, data=j, **kwargs)
 
     def get_instance_content(self, id_, **kwargs):
+        """List first-level DICOM tags.
+
+        :param str id_:
+            The instance UUID
+        :return:
+            The first-level DICOM tags.
+        :rtype:
+            list
+        """
         kwargs["auth"] = kwargs.get("auth", self._auth)
         return self.instances.content(id_=id_, **kwargs)
 
-    def get_instance_content_raw_tag(self, id_, **kwargs):
+    def get_instance_content_raw_tag(self, id_, group, element, **kwargs):
+        """Get raw access to the DICOM tag (comprising the padding character)
+
+        :param str id_:
+            The instance UUID
+        :param str group:
+            The group
+        :param str element:
+            The element
+        :return:
+            The raw DICOM tag
+        :rtype:
+            str
+        """
         kwargs["auth"] = kwargs.get("auth", self._auth)
-        return self.instances.content_raw_tag(id_=id_, **kwargs)
+        return self.instances.content_raw_tag(
+            id_=id_, group=group, element=element, **kwargs
+        )
 
     def export_instance(self, id_, **kwargs):
         kwargs["auth"] = kwargs.get("auth", self._auth)
         return self.instances.export(id_=id_, data={}, **kwargs)
 
     def get_instance_file(self, id_, **kwargs):
+        """Get the instance file
+
+        Example:
+
+            >>> for x in orthanc.get_instance_file(<id>):
+            ...     print(x)
+
+        :param str id_:
+            The instance UUID
+        :return:
+            Yields the raw DICOM file
+        :rtype:
+            generator
+        """
         kwargs["auth"] = kwargs.get("auth", self._auth)
         return self.instances.file_(id_=id_, **kwargs)
 
     def get_instance_frames(self, id_, **kwargs):
+        """Get the list of frame numbers in the instance file.
+
+        :param str id_:
+            The instance UUID
+        :return:
+            A list of integers corresponding to the frames
+        :rtype:
+            list (int)
+        """
         kwargs["auth"] = kwargs.get("auth", self._auth)
         return self.instances.frames(id_=id_, **kwargs)
 
@@ -165,6 +254,15 @@ class Orthanc:
         return self.instances.module(id_=id_, **kwargs)
 
     def get_instance_patient(self, id_, **kwargs):
+        """Get the parent patient of this instance.
+
+        :param str id_:
+            The instance UUID
+        :return:
+            The parent patient information
+        :rtype:
+            dict
+        """
         kwargs["auth"] = kwargs.get("auth", self._auth)
         return self.instances.patient(id_=id_, **kwargs)
 
@@ -181,6 +279,15 @@ class Orthanc:
         return self.instances.reconstruct(id_=id_, data={}, **kwargs)
 
     def get_instance_series(self, id_, **kwargs):
+        """Get the parent series of this instance.
+
+        :param str id_:
+            The instance UUID
+        :return:
+            The parent series information
+        :rtype:
+            dict
+        """
         kwargs["auth"] = kwargs.get("auth", self._auth)
         return self.instances.series(id_=id_, **kwargs)
 
@@ -193,6 +300,15 @@ class Orthanc:
         return self.instances.statistics(id_=id_, **kwargs)
 
     def get_instance_study(self, id_, **kwargs):
+        """Get the parent study of this instance.
+
+        :param str id_:
+            The instance UUID
+        :return:
+            The parent study information
+        :rtype:
+            dict
+        """
         kwargs["auth"] = kwargs.get("auth", self._auth)
         return self.instances.study(id_=id_, **kwargs)
 
@@ -223,6 +339,15 @@ class Orthanc:
         return self.patients.archive(id_=id_, **kwargs)
 
     def get_patient_instances(self, id_, **kwargs):
+        """Get all instances for this patient
+
+        :param str id_:
+            Patient UUID
+        :return:
+            All the instances for this patient. Expanded information.
+        :rtype:
+            list (dict)
+        """
         kwargs["auth"] = kwargs.get("auth", self._auth)
         return self.patients.instances(id_=id_, **kwargs)
 
@@ -256,6 +381,15 @@ class Orthanc:
         return self.patients.protected(id_=id_, data=data, **kwargs)
 
     def get_patient_series(self, id_, **kwargs):
+        """Get all series for this patient
+
+        :param str id_:
+            Patient UUID
+        :return:
+            All the series for this patient. Expanded information.
+        :rtype:
+            list (dict)
+        """
         kwargs["auth"] = kwargs.get("auth", self._auth)
         return self.patients.series(id_=id_, **kwargs)
 
@@ -268,6 +402,15 @@ class Orthanc:
         return self.patients.statistics(id_=id_, **kwargs)
 
     def get_patient_studies(self, id_, **kwargs):
+        """Get all studies for this patient
+
+        :param str id_:
+            Patient UUID
+        :return:
+            All the studies for this patient. Expanded information.
+        :rtype:
+            list (dict)
+        """
         kwargs["auth"] = kwargs.get("auth", self._auth)
         return self.patients.studies(id_=id_, **kwargs)
 
@@ -639,7 +782,11 @@ class Orthanc:
     def find(self, query, **kwargs):
         """Run C-Find with query
 
-        Example: query = {'Level': 'Patient', 'Query': {'PatientName': 'John*'}}
+        Example:
+
+            >>> orthanc = Orthanc('https://orthanc.example.com')
+            >>> query = {'Level': 'Patient', 'Query': {'PatientName': 'John*'}}
+            >>> orthanc.find(query) #returns the UUIDs of matching records
 
         :param dict query:
             Query to run
