@@ -70,7 +70,9 @@ class OrthancPatients(Service):
     media = StreamingEndpoint(path="patients/{id_}/media/")
     protected = Endpoint(path="patients/{id_}/protected/")
     put_protected = Endpoint(path="patients/{id_}/protected/", default_method="PUT")
-    reconstruct = JsonEndpoint(path="patients/{id_}/reconstruct/", default_method="POST")
+    reconstruct = JsonEndpoint(
+        path="patients/{id_}/reconstruct/", default_method="POST"
+    )
     series = JsonEndpoint(path="patients/{id_}/series/")
     shared_tags = JsonEndpoint(path="patients/{id_}/shared-tags/")
     statistics = JsonEndpoint(path="patients/{id_}/statistics/")

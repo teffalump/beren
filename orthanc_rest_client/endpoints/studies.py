@@ -70,7 +70,9 @@ class OrthancStudies(Service):
     module = JsonEndpoint(path="/studies/{id_}/module/")
     module_patient = JsonEndpoint(path="/studies/{id_}/module_patient/")
     patient = JsonEndpoint(path="/studies/{id_}/patient/")
-    reconstruct = JsonEndpoint(path="/studies/{id_}/reconstruct/", default_method="POST")
+    reconstruct = JsonEndpoint(
+        path="/studies/{id_}/reconstruct/", default_method="POST"
+    )
     series = JsonEndpoint(path="/studies/{id_}/series/")
     shared_tags = JsonEndpoint(path="/studies/{id_}/shared-tags/")
     statistics = JsonEndpoint(path="/studies/{id_}/statistics/")

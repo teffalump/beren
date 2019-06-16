@@ -117,45 +117,31 @@ class Orthanc:
 
     @auth
     def get_instance_frame_int16(self, id_, frame, **kwargs):
-        return self.instances.frame_int16(
-            id_=id_, number=frame, **kwargs
-        )
+        return self.instances.frame_int16(id_=id_, number=frame, **kwargs)
 
     @auth
     def get_instance_frame_uint16(self, id_, frame, **kwargs):
-        return self.instances.frame_uint16(
-            id_=id_, number=frame, **kwargs
-        )
+        return self.instances.frame_uint16(id_=id_, number=frame, **kwargs)
 
     @auth
     def get_instance_frame_uint8(self, id_, frame, **kwargs):
-        return self.instances.frame_uint8(
-            id_=id_, number=frame, **kwargs
-        )
+        return self.instances.frame_uint8(id_=id_, number=frame, **kwargs)
 
     @auth
     def get_instance_frame_matlab(self, id_, frame, **kwargs):
-        return self.instances.frame_matlab(
-            id_=id_, number=frame, **kwargs
-        )
+        return self.instances.frame_matlab(id_=id_, number=frame, **kwargs)
 
     @auth
     def get_instance_frame_preview(self, id_, frame, **kwargs):
-        return self.instances.frame_preview(
-            id_=id_, number=frame, **kwargs
-        )
+        return self.instances.frame_preview(id_=id_, number=frame, **kwargs)
 
     @auth
     def get_instance_frame_raw(self, id_, frame, **kwargs):
-        return self.instances.frame_raw(
-            id_=id_, number=frame, **kwargs
-        )
+        return self.instances.frame_raw(id_=id_, number=frame, **kwargs)
 
     @auth
     def get_instance_frame_raw_gz(self, id_, frame, **kwargs):
-        return self.instances.frame_raw_gz(
-            id_=id_, number=frame, **kwargs
-        )
+        return self.instances.frame_raw_gz(id_=id_, number=frame, **kwargs)
 
     @auth
     def get_instance_header(self, id_, **kwargs):
@@ -333,15 +319,11 @@ class Orthanc:
 
     @auth
     def get_query_answers_content(self, id_, index, **kwargs):
-        return self.queries.answers_content(
-            id_=id_, index=index, **kwargs
-        )
+        return self.queries.answers_content(id_=id_, index=index, **kwargs)
 
     @auth
     def post_query_answers_retrieve(self, id_, index, **kwargs):
-        return self.queries.answers_retrieve(
-            id_=id_, index=index, **kwargs
-        )
+        return self.queries.answers_retrieve(id_=id_, index=index, **kwargs)
 
     @auth
     def get_query_level(self, id_, **kwargs):
@@ -509,9 +491,7 @@ class Orthanc:
     @auth
     def update_modality(self, dicom, data, **kwargs):
         j = self.convert_to_json(data)
-        return self.modalities.put_modality(
-            dicom=dicom, data=j, **kwargs
-        )
+        return self.modalities.put_modality(dicom=dicom, data=j, **kwargs)
 
     @auth
     def echo_modality(self, dicom, **kwargs):
