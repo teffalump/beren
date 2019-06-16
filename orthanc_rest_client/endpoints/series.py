@@ -19,58 +19,58 @@ __all__ = ["OrthancSeries"]
 class OrthancSeries(Service):
 
     series = JsonEndpoint(path="series/")
-    part = JsonEndpoint(path="series/{id}/")
-    del_part = JsonEndpoint(path="series/{id}/", default_method="DELETE")
-    anonymize = JsonEndpoint(path="series/{id}/anonymize/", default_method="POST")
-    archive = StreamingEndpoint(path="series/{id}/archive/")
-    attachments = JsonEndpoint(path="series/{id}/attachments/")
-    attachment = JsonEndpoint(path="series/{id}/attachment/{name}/")
+    part = JsonEndpoint(path="series/{id_}/")
+    del_part = JsonEndpoint(path="series/{id_}/", default_method="DELETE")
+    anonymize = JsonEndpoint(path="series/{id_}/anonymize/", default_method="POST")
+    archive = StreamingEndpoint(path="series/{id_}/archive/")
+    attachments = JsonEndpoint(path="series/{id_}/attachments/")
+    attachment = JsonEndpoint(path="series/{id_}/attachment/{name}/")
     del_attachment = JsonEndpoint(
-        path="series/{id}/attachment/{name}/", default_method="DELETE"
+        path="series/{id_}/attachment/{name}/", default_method="DELETE"
     )
     put_attachment = JsonEndpoint(
-        path="series/{id}/attachment/{name}/", default_method="PUT"
+        path="series/{id_}/attachment/{name}/", default_method="PUT"
     )
     compress_attachment = JsonEndpoint(
-        path="series/{id}/attachment/{name}/compress/", default_method="POST"
+        path="series/{id_}/attachment/{name}/compress/", default_method="POST"
     )
     compressed_attachment_data = JsonEndpoint(
-        path="series/{id}/attachment/{name}/compressed-data/"
+        path="series/{id_}/attachment/{name}/compressed-data/"
     )
     compressed_attachment_md5 = JsonEndpoint(
-        path="series/{id}/attachment/{name}/compressed-md5/"
+        path="series/{id_}/attachment/{name}/compressed-md5/"
     )
     compressed_attachment_size = JsonEndpoint(
-        path="series/{id}/attachment/{name}/compressed-size/"
+        path="series/{id_}/attachment/{name}/compressed-size/"
     )
-    attachment_data = JsonEndpoint(path="series/{id}/attachment/{name}/data")
+    attachment_data = JsonEndpoint(path="series/{id_}/attachment/{name}/data")
     attachment_is_compressed = JsonEndpoint(
-        path="series/{id}/attachment/{name}/is-compressed"
+        path="series/{id_}/attachment/{name}/is-compressed"
     )
-    attachment_md5 = JsonEndpoint(path="series/{id}/attachment/{name}/md5")
-    attachment_size = JsonEndpoint(path="series/{id}/attachment/{name}/size")
+    attachment_md5 = JsonEndpoint(path="series/{id_}/attachment/{name}/md5")
+    attachment_size = JsonEndpoint(path="series/{id_}/attachment/{name}/size")
     uncompress_attachment = JsonEndpoint(
-        path="series/{id}/attachment/{name}/uncompress", default_method="POST"
+        path="series/{id_}/attachment/{name}/uncompress", default_method="POST"
     )
     verify_attachment = JsonEndpoint(
-        path="series/{id}/attachment/{name}/verify-md5", default_method="POST"
+        path="series/{id_}/attachment/{name}/verify-md5", default_method="POST"
     )
-    instances = JsonEndpoint(path="series/{id}/instances/")
-    instances_tags = JsonEndpoint(path="series/{id}/instances-tags/")
-    media = StreamingEndpoint(path="series/{id}/media/")
-    list_metadata = JsonEndpoint(path="series/{id}/metadata/")
-    metadata = JsonEndpoint(path="series/{id}/metadata/{name}/")
+    instances = JsonEndpoint(path="series/{id_}/instances/")
+    instances_tags = JsonEndpoint(path="series/{id_}/instances-tags/")
+    media = StreamingEndpoint(path="series/{id_}/media/")
+    list_metadata = JsonEndpoint(path="series/{id_}/metadata/")
+    metadata = JsonEndpoint(path="series/{id_}/metadata/{name}/")
     del_metadata = JsonEndpoint(
-        path="series/{id}/metadata/{name}/", default_method="DELETE"
+        path="series/{id_}/metadata/{name}/", default_method="DELETE"
     )
     put_metadata = JsonEndpoint(
-        path="series/{id}/metadata/{name}/", default_method="PUT"
+        path="series/{id_}/metadata/{name}/", default_method="PUT"
     )
-    modify = JsonEndpoint(path="series/{id}/modify/", default_method="POST")
-    module = JsonEndpoint(path="series/{id}/module/")
-    ordered_slices = JsonEndpoint(path="series/{id}/ordered-slices/")
-    patient = JsonEndpoint(path="series/{id}/patient/")
-    reconstruct = JsonEndpoint(path="series/{id}/reconstruct/", default_method="POST")
-    shared_tags = JsonEndpoint(path="series/{id}/shared-tags/")
-    statistics = JsonEndpoint(path="series/{id}/statistics/")
-    study = JsonEndpoint(path="series/{id}/study/")
+    modify = JsonEndpoint(path="series/{id_}/modify/", default_method="POST")
+    module = JsonEndpoint(path="series/{id_}/module/")
+    ordered_slices = JsonEndpoint(path="series/{id_}/ordered-slices/")
+    patient = JsonEndpoint(path="series/{id_}/patient/")
+    reconstruct = JsonEndpoint(path="series/{id_}/reconstruct/", default_method="POST")
+    shared_tags = JsonEndpoint(path="series/{id_}/shared-tags/")
+    statistics = JsonEndpoint(path="series/{id_}/statistics/")
+    study = JsonEndpoint(path="series/{id_}/study/")

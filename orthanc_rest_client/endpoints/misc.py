@@ -25,12 +25,12 @@ class OrthancServer(Service):
     del_exports = JsonEndpoint(path="exports/", default_method="DELETE")
 
     jobs = JsonEndpoint(path="jobs/")
-    job = JsonEndpoint(path="jobs/{id}/")
-    cancel_job = JsonEndpoint(path="jobs/{id}/cancel/", default_method="POST")
-    pause_job = JsonEndpoint(path="jobs/{id}/pause/", default_method="POST")
-    resubmit_job = JsonEndpoint(path="jobs/{id}/resubmit/", default_method="POST")
-    resume_job = JsonEndpoint(path="jobs/{id}/resume/", default_method="POST")
-    job_output = JsonEndpoint(path="jobs/{id}/{key}/")
+    job = JsonEndpoint(path="jobs/{id_}/")
+    cancel_job = JsonEndpoint(path="jobs/{id_}/cancel/", default_method="POST")
+    pause_job = JsonEndpoint(path="jobs/{id_}/pause/", default_method="POST")
+    resubmit_job = JsonEndpoint(path="jobs/{id_}/resubmit/", default_method="POST")
+    resume_job = JsonEndpoint(path="jobs/{id_}/resume/", default_method="POST")
+    job_output = JsonEndpoint(path="jobs/{id_}/{key}/")
 
     peers = JsonEndpoint(path="peers/")
     peer = JsonEndpoint(path="peers/{peer}/")
@@ -39,7 +39,7 @@ class OrthancServer(Service):
     store_peer = JsonEndpoint(path="peers/{peer}/store/", default_method="POST")
 
     plugins = JsonEndpoint(path="plugins/")
-    plugin = JsonEndpoint(path="plugins/{id}/")
+    plugin = JsonEndpoint(path="plugins/{id_}/")
     plugins_js = Endpoint(path="plugins/explorer.js/")
 
     statistics = JsonEndpoint(path="statistics/")

@@ -84,143 +84,143 @@ class Orthanc:
 
     @auth
     def get_instance(self, id_, **kwargs):
-        return self.instances.instance(path_kwargs={"id": id_}, **kwargs)
+        return self.instances.instance(id_=id_, **kwargs)
 
     @auth
     def delete_instance(self, id_, **kwargs):
-        return self.instances.del_instance(path_kwargs={"id": id_}, **kwargs)
+        return self.instances.del_instance(id_=id_, **kwargs)
 
     @auth
     def anonymize_instance(self, id_, data={}, **kwargs):
         j = self.convert_to_json(data)
-        return self.instances.anonymize(path_kwargs={"id": id_}, data=j, **kwargs)
+        return self.instances.anonymize(id_=id_, data=j, **kwargs)
 
     @auth
     def get_instance_content(self, id_, **kwargs):
-        return self.instances.content(path_kwargs={"id": id_}, **kwargs)
+        return self.instances.content(id_=id_, **kwargs)
 
     @auth
     def get_instance_content_raw_tag(self, id_, **kwargs):
-        return self.instances.content_raw_tag(path_kwargs={"id": id_}, **kwargs)
+        return self.instances.content_raw_tag(id_=id_, **kwargs)
 
     @auth
     def export_instance(self, id_, **kwargs):
-        return self.instances.export(path_kwargs={"id": id_}, data={}, **kwargs)
+        return self.instances.export(id_=id_, data={}, **kwargs)
 
     @auth
     def get_instance_file(self, id_, **kwargs):
-        return self.instances.file_(path_kwargs={"id": id_}, **kwargs)
+        return self.instances.file_(id_=id_, **kwargs)
 
     @auth
     def get_instance_frames(self, id_, **kwargs):
-        return self.instances.frames(path_kwargs={"id": id_}, **kwargs)
+        return self.instances.frames(id_=id_, **kwargs)
 
     @auth
     def get_instance_frame_int16(self, id_, frame, **kwargs):
         return self.instances.frame_int16(
-            path_kwargs={"id": id_, "number": frame}, **kwargs
+            id_=id_, number=frame, **kwargs
         )
 
     @auth
     def get_instance_frame_uint16(self, id_, frame, **kwargs):
         return self.instances.frame_uint16(
-            path_kwargs={"id": id_, "number": frame}, **kwargs
+            id_=id_, number=frame, **kwargs
         )
 
     @auth
     def get_instance_frame_uint8(self, id_, frame, **kwargs):
         return self.instances.frame_uint8(
-            path_kwargs={"id": id_, "number": frame}, **kwargs
+            id_=id_, number=frame, **kwargs
         )
 
     @auth
     def get_instance_frame_matlab(self, id_, frame, **kwargs):
         return self.instances.frame_matlab(
-            path_kwargs={"id": id_, "number": frame}, **kwargs
+            id_=id_, number=frame, **kwargs
         )
 
     @auth
     def get_instance_frame_preview(self, id_, frame, **kwargs):
         return self.instances.frame_preview(
-            path_kwargs={"id": id_, "number": frame}, **kwargs
+            id_=id_, number=frame, **kwargs
         )
 
     @auth
     def get_instance_frame_raw(self, id_, frame, **kwargs):
         return self.instances.frame_raw(
-            path_kwargs={"id": id_, "number": frame}, **kwargs
+            id_=id_, number=frame, **kwargs
         )
 
     @auth
     def get_instance_frame_raw_gz(self, id_, frame, **kwargs):
         return self.instances.frame_raw_gz(
-            path_kwargs={"id": id_, "number": frame}, **kwargs
+            id_=id_, number=frame, **kwargs
         )
 
     @auth
     def get_instance_header(self, id_, **kwargs):
-        return self.instances.header(path_kwargs={"id": id_}, **kwargs)
+        return self.instances.header(id_=id_, **kwargs)
 
     @auth
     def get_instance_int16(self, id_, **kwargs):
-        return self.instances.image_int16(path_kwargs={"id": id_}, **kwargs)
+        return self.instances.image_int16(id_=id_, **kwargs)
 
     @auth
     def get_instance_uint16(self, id_, **kwargs):
-        return self.instances.image_uint16(path_kwargs={"id": id_}, **kwargs)
+        return self.instances.image_uint16(id_=id_, **kwargs)
 
     @auth
     def get_instance_uint8(self, id_, **kwargs):
-        return self.instances.image_uint8(path_kwargs={"id": id_}, **kwargs)
+        return self.instances.image_uint8(id_=id_, **kwargs)
 
     @auth
     def get_instance_matlab(self, id_, **kwargs):
-        return self.instances.matlab(path_kwargs={"id": id_}, **kwargs)
+        return self.instances.matlab(id_=id_, **kwargs)
 
     @auth
     def modify_instance(self, id_, data, **kwargs):
         j = self.convert_to_json(data)
-        return self.instances.modify(path_kwargs={"id": id_}, data=j, **kwargs)
+        return self.instances.modify(id_=id_, data=j, **kwargs)
 
     @auth
     def get_instance_module(self, id_, **kwargs):
-        return self.instances.module(path_kwargs={"id": id_}, **kwargs)
+        return self.instances.module(id_=id_, **kwargs)
 
     @auth
     def get_instance_patient(self, id_, **kwargs):
-        return self.instances.patient(path_kwargs={"id": id_}, **kwargs)
+        return self.instances.patient(id_=id_, **kwargs)
 
     @auth
     def get_instance_pdf(self, id_, **kwargs):
-        return self.instances.pdf(path_kwargs={"id": id_}, **kwargs)
+        return self.instances.pdf(id_=id_, **kwargs)
 
     @auth
     def get_instance_preview(self, id_, **kwargs):
-        return self.instances.preview(path_kwargs={"id": id_}, **kwargs)
+        return self.instances.preview(id_=id_, **kwargs)
 
     @auth
     def reconstruct_instance(self, id_, **kwargs):
-        return self.instances.reconstruct(path_kwargs={"id": id_}, data={}, **kwargs)
+        return self.instances.reconstruct(id_=id_, data={}, **kwargs)
 
     @auth
     def get_instance_series(self, id_, **kwargs):
-        return self.instances.series(path_kwargs={"id": id_}, **kwargs)
+        return self.instances.series(id_=id_, **kwargs)
 
     @auth
     def get_instance_simplified_tags(self, id_, **kwargs):
-        return self.instances.simplified_tags(path_kwargs={"id": id_}, **kwargs)
+        return self.instances.simplified_tags(id_=id_, **kwargs)
 
     @auth
     def get_instance_statistics(self, id_, **kwargs):
-        return self.instances.statistics(path_kwargs={"id": id_}, **kwargs)
+        return self.instances.statistics(id_=id_, **kwargs)
 
     @auth
     def get_instance_study(self, id_, **kwargs):
-        return self.instances.study(path_kwargs={"id": id_}, **kwargs)
+        return self.instances.study(id_=id_, **kwargs)
 
     @auth
     def get_instance_tags(self, id_, **kwargs):
-        return self.instances.tags(path_kwargs={"id": id_}, **kwargs)
+        return self.instances.tags(id_=id_, **kwargs)
 
     #### PATIENTS
     @auth
@@ -229,76 +229,76 @@ class Orthanc:
 
     @auth
     def get_patient(self, id_, **kwargs):
-        return self.patients.patient(path_kwargs={"id": id_}, **kwargs)
+        return self.patients.patient(id_=id_, **kwargs)
 
     @auth
     def delete_patient(self, id_, **kwargs):
-        return self.patients.del_patient(path_kwargs={"id": id_}, **kwargs)
+        return self.patients.del_patient(id_=id_, **kwargs)
 
     @auth
     def anonymize_patient(self, id_, data={}, **kwargs):
         j = self.convert_to_json(data)
-        return self.patients.anonymize(path_kwargs={"id": id_}, data=j, **kwargs)
+        return self.patients.anonymize(id_=id_, data=j, **kwargs)
 
     @auth
     def archive_patient(self, id_, **kwargs):
-        return self.patients.archive(path_kwargs={"id": id_}, **kwargs)
+        return self.patients.archive(id_=id_, **kwargs)
 
     @auth
     def get_patient_instances(self, id_, **kwargs):
-        return self.patients.instances(path_kwargs={"id": id_}, **kwargs)
+        return self.patients.instances(id_=id_, **kwargs)
 
     @auth
     def get_patient_instance_tags(self, id_, **kwargs):
-        return self.patients.instances_tags(path_kwargs={"id": id_}, **kwargs)
+        return self.patients.instances_tags(id_=id_, **kwargs)
 
     @auth
     def modify_patient(self, id_, data, **kwargs):
         j = self.convert_to_json(data)
-        return self.patients.modify(path_kwargs={"id": id_}, data=j, **kwargs)
+        return self.patients.modify(id_=id_, data=j, **kwargs)
 
     @auth
     def get_patient_module(self, id_, **kwargs):
-        return self.patients.module(path_kwargs={"id": id_}, **kwargs)
+        return self.patients.module(id_=id_, **kwargs)
 
     @auth
     def get_patient_media(self, id_, **kwargs):
-        return self.patients.media(path_kwargs={"id": id_}, **kwargs)
+        return self.patients.media(id_=id_, **kwargs)
 
     @auth
     def get_patient_protected(self, id_, **kwargs):
-        return self.patients.protected(path_kwargs={"id": id_}, **kwargs)
+        return self.patients.protected(id_=id_, **kwargs)
 
     @auth
     def put_patient_protected(self, id_, data={}, **kwargs):
-        return self.patients.put_protected(path_kwargs={"id": id_}, data=data, **kwargs)
+        return self.patients.put_protected(id_=id_, data=data, **kwargs)
 
     @auth
     def reconstruct_patient(self, id_, data={}, **kwargs):
-        return self.patients.protected(path_kwargs={"id": id_}, data=data, **kwargs)
+        return self.patients.protected(id_=id_, data=data, **kwargs)
 
     @auth
     def get_patient_series(self, id_, **kwargs):
-        return self.patients.series(path_kwargs={"id": id_}, **kwargs)
+        return self.patients.series(id_=id_, **kwargs)
 
     @auth
     def get_patient_shared_tags(self, id_, **kwargs):
-        return self.patients.shared_tags(path_kwargs={"id": id_}, **kwargs)
+        return self.patients.shared_tags(id_=id_, **kwargs)
 
     @auth
     def get_patient_statistics(self, id_, **kwargs):
-        return self.patients.statistics(path_kwargs={"id": id_}, **kwargs)
+        return self.patients.statistics(id_=id_, **kwargs)
 
     @auth
     def get_patient_studies(self, id_, **kwargs):
-        return self.patients.studies(path_kwargs={"id": id_}, **kwargs)
+        return self.patients.studies(id_=id_, **kwargs)
 
     @auth
     def get_patient_id_from_uuid(self, id_, **kwargs):
         return (
-            self.patients.patient(path_kwargs={"id": id_}, **kwargs)
+            self.patients.patient(id_=id_, **kwargs)
             .get("MainDicomTags")
-            .get("PatientID")
+            .get("Patientid_")
         )
 
     @auth
@@ -307,7 +307,7 @@ class Orthanc:
             return [
                 self.get_patient_studies(patient)
                 for patient in self.find(
-                    {"Level": "Patient", "Limit": 1, "Query": {"PatientID": id_}},
+                    {"Level": "Patient", "Limit": 1, "Query": {"Patientid_": id_}},
                     **kwargs
                 )
             ][0]
@@ -321,43 +321,43 @@ class Orthanc:
 
     @auth
     def get_query(self, id_, **kwargs):
-        return self.queries.query(path_kwargs={"id": id_}, **kwargs)
+        return self.queries.query(id_=id_, **kwargs)
 
     @auth
     def delete_query(self, id_, **kwargs):
-        return self.queries.del_query(path_kwargs={"id": id_}, **kwargs)
+        return self.queries.del_query(id_=id_, **kwargs)
 
     @auth
     def get_query_answers(self, id_, **kwargs):
-        return self.queries.query(path_kwargs={"id": id_}, **kwargs)
+        return self.queries.query(id_=id_, **kwargs)
 
     @auth
     def get_query_answers_content(self, id_, index, **kwargs):
         return self.queries.answers_content(
-            path_kwargs={"id": id_, "index": index}, **kwargs
+            id_=id_, index=index, **kwargs
         )
 
     @auth
     def post_query_answers_retrieve(self, id_, index, **kwargs):
         return self.queries.answers_retrieve(
-            path_kwargs={"id": id_, "index": index}, **kwargs
+            id_=id_, index=index, **kwargs
         )
 
     @auth
     def get_query_level(self, id_, **kwargs):
-        return self.queries.level(path_kwargs={"id": id_}, **kwargs)
+        return self.queries.level(id_=id_, **kwargs)
 
     @auth
     def get_query_modality(self, id_, **kwargs):
-        return self.queries.modality(path_kwargs={"id": id_}, **kwargs)
+        return self.queries.modality(id_=id_, **kwargs)
 
     @auth
     def get_query_query(self, id_, **kwargs):
-        return self.queries.query_query(path_kwargs={"id": id_}, **kwargs)
+        return self.queries.query_query(id_=id_, **kwargs)
 
     @auth
     def post_query_retrieve(self, id_, **kwargs):
-        return self.queries.retrieve(path_kwargs={"id": id_}, **kwargs)
+        return self.queries.retrieve(id_=id_, **kwargs)
 
     #### SERIES
     @auth
@@ -366,65 +366,65 @@ class Orthanc:
 
     @auth
     def get_one_series(self, id_, **kwargs):
-        return self.series.part(path_kwargs={"id": id_}, **kwargs)
+        return self.series.part(id_=id_, **kwargs)
 
     @auth
     def delete_series(self, id_, **kwargs):
-        return self.series.del_part(path_kwargs={"id": id_}, **kwargs)
+        return self.series.del_part(id_=id_, **kwargs)
 
     @auth
     def anonymize_series(self, id_, data={}, **kwargs):
         j = self.convert_to_json(data)
-        return self.series.anonymize(path_kwargs={"id": id_}, data=j, **kwargs)
+        return self.series.anonymize(id_=id_, data=j, **kwargs)
 
     @auth
     def get_series_archive(self, id_, **kwargs):
-        return self.series.archive(path_kwargs={"id": id_}, **kwargs)
+        return self.series.archive(id_=id_, **kwargs)
 
     @auth
     def get_series_instances(self, id_, **kwargs):
-        return self.series.instances(path_kwargs={"id": id_}, **kwargs)
+        return self.series.instances(id_=id_, **kwargs)
 
     @auth
     def get_series_instances_tags(self, id_, **kwargs):
-        return self.series.instances_tags(path_kwargs={"id": id_}, **kwargs)
+        return self.series.instances_tags(id_=id_, **kwargs)
 
     @auth
     def get_series_media(self, id_, **kwargs):
-        return self.series.media(path_kwargs={"id": id_}, **kwargs)
+        return self.series.media(id_=id_, **kwargs)
 
     @auth
     def modify_series(self, id_, data, **kwargs):
         j = self.convert_to_json(data)
-        return self.series.modify(path_kwargs={"id": id_}, data=j, **kwargs)
+        return self.series.modify(id_=id_, data=j, **kwargs)
 
     @auth
     def get_series_module(self, id_, **kwargs):
-        return self.series.module(path_kwargs={"id": id_}, **kwargs)
+        return self.series.module(id_=id_, **kwargs)
 
     @auth
     def get_series_ordered_slices(self, id_, **kwargs):
-        return self.series.ordered_slices(path_kwargs={"id": id_}, **kwargs)
+        return self.series.ordered_slices(id_=id_, **kwargs)
 
     @auth
     def get_series_patient(self, id_, **kwargs):
-        return self.series.patient(path_kwargs={"id": id_}, **kwargs)
+        return self.series.patient(id_=id_, **kwargs)
 
     @auth
     def reconstruct_series(self, id_, **kwargs):
-        return self.series.reconstruct(path_kwargs={"id": id_}, **kwargs)
+        return self.series.reconstruct(id_=id_, **kwargs)
 
     @auth
     def get_series_shared_tags(self, id_, **kwargs):
-        return self.series.shared_tags(path_kwargs={"id": id_}, **kwargs)
+        return self.series.shared_tags(id_=id_, **kwargs)
 
     @auth
     def get_series_statistics(self, id_, **kwargs):
-        return self.series.statistics(path_kwargs={"id": id_}, **kwargs)
+        return self.series.statistics(id_=id_, **kwargs)
 
     @auth
     def get_series_study(self, id_, **kwargs):
-        return self.series.study(path_kwargs={"id": id_}, **kwargs)
+        return self.series.study(id_=id_, **kwargs)
 
     #### STUDIES
     @auth
@@ -433,65 +433,65 @@ class Orthanc:
 
     @auth
     def get_study(self, id_, **kwargs):
-        return self.studies.study(path_kwargs={"id": id_}, **kwargs)
+        return self.studies.study(id_=id_, **kwargs)
 
     @auth
     def delete_study(self, id_, **kwargs):
-        return self.studies.del_study(path_kwargs={"id": id_}, **kwargs)
+        return self.studies.del_study(id_=id_, **kwargs)
 
     @auth
     def anonymize_study(self, id_, data={}, **kwargs):
         j = self.convert_to_json(data)
-        return self.studies.anonymize(path_kwargs={"id": id_}, data=j, **kwargs)
+        return self.studies.anonymize(id_=id_, data=j, **kwargs)
 
     @auth
     def get_study_archive(self, id_, **kwargs):
-        return self.studies.archive(path_kwargs={"id": id_}, **kwargs)
+        return self.studies.archive(id_=id_, **kwargs)
 
     @auth
     def get_study_instances(self, id_, **kwargs):
-        return self.studies.instances(path_kwargs={"id": id_}, **kwargs)
+        return self.studies.instances(id_=id_, **kwargs)
 
     @auth
     def get_study_instances_tags(self, id_, **kwargs):
-        return self.studies.instances_tags(path_kwargs={"id": id_}, **kwargs)
+        return self.studies.instances_tags(id_=id_, **kwargs)
 
     @auth
     def get_study_media(self, id_, **kwargs):
-        return self.studies.media(path_kwargs={"id": id_}, **kwargs)
+        return self.studies.media(id_=id_, **kwargs)
 
     @auth
     def modify_study(self, id_, data, **kwargs):
         j = self.convert_to_json(data)
-        return self.studies.modify(path_kwargs={"id": id_}, data=j, **kwargs)
+        return self.studies.modify(id_=id_, data=j, **kwargs)
 
     @auth
     def get_study_module(self, id_, **kwargs):
-        return self.studies.module(path_kwargs={"id": id_}, **kwargs)
+        return self.studies.module(id_=id_, **kwargs)
 
     @auth
     def get_study_module_patient(self, id_, **kwargs):
-        return self.studies.module_patient(path_kwargs={"id": id_}, **kwargs)
+        return self.studies.module_patient(id_=id_, **kwargs)
 
     @auth
     def get_study_patient(self, id_, **kwargs):
-        return self.studies.patient(path_kwargs={"id": id_}, **kwargs)
+        return self.studies.patient(id_=id_, **kwargs)
 
     @auth
     def reconstruct_study(self, id_, **kwargs):
-        return self.studies.reconstruct(path_kwargs={"id": id_}, **kwargs)
+        return self.studies.reconstruct(id_=id_, **kwargs)
 
     @auth
     def get_study_series(self, id_, **kwargs):
-        return self.studies.series(path_kwargs={"id": id_}, **kwargs)
+        return self.studies.series(id_=id_, **kwargs)
 
     @auth
     def get_study_shared_tags(self, id_, **kwargs):
-        return self.studies.shared_tags(path_kwargs={"id": id_}, **kwargs)
+        return self.studies.shared_tags(id_=id_, **kwargs)
 
     @auth
     def get_study_statistics(self, id_, **kwargs):
-        return self.studies.statistics(path_kwargs={"id": id_}, **kwargs)
+        return self.studies.statistics(id_=id_, **kwargs)
 
     #### MODALITIES ###
     @auth
@@ -500,37 +500,37 @@ class Orthanc:
 
     @auth
     def get_modality(self, dicom, **kwargs):
-        return self.modalities.modality(path_kwargs={"dicom": dicom}, **kwargs)
+        return self.modalities.modality(dicom=dicom, **kwargs)
 
     @auth
     def delete_modality(self, dicom, **kwargs):
-        return self.modalities.del_modality(path_kwargs={"dicom": dicom}, **kwargs)
+        return self.modalities.del_modality(dicom=dicom, **kwargs)
 
     @auth
     def update_modality(self, dicom, data, **kwargs):
         j = self.convert_to_json(data)
         return self.modalities.put_modality(
-            path_kwargs={"dicom": dicom}, data=j, **kwargs
+            dicom=dicom, data=j, **kwargs
         )
 
     @auth
     def echo_modality(self, dicom, **kwargs):
-        return self.modalities.echo(path_kwargs={"dicom": dicom}, data={}, **kwargs)
+        return self.modalities.echo(dicom=dicom, data={}, **kwargs)
 
     @auth
     def move_modality(self, dicom, data, **kwargs):
         j = self.convert_to_json(data)
-        return self.modalities.move(path_kwargs={"dicom": dicom}, data=j, **kwargs)
+        return self.modalities.move(dicom=dicom, data=j, **kwargs)
 
     @auth
     def query_modality(self, dicom, data, **kwargs):
         j = self.convert_to_json(data)
-        return self.modalities.query(path_kwargs={"dicom": dicom}, data=j, **kwargs)
+        return self.modalities.query(dicom=dicom, data=j, **kwargs)
 
     @auth
     def store_modality(self, dicom, data, **kwargs):
         j = self.convert_to_json(data)
-        return self.modalities.store(path_kwargs={"dicom": dicom}, data=j, **kwargs)
+        return self.modalities.store(dicom=dicom, data=j, **kwargs)
 
     #### SERVER-RELATED
     @auth
@@ -559,23 +559,23 @@ class Orthanc:
 
     @auth
     def get_job(self, id_, **kwargs):
-        return self.server.job(path_kwargs={"id": id_}, **kwargs)
+        return self.server.job(id_=id_, **kwargs)
 
     @auth
     def cancel_job(self, id_, **kwargs):
-        return self.server.cancel_job(path_kwargs={"id": id_}, data={}, **kwargs)
+        return self.server.cancel_job(id_=id_, data={}, **kwargs)
 
     @auth
     def pause_job(self, id_, **kwargs):
-        return self.server.pause_job(path_kwargs={"id": id_}, data={}, **kwargs)
+        return self.server.pause_job(id_=id_, data={}, **kwargs)
 
     @auth
     def resubmit_job(self, id_, **kwargs):
-        return self.server.resubmit_job(path_kwargs={"id": id_}, data={}, **kwargs)
+        return self.server.resubmit_job(id_=id_, data={}, **kwargs)
 
     @auth
     def resume_job(self, id_, **kwargs):
-        return self.server.resume_job(path_kwargs={"id": id_}, data={}, **kwargs)
+        return self.server.resume_job(id_=id_, data={}, **kwargs)
 
     @auth
     def get_peers(self, **kwargs):
@@ -583,19 +583,19 @@ class Orthanc:
 
     @auth
     def get_peer(self, peer, **kwargs):
-        return self.server.peer(path_kwargs={"peer": peer}, **kwargs)
+        return self.server.peer(peer=peer, **kwargs)
 
     @auth
     def delete_peer(self, peer, **kwargs):
-        return self.server.del_peer(path_kwargs={"peer": peer}, **kwargs)
+        return self.server.del_peer(peer=peer, **kwargs)
 
     @auth
     def put_peer(self, peer, **kwargs):
-        return self.server.put_peer(path_kwargs={"peer": peer}, **kwargs)
+        return self.server.put_peer(peer=peer, **kwargs)
 
     @auth
     def store_peer(self, peer, **kwargs):
-        return self.server.store_peer(path_kwargs={"peer": peer}, **kwargs)
+        return self.server.store_peer(peer=peer, **kwargs)
 
     @auth
     def get_plugins(self, **kwargs):
@@ -603,7 +603,7 @@ class Orthanc:
 
     @auth
     def get_plugin(self, id_, **kwargs):
-        return self.server.plugin(path_kwargs={"id": id_}, **kwargs)
+        return self.server.plugin(id_=id_, **kwargs)
 
     @auth
     def get_plugins_js(self, **kwargs):

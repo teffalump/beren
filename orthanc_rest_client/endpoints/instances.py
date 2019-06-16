@@ -20,79 +20,79 @@ class OrthancInstances(Service):
 
     instances = JsonEndpoint(path="instances/")
     add_instance = JsonEndpoint(path="instances/", default_method="POST")
-    instance = JsonEndpoint(path="instances/{id}/")
-    del_instance = JsonEndpoint(path="instances/{id}/", default_method="DELETE")
-    anonymize = JsonEndpoint(path="instances/{id}/anonymize/", default_method="POST")
-    attachments = JsonEndpoint(path="instances/{id}/attachments")
-    attachment = JsonEndpoint(path="instances/{id}/attachment/{name}/")
+    instance = JsonEndpoint(path="instances/{id_}/")
+    del_instance = JsonEndpoint(path="instances/{id_}/", default_method="DELETE")
+    anonymize = JsonEndpoint(path="instances/{id_}/anonymize/", default_method="POST")
+    attachments = JsonEndpoint(path="instances/{id_}/attachments")
+    attachment = JsonEndpoint(path="instances/{id_}/attachment/{name}/")
     del_attachment = JsonEndpoint(
-        path="instances/{id}/attachment/{name}/", default_method="DELETE"
+        path="instances/{id_}/attachment/{name}/", default_method="DELETE"
     )
     put_attachment = JsonEndpoint(
-        path="instances/{id}/attachment/{name}/", default_method="PUT"
+        path="instances/{id_}/attachment/{name}/", default_method="PUT"
     )
     compress_attachment = JsonEndpoint(
-        path="instances/{id}/attachment/{name}/compress", default_method="POST"
+        path="instances/{id_}/attachment/{name}/compress", default_method="POST"
     )
     compressed_attachment_data = JsonEndpoint(
-        path="instances/{id}/attachment/{name}/compressed-data"
+        path="instances/{id_}/attachment/{name}/compressed-data"
     )
     compressed_attachment_md5 = JsonEndpoint(
-        path="instances/{id}/attachment/{name}/compressed-md5"
+        path="instances/{id_}/attachment/{name}/compressed-md5"
     )
     compressed_attachment_size = JsonEndpoint(
-        path="instances/{id}/attachment/{name}/compressed-size"
+        path="instances/{id_}/attachment/{name}/compressed-size"
     )
-    attachment_data = JsonEndpoint(path="instances/{id}/attachment/{name}/data")
+    attachment_data = JsonEndpoint(path="instances/{id_}/attachment/{name}/data")
     attachment_is_compressed = JsonEndpoint(
-        path="instances/{id}/attachment/{name}/is-compressed"
+        path="instances/{id_}/attachment/{name}/is-compressed"
     )
-    attachment_md5 = JsonEndpoint(path="instances/{id}/attachment/{name}/md5")
-    attachment_size = JsonEndpoint(path="instances/{id}/attachment/{name}/size")
+    attachment_md5 = JsonEndpoint(path="instances/{id_}/attachment/{name}/md5")
+    attachment_size = JsonEndpoint(path="instances/{id_}/attachment/{name}/size")
     uncompress_attachment = JsonEndpoint(
-        path="instances/{id}/attachment/{name}/uncompress", default_method="POST"
+        path="instances/{id_}/attachment/{name}/uncompress", default_method="POST"
     )
     verify_attachment = JsonEndpoint(
-        path="instances/{id}/attachment/{name}/verify-md5", default_method="POST"
+        path="instances/{id_}/attachment/{name}/verify-md5", default_method="POST"
     )
-    content = JsonEndpoint(path="instances/{id}/content")
-    content_raw_tag = JsonEndpoint(path="instances/{id}/content/{group}-{element}/")
-    # instance_content_raw_seq = JsonEndpoint(path='instances/{id}/content/{group}-{element}/{index}/')
-    export = JsonEndpoint(path="instances/{id}/export/", default_method="POST")
-    file_ = StreamingEndpoint(path="instances/{id}/file/")
-    frames = JsonEndpoint(path="instances/{id}/frames/")
-    frame_int16 = StreamingEndpoint(path="instances/{id}/frames/{number}/image-int16/")
+    content = JsonEndpoint(path="instances/{id_}/content")
+    content_raw_tag = JsonEndpoint(path="instances/{id_}/content/{group}-{element}/")
+    # instance_content_raw_seq = JsonEndpoint(path='instances/{id_}/content/{group}-{element}/{index}/')
+    export = JsonEndpoint(path="instances/{id_}/export/", default_method="POST")
+    file_ = StreamingEndpoint(path="instances/{id_}/file/")
+    frames = JsonEndpoint(path="instances/{id_}/frames/")
+    frame_int16 = StreamingEndpoint(path="instances/{id_}/frames/{number}/image-int16/")
     frame_uint16 = StreamingEndpoint(
-        path="instances/{id}/frames/{number}/image-uint16/"
+        path="instances/{id_}/frames/{number}/image-uint16/"
     )
-    frame_uint8 = StreamingEndpoint(path="instances/{id}/frames/{number}/image-uint8/")
-    frame_matlab = Endpoint(path="instances/{id}/frames/{number}/matlab/")
-    frame_preview = StreamingEndpoint(path="instances/{id}/frames/{number}/preview/")
-    frame_raw = StreamingEndpoint(path="instances/{id}/frames/{number}/raw/")
-    frame_raw_gz = StreamingEndpoint(path="instances/{id}/frames/{number}/raw.gz/")
-    header = JsonEndpoint(path="instances/{id}/header/")
-    image_int16 = StreamingEndpoint(path="instances/{id}/image-int16/")
-    image_uint16 = StreamingEndpoint(path="instances/{id}/image-uint16/")
-    image_uint8 = StreamingEndpoint(path="instances/{id}/image-uint8/")
-    matlab = Endpoint(path="instances/{id}/matlab/")
-    list_metadata = JsonEndpoint(path="instances/{id}/metadata/")
-    metadata = JsonEndpoint(path="instances/{id}/metadata/{name}/")
+    frame_uint8 = StreamingEndpoint(path="instances/{id_}/frames/{number}/image-uint8/")
+    frame_matlab = Endpoint(path="instances/{id_}/frames/{number}/matlab/")
+    frame_preview = StreamingEndpoint(path="instances/{id_}/frames/{number}/preview/")
+    frame_raw = StreamingEndpoint(path="instances/{id_}/frames/{number}/raw/")
+    frame_raw_gz = StreamingEndpoint(path="instances/{id_}/frames/{number}/raw.gz/")
+    header = JsonEndpoint(path="instances/{id_}/header/")
+    image_int16 = StreamingEndpoint(path="instances/{id_}/image-int16/")
+    image_uint16 = StreamingEndpoint(path="instances/{id_}/image-uint16/")
+    image_uint8 = StreamingEndpoint(path="instances/{id_}/image-uint8/")
+    matlab = Endpoint(path="instances/{id_}/matlab/")
+    list_metadata = JsonEndpoint(path="instances/{id_}/metadata/")
+    metadata = JsonEndpoint(path="instances/{id_}/metadata/{name}/")
     del_metadata = JsonEndpoint(
-        path="instances/{id}/metadata/{name}/", default_method="DELETE"
+        path="instances/{id_}/metadata/{name}/", default_method="DELETE"
     )
     put_metadata = JsonEndpoint(
-        path="instances/{id}/metadata/{name}/", default_method="PUT"
+        path="instances/{id_}/metadata/{name}/", default_method="PUT"
     )
-    modify = JsonEndpoint(path="instances/{id}/modify/", default_method="POST")
-    module = JsonEndpoint(path="instances/{id}/module/")
-    patient = JsonEndpoint(path="instances/{id}/patient/")
-    pdf = StreamingEndpoint(path="instances/{id}/pdf/")
-    preview = StreamingEndpoint(path="instances/{id}/preview/")
+    modify = JsonEndpoint(path="instances/{id_}/modify/", default_method="POST")
+    module = JsonEndpoint(path="instances/{id_}/module/")
+    patient = JsonEndpoint(path="instances/{id_}/patient/")
+    pdf = StreamingEndpoint(path="instances/{id_}/pdf/")
+    preview = StreamingEndpoint(path="instances/{id_}/preview/")
     reconstruct = JsonEndpoint(
-        path="instances/{id}/reconstruct/", default_method="POST"
+        path="instances/{id_}/reconstruct/", default_method="POST"
     )
-    series = JsonEndpoint(path="instances/{id}/series/")
-    simplified_tags = JsonEndpoint(path="instances/{id}/simplified-tags/")
-    statistics = JsonEndpoint(path="instances/{id}/statistics/")
-    study = JsonEndpoint(path="instances/{id}/study/")
-    tags = JsonEndpoint(path="instances/{id}/tags/")
+    series = JsonEndpoint(path="instances/{id_}/series/")
+    simplified_tags = JsonEndpoint(path="instances/{id_}/simplified-tags/")
+    statistics = JsonEndpoint(path="instances/{id_}/statistics/")
+    study = JsonEndpoint(path="instances/{id_}/study/")
+    tags = JsonEndpoint(path="instances/{id_}/tags/")

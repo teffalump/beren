@@ -19,58 +19,58 @@ __all__ = ["OrthancStudies"]
 class OrthancStudies(Service):
 
     studies = JsonEndpoint(path="/studies/")
-    study = JsonEndpoint(path="/studies/{id}/")
-    del_study = JsonEndpoint(path="/studies/{id}/", default_method="DELETE")
-    anonymize = JsonEndpoint(path="/studies/{id}/anonymize/", default_method="POST")
-    archive = StreamingEndpoint(path="/studies/{id}/archive/")
-    attachments = JsonEndpoint(path="studies/{id}/attachments")
-    attachment = JsonEndpoint(path="studies/{id}/attachment/{name}/")
+    study = JsonEndpoint(path="/studies/{id_}/")
+    del_study = JsonEndpoint(path="/studies/{id_}/", default_method="DELETE")
+    anonymize = JsonEndpoint(path="/studies/{id_}/anonymize/", default_method="POST")
+    archive = StreamingEndpoint(path="/studies/{id_}/archive/")
+    attachments = JsonEndpoint(path="studies/{id_}/attachments")
+    attachment = JsonEndpoint(path="studies/{id_}/attachment/{name}/")
     del_attachment = JsonEndpoint(
-        path="studies/{id}/attachment/{name}/", default_method="DELETE"
+        path="studies/{id_}/attachment/{name}/", default_method="DELETE"
     )
     put_attachment = JsonEndpoint(
-        path="studies/{id}/attachment/{name}/", default_method="PUT"
+        path="studies/{id_}/attachment/{name}/", default_method="PUT"
     )
     compress_attachment = JsonEndpoint(
-        path="studies/{id}/attachment/{name}/compress", default_method="POST"
+        path="studies/{id_}/attachment/{name}/compress", default_method="POST"
     )
     compressed_attachment_data = JsonEndpoint(
-        path="studies/{id}/attachment/{name}/compressed-data"
+        path="studies/{id_}/attachment/{name}/compressed-data"
     )
     compressed_attachment_md5 = JsonEndpoint(
-        path="studies/{id}/attachment/{name}/compressed-md5"
+        path="studies/{id_}/attachment/{name}/compressed-md5"
     )
     compressed_attachment_size = JsonEndpoint(
-        path="studies/{id}/attachment/{name}/compressed-size"
+        path="studies/{id_}/attachment/{name}/compressed-size"
     )
-    attachment_data = JsonEndpoint(path="studies/{id}/attachment/{name}/data")
+    attachment_data = JsonEndpoint(path="studies/{id_}/attachment/{name}/data")
     attachment_is_compressed = JsonEndpoint(
-        path="studies/{id}/attachment/{name}/is-compressed"
+        path="studies/{id_}/attachment/{name}/is-compressed"
     )
-    attachment_md5 = JsonEndpoint(path="studies/{id}/attachment/{name}/md5")
-    attachment_size = JsonEndpoint(path="studies/{id}/attachment/{name}/size")
+    attachment_md5 = JsonEndpoint(path="studies/{id_}/attachment/{name}/md5")
+    attachment_size = JsonEndpoint(path="studies/{id_}/attachment/{name}/size")
     uncompress_attachment = JsonEndpoint(
-        path="studies/{id}/attachment/{name}/uncompress", default_method="POST"
+        path="studies/{id_}/attachment/{name}/uncompress", default_method="POST"
     )
     verify_attachment = JsonEndpoint(
-        path="studies/{id}/attachment/{name}/verify-md5", default_method="POST"
+        path="studies/{id_}/attachment/{name}/verify-md5", default_method="POST"
     )
-    instances = JsonEndpoint(path="/studies/{id}/instances/")
-    instances_tags = JsonEndpoint(path="/studies/{id}/instances-tags/")
-    media = StreamingEndpoint(path="/studies/{id}/media/")
-    list_metadata = JsonEndpoint(path="studies/{id}/metadata/")
-    metadata = JsonEndpoint(path="studies/{id}/metadata/{name}/")
+    instances = JsonEndpoint(path="/studies/{id_}/instances/")
+    instances_tags = JsonEndpoint(path="/studies/{id_}/instances-tags/")
+    media = StreamingEndpoint(path="/studies/{id_}/media/")
+    list_metadata = JsonEndpoint(path="studies/{id_}/metadata/")
+    metadata = JsonEndpoint(path="studies/{id_}/metadata/{name}/")
     del_metadata = JsonEndpoint(
-        path="studies/{id}/metadata/{name}/", default_method="DELETE"
+        path="studies/{id_}/metadata/{name}/", default_method="DELETE"
     )
     put_metadata = JsonEndpoint(
-        path="studies/{id}/metadata/{name}/", default_method="PUT"
+        path="studies/{id_}/metadata/{name}/", default_method="PUT"
     )
-    modify = JsonEndpoint(path="/studies/{id}/modify/", default_method="POST")
-    module = JsonEndpoint(path="/studies/{id}/module/")
-    module_patient = JsonEndpoint(path="/studies/{id}/module_patient/")
-    patient = JsonEndpoint(path="/studies/{id}/patient/")
-    reconstruct = JsonEndpoint(path="/studies/{id}/reconstruct/", default_method="POST")
-    series = JsonEndpoint(path="/studies/{id}/series/")
-    shared_tags = JsonEndpoint(path="/studies/{id}/shared-tags/")
-    statistics = JsonEndpoint(path="/studies/{id}/statistics/")
+    modify = JsonEndpoint(path="/studies/{id_}/modify/", default_method="POST")
+    module = JsonEndpoint(path="/studies/{id_}/module/")
+    module_patient = JsonEndpoint(path="/studies/{id_}/module_patient/")
+    patient = JsonEndpoint(path="/studies/{id_}/patient/")
+    reconstruct = JsonEndpoint(path="/studies/{id_}/reconstruct/", default_method="POST")
+    series = JsonEndpoint(path="/studies/{id_}/series/")
+    shared_tags = JsonEndpoint(path="/studies/{id_}/shared-tags/")
+    statistics = JsonEndpoint(path="/studies/{id_}/statistics/")
