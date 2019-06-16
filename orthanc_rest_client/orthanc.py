@@ -63,10 +63,11 @@ class Orthanc:
 
     @staticmethod
     def convert_to_json(data, **kwargs):
+        """Wrapper for ```json.dumps``"""
         return dumps(data, **kwargs)
 
     #### INSTANCES
-    def get_instances(self, expand=False, since=None, limit=None, **kwargs):
+    def get_instances(self, expand=False, since=0, limit=None, **kwargs):
         """Return instance(s) information. No raw file data.
 
         Use expand keyword argument to retrieve extensive information.
@@ -76,9 +77,9 @@ class Orthanc:
             Return verbose information about instances. Default ``False``.
             By default, returns UUIDs.
         :param int since:
-            Return since instance number. Optional. Requires limit.
+            Return since nth instance record. Default ``0``.
         :param int limit:
-            Limit to given number. Optional. Requires since.
+            Limit to given number. Optional.
         :return:
             A list of records: either UUIDs or dictionary of information
         :rtype:
@@ -87,7 +88,7 @@ class Orthanc:
         params = {}
         if expand == True:
             params["expand"] = True
-        if limit or since:
+        if limit:
             try:
                 params["since"] = int(since)
                 params["limit"] = int(limit)
@@ -649,6 +650,25 @@ class Orthanc:
 
     #### SERVER-RELATED
     def get_changes(self, since=0, limit=100, last=False, **kwargs):
+        """Get changes.
+
+        Use since and limit to specify a group of records.
+        Use last to get last record.
+
+        :param int since:
+            Get the records since nth record. Default ``0``
+        :param int limit:
+            Return given number of records. Server maximum exists at ``100`` (?). Default ``100``
+        :param bool last:
+            Only return most recent change. Default ``False``
+        :return:
+            Returns a dictionary with keys:
+                'Changes': [..] # List of changes
+                'Done': bool    # At most recent change?
+                'Last': int     # Most recent change number returned in 'Changes'
+        :rtype:
+            dict
+        """
         if last:
             kwargs["params"] = {"last": ""}  # overrule
         else:
