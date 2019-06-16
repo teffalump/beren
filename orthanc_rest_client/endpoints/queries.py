@@ -19,23 +19,23 @@ __all__ = ["OrthancQueries"]
 class OrthancQueries(Service):
 
     queries = JsonEndpoint(path="queries/")
-    query = JsonEndpoint(path="queries/{id}/")
-    del_query = JsonEndpoint(path="queries/{id}/", default_method="DELETE")
-    answers = JsonEndpoint(path="queries/{id}/answers/")
-    answers_content = JsonEndpoint(path="queries/{id}/answers/{index}/content/")
+    query = JsonEndpoint(path="queries/{id_}/")
+    del_query = JsonEndpoint(path="queries/{id_}/", default_method="DELETE")
+    answers = JsonEndpoint(path="queries/{id_}/answers/")
+    answers_content = JsonEndpoint(path="queries/{id_}/answers/{index}/content/")
     answers_retrieve = JsonEndpoint(
-        path="queries/{id}/answers/{index}/retrieve/", default_method="POST"
+        path="queries/{id_}/answers/{index}/retrieve/", default_method="POST"
     )
     answers_instances = JsonEndpoint(
-        path="queries/{id}/answers/{index}/query-instances/", default_method="POST"
+        path="queries/{id_}/answers/{index}/query-instances/", default_method="POST"
     )
     answers_series = JsonEndpoint(
-        path="queries/{id}/answers/{index}/query-series/", default_method="POST"
+        path="queries/{id_}/answers/{index}/query-series/", default_method="POST"
     )
     answers_studies = JsonEndpoint(
-        path="queries/{id}/answers/{index}/query-studies/", default_method="POST"
+        path="queries/{id_}/answers/{index}/query-studies/", default_method="POST"
     )
-    level = JsonEndpoint(path="queries/{id}/level/")
-    modality = JsonEndpoint(path="queries/{id}/modality/")
-    query_query = JsonEndpoint(path="queries/{id}/query/")
-    retrieve = JsonEndpoint(path="queries/{id}/retrieve/", default_method="POST")
+    level = JsonEndpoint(path="queries/{id_}/level/")
+    modality = JsonEndpoint(path="queries/{id_}/modality/")
+    query_query = JsonEndpoint(path="queries/{id_}/query/")
+    retrieve = JsonEndpoint(path="queries/{id_}/retrieve/", default_method="POST")
