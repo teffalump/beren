@@ -79,5 +79,6 @@ class OrthancServer(Service):
     tools_metrics_prometheus = JsonEndpoint(path="tools/metrics-prometheus/")
     tools_now = Endpoint(path="tools/now/")
     tools_now_local = Endpoint(path="tools/now-local/")
+    tools_reconstruct = Endpoint(path="tools/reconstruct/", default_method="POST")
     tools_reset = JsonEndpoint(path="tools/reset/", default_method="POST")
     tools_shutdown = JsonEndpoint(path="tools/shutdown/", default_method="POST")

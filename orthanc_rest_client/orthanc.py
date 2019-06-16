@@ -615,6 +615,13 @@ class Orthanc:
 
     @auth
     def get_system(self, **kwargs):
+        """Get running system information
+
+        :return:
+            System information
+        :rtype:
+            dict
+        """
         return self.server.system(**kwargs)
 
     @auth
@@ -643,6 +650,13 @@ class Orthanc:
 
     @auth
     def get_dicom_conformance(self, **kwargs):
+        """Get the DICOM conformance statement of this version of Orthanc
+
+        :return:
+            DICOM conformance statement
+        :rtype:
+            str
+        """
         return self.server.tools_dicom_conformance(**kwargs)
 
     @auth
@@ -652,14 +666,35 @@ class Orthanc:
 
     @auth
     def find(self, query, **kwargs):
+        """Run C-Find with query
+
+        Example: query = {'Level': 'Patient', 'Query': {'PatientName': 'John*'}}
+
+        :param dict query:
+            Query to run
+        :return:
+            Matching record uuid(s)
+        :rtype:
+            list
+        """
         j = self.convert_to_json(query)
         return self.server.tools_find(data=j, **kwargs)
 
     @auth
     def generate_uid(self, level, **kwargs):
-        """Level must be 'patient', 'instance', 'series', or 'study'"""
-        j = self.convert_to_json({"level": level})
-        return self.server.tools_generate_uid(data=j, **kwargs)
+        """Generate DICOM UID
+
+        :param str level:
+            DICOM UID level (patient, series, study, or instance)
+        :return:
+            UID
+        :rtype:
+            str
+        """
+        if level not in ["patient", "instance", "series", "study"]:
+            raise ValueError("Must be patient, instance, series, or study")
+        params = {"level": level}
+        return self.server.tools_generate_uid(params=params, **kwargs)
 
     @auth
     def invalidate_tags(self, **kwargs):
@@ -667,20 +702,68 @@ class Orthanc:
 
     @auth
     def lookup(self, lookup, **kwargs):
-        return self.server.tools_lookup(data=lookup, **kwargs)
+        """Map DICOM UIDs to Orthanc identifiers
+
+        :param lookup:
+            UID(s) to map
+        :return:
+            Orthanc identifiers
+        :rtype:
+            list
+        """
+        return self.server.tools_lookup(data=self.convert_to_json(lookup), **kwargs)
 
     @auth
     def get_now(self, **kwargs):
+        """Get the current universal datetime (UTC) in the ISO 8601 format
+
+        :return:
+            Universal datetime (UTC)
+        :rtype:
+            str (ISO 8601)
+        """
         return self.server.tools_now(**kwargs)
 
     @auth
     def get_now_local(self, **kwargs):
+        """Get the current local datetime in the ISO 8601 format
+
+        :return:
+            Local datetime
+        :rtype:
+            str (ISO 8601)
+        """
         return self.server.tools_now_local(**kwargs)
 
     @auth
+    def reconstruct(self, **kwargs):
+        """Reconstruct the main DICOM tags, JSON summary, and metadata of all instances. Slow!
+
+        :return:
+            Empty string on success or raises Exception
+        :rtype:
+            str
+        """
+        return self.server.tools_reconstruct(data={}, **kwargs)
+
+    @auth
     def reset(self, **kwargs):
+        """Hot restart of Orthanc server and re-reads configuration file
+
+        :return:
+            Empty dict on success or raises Exception
+        :rtype:
+            dict
+        """
         return self.server.tools_reset(data={}, **kwargs)
 
     @auth
     def shutdown(self, **kwargs):
+        """Stop Orthanc server
+
+        :return:
+            Empty list on success
+        :rtype:
+            dict
+        """
         return self.server.tools_shutdown(data={}, **kwargs)
