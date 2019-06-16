@@ -49,7 +49,17 @@ Import the pre-defined client and pass the server details
     # Get previous queries
     orthanc.get_queries()
 
-There are other preconfigured endpoints.
+There are many other preconfigured endpoints.
+
+### Authentication
+
+Pass valid auth object:
+
+    from requests.auth import HTTPBasicAuth
+    auth = HTTPBasicAuth('orthanc', 'orthanc')
+    orthanc = Orthanc('https://test.server.com', auth=auth)
+
+Then call functions normally (the auth object is passed automatically).
 
 ### Advanced examples
 
@@ -60,16 +70,6 @@ Save instance file to local directory:
         with open(fileName, 'wb') as dcm:
             for chunk in orthanc.get_instance_file(instance_id):
                 dcm.write(chunk)
-
-### Authenticated Endpoints
-
-Pass valid auth object:
-
-    from requests.auth import HTTPBasicAuth
-    auth = HTTPBasicAuth('orthanc', 'orthanc')
-    orthanc = Orthanc('https://test.server.com', auth=auth)
-
-Then call functions normally (the auth object is passed automatically).
 
 ### HTTP endpoints
 
