@@ -75,7 +75,7 @@ Save instance file to local directory:
 
 The rest client will warn on using HTTP endpoints. Strongly consider using HTTPS given the data sensitivity.
 
-### For further help
+### Further help
 
 - [apiron](https://github.com/ithaka/apiron)
 - [Orthanc documentation](http://book.orthanc-server.com)

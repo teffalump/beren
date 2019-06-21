@@ -68,10 +68,10 @@ class Orthanc:
 
     #### INSTANCES
     def get_instances(self, expand=False, since=0, limit=None, **kwargs):
-        """Return instance(s) information. No raw file data.
+        """Return instance record(s). No raw file data.
 
-        Use expand keyword argument to retrieve extensive information.
-        Use since and limit keyword arguments to specify group of records.
+        Use ``expand`` keyword argument to retrieve extensive information.
+        Use ``since`` and ``limit`` keyword arguments to specify group of records.
 
         :param bool expand:
             Return verbose information about instances. Default ``False``.
@@ -79,7 +79,7 @@ class Orthanc:
         :param int since:
             Return since nth instance record. Default ``0``.
         :param int limit:
-            Limit to given number. Optional.
+            Limit to given number of records. Optional.
         :return:
             A list of records: either UUIDs or dictionary of information
         :rtype:
