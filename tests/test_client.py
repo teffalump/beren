@@ -36,7 +36,11 @@ class TestClass:
         with pytest.warns(UserWarning):
             Orthanc(WEAK_URL)
 
+        with pytest.warns(None) as skip:
+            Orthanc(WEAK_URL, warn_insecure=False)
+
         with pytest.warns(None) as record:
             Orthanc(URL)
 
         assert len(record) == 0
+        assert len(skip) == 0

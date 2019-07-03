@@ -28,7 +28,21 @@ __all__ = ["Orthanc"]
 
 
 class Orthanc:
-    def __init__(self, server, auth=None):
+    """
+    A class for interfacing with Orthanc DICOM REST APIs.
+
+    :param str server:
+        Fully qualified URL of the API
+    :param requests.auth.HTTPBasicAuth auth:
+        Auth object from :mod:`requests` with server credentials (optional)
+    :param bool warn_insecure:
+        Warn on HTTP endpoints (default: True)
+    :return:
+        A class with robust methods to interact with the REST API
+    :rtype:
+        class
+    """
+    def __init__(self, server, auth=None, warn_insecure=True):
         self._target = server
         self._auth = auth
         self.instances = OrthancInstances
@@ -39,7 +53,7 @@ class Orthanc:
         self.server = OrthancServer
         self.studies = OrthancStudies
 
-        if urlparse(server)[0] == "http":
+        if urlparse(server)[0] == "http" and warn_insecure:
             warn(
                 """{} is an unencrypted connection! Strongly consider using an encrypted (https) REST endpoint.""".format(
                     server
