@@ -1,6 +1,7 @@
 # Orthanc REST client
 
 [![Build Status](https://travis-ci.com/teffalump/orthanc_rest_client.svg?branch=master)](https://travis-ci.com/teffalump/orthanc_rest_client)
+[![PyPI version](https://badge.fury.io/py/orthanc-rest-client.svg)](https://badge.fury.io/py/orthanc-rest-client)
 
 Provides a REST client targeted at [Orthanc](https://www.orthanc-server.com) REST API endpoints.
 
