@@ -1,6 +1,7 @@
 # Orthanc REST client
 
 [![Build Status](https://travis-ci.com/teffalump/orthanc_rest_client.svg?branch=master)](https://travis-ci.com/teffalump/orthanc_rest_client)
+[![PyPI version](https://badge.fury.io/py/orthanc-rest-client.svg)](https://badge.fury.io/py/orthanc-rest-client)
 
 Provides a REST client targeted at [Orthanc](https://www.orthanc-server.com) REST API endpoints.
 
@@ -63,7 +64,7 @@ Then call functions normally (the auth object is passed automatically).
 
 ### Advanced examples
 
-Save instance file to local directory:
+For example, to save an instance file to local directory:
 
     def save_dcm_file(instance_id):
         fileName = '.'.join([instance_id, "dcm"])
@@ -71,9 +72,19 @@ Save instance file to local directory:
             for chunk in orthanc.get_instance_file(instance_id):
                 dcm.write(chunk)
 
-### HTTP endpoints
+To get a zip of DCM files from a series:
 
-The rest client will warn on using HTTP endpoints. Strongly consider using HTTPS given the data sensitivity.
+    with open('test.zip', 'wb') as z:
+        for chunk in orthanc.get_series_archive(<id>):
+            z.write(chunk)
+
+### Security warning on non-HTTPS endpoints
+
+The rest client will warn when using HTTP endpoints. Strongly consider using HTTPS given the data sensitivity.
+
+You can disable the warning using the `warn_insecure` keyword argument:
+
+    orthanc = Orthanc('http://insecure.endpoint.com', warn_insecure=False)
 
 ### Further help
 

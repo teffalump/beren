@@ -42,6 +42,7 @@ class Orthanc:
     :rtype:
         class
     """
+
     def __init__(self, server, auth=None, warn_insecure=True):
         self._target = server
         self._auth = auth
