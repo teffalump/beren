@@ -77,7 +77,7 @@ class Orthanc:
 
     @staticmethod
     def convert_to_json(data, **kwargs):
-        """Wrapper for ```json.dumps``"""
+        """Wrapper for ``json.dumps``"""
         return dumps(data, **kwargs)
 
     #### INSTANCES
@@ -123,14 +123,16 @@ class Orthanc:
         return self.instances.add_instance(data=dicom, **kwargs)
 
     def get_instance(self, id_, **kwargs):
-        """Get a single instance information. Equivalent to ``expand``.
+        """Get a single instance record. Equivalent to ``expand``.
+
+        No raw data - use ``get_instance_file`` instead
 
         :param str id_:
             The instance UUID
         :return:
-            Instance information for the UUID
+            Instance information
         :rtype:
-            Dict
+            dict
         """
         kwargs["auth"] = kwargs.get("auth", self._auth)
         return self.instances.instance(id_=id_, **kwargs)
@@ -332,11 +334,47 @@ class Orthanc:
         return self.instances.tags(id_=id_, **kwargs)
 
     #### PATIENTS
-    def get_patients(self, **kwargs):
+    def get_patients(self, expand=False, since=0, limit=None, **kwargs):
+        """Return patient record(s)
+
+        Use ``expand`` keyword argument to retrieve expanded information.
+        Use ``since`` and ``limit`` keyword arguments to specify group of records.
+
+        :param bool expand:
+            Return verbose information about patients. Default ``False``.
+            By default, returns UUIDs.
+        :param int since:
+            Return since nth patient record. Default ``0``.
+        :param int limit:
+            Limit to given number of records. Optional.
+        :return:
+            A list of records: either UUIDs or dictionary of information
+        :rtype:
+            list
+        """
+        params = {}
+        if expand == True:
+            params["expand"] = True
+        if limit:
+            try:
+                params["since"] = int(since)
+                params["limit"] = int(limit)
+            except:
+                raise TypeError("Must provide valid ints as since and limit")
+        kwargs["params"] = params
         kwargs["auth"] = kwargs.get("auth", self._auth)
         return self.patients.patients(**kwargs)
 
     def get_patient(self, id_, **kwargs):
+        """Get a single patient record. Equivalent to ``expand``.
+
+        :param str id_:
+            The patient UUID
+        :return:
+            Expanded patient record
+        :rtype:
+            dict
+        """
         kwargs["auth"] = kwargs.get("auth", self._auth)
         return self.patients.patient(id_=id_, **kwargs)
 
@@ -430,11 +468,22 @@ class Orthanc:
         return self.patients.studies(id_=id_, **kwargs)
 
     def get_patient_id_from_uuid(self, id_, **kwargs):
+        """Get the patient ID (usually equivalent to MRN/PUID) from UUID
+
+        Helper function.
+
+        :param str id:
+            Patient UUID
+        :return:
+            The patient ID, usually equivalent to MRN/PUID
+        :rtype:
+            str
+        """
         kwargs["auth"] = kwargs.get("auth", self._auth)
         return (
             self.patients.patient(id_=id_, **kwargs)
             .get("MainDicomTags")
-            .get("Patientid_")
+            .get("PatientID")
         )
 
     def get_patient_studies_from_id(self, id_, **kwargs):
@@ -443,7 +492,7 @@ class Orthanc:
             return [
                 self.get_patient_studies(patient)
                 for patient in self.find(
-                    {"Level": "Patient", "Limit": 1, "Query": {"Patientid_": id_}},
+                    {"Level": "Patient", "Limit": 1, "Query": {"PatientID": id_}},
                     **kwargs
                 )
             ][0]
@@ -510,10 +559,28 @@ class Orthanc:
         return self.series.anonymize(id_=id_, data=j, **kwargs)
 
     def get_series_archive(self, id_, **kwargs):
+        """Create a ZIP archive for media storage with DICOMDIR
+
+        :param str id_:
+            Series UUID
+        :return:
+            Returns zip archive as a generator
+        :rtype:
+            generator
+        """
         kwargs["auth"] = kwargs.get("auth", self._auth)
         return self.series.archive(id_=id_, **kwargs)
 
     def get_series_instances(self, id_, **kwargs):
+        """"Retrieve all the instances of this series in a single REST call
+
+        :param str id_:
+            Series UUID
+        :return:
+            Expanded information of all the instances in this series
+        :rtype:
+            list (dict)
+        """
         kwargs["auth"] = kwargs.get("auth", self._auth)
         return self.series.instances(id_=id_, **kwargs)
 
@@ -679,7 +746,7 @@ class Orthanc:
             Returns a dictionary with keys:
                 'Changes': [..] # List of changes
                 'Done': bool    # At most recent change?
-                'Last': int     # Most recent change number returned in 'Changes'
+                'Last': int     # Most recent change index returned in 'Changes'
         :rtype:
             dict
         """
