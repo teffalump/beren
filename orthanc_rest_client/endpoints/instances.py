@@ -22,7 +22,9 @@ class OrthancInstances(Service):
     add_instance = JsonEndpoint(path="instances/", default_method="POST")
     instance = JsonEndpoint(path="instances/{id_}/")
     del_instance = JsonEndpoint(path="instances/{id_}/", default_method="DELETE")
-    anonymize = StreamingEndpoint(path="instances/{id_}/anonymize/", default_method="POST")
+    anonymize = StreamingEndpoint(
+        path="instances/{id_}/anonymize/", default_method="POST"
+    )
     attachments = JsonEndpoint(path="instances/{id_}/attachments")
     attachment = JsonEndpoint(path="instances/{id_}/attachment/{name}/")
     del_attachment = JsonEndpoint(

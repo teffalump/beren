@@ -85,7 +85,7 @@ class Orthanc:
     def clean(d):
         """Clean the parameter dict for endpoint semantics"""
         n = {}
-        for k,v in d.items():
+        for k, v in d.items():
             if v == None or v == False:
                 continue
             elif v == True:
@@ -167,7 +167,15 @@ class Orthanc:
         kwargs["auth"] = kwargs.get("auth", self._auth)
         return self.instances.del_instance(id_=id_, **kwargs)
 
-    def anonymize_instance(self, id_, version="2017c", keep_private=False, keep_tags=None, replace_tags=None, **kwargs):
+    def anonymize_instance(
+        self,
+        id_,
+        version="2017c",
+        keep_private=False,
+        keep_tags=None,
+        replace_tags=None,
+        **kwargs
+    ):
         """Anonymize the instance by erasing all the tags that are specified in Table E.1-1 from PS 3.15 of the DICOM standard
 
 
@@ -186,11 +194,12 @@ class Orthanc:
         :rtype:
             DICOM file
         """
-        data = {"DicomVersion": version,
-                "KeepPrivateTags": keep_private,
-                "Keep": keep_tags,
-                "Replace": replace_tags
-                }
+        data = {
+            "DicomVersion": version,
+            "KeepPrivateTags": keep_private,
+            "Keep": keep_tags,
+            "Replace": replace_tags,
+        }
         j = self.convert_to_json(data)
         kwargs["auth"] = kwargs.get("auth", self._auth)
         return self.instances.anonymize(id_=id_, data=j, **kwargs)
@@ -308,7 +317,7 @@ class Orthanc:
         :rtype:
             dict
         """
-        kwargs["params"] = self.clean({'simplify': simplify, 'short': short})
+        kwargs["params"] = self.clean({"simplify": simplify, "short": short})
         kwargs["auth"] = kwargs.get("auth", self._auth)
         return self.instances.header(id_=id_, **kwargs)
 
@@ -441,7 +450,7 @@ class Orthanc:
         :rtype:
             dict
         """
-        kwargs["params"] = self.clean({'simplify': simplify, 'short': short})
+        kwargs["params"] = self.clean({"simplify": simplify, "short": short})
         kwargs["auth"] = kwargs.get("auth", self._auth)
         return self.instances.tags(id_=id_, **kwargs)
 
@@ -1014,11 +1023,7 @@ class Orthanc:
         :rtype:
             list
         """
-        body = {'Query': query,
-                'Level': level,
-                'Expand': expand,
-                'Limit': limit,
-                }
+        body = {"Query": query, "Level": level, "Expand": expand, "Limit": limit}
         j = self.convert_to_json(body)
         kwargs["auth"] = kwargs.get("auth", self._auth)
         return self.server.tools_find(data=j, **kwargs)
