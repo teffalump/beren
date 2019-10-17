@@ -81,6 +81,19 @@ class Orthanc:
         """Wrapper for ``json.dumps``"""
         return dumps(data, **kwargs)
 
+    @staticmethod
+    def clean(d):
+        """Clean the parameter dict for endpoint semantics"""
+        n = {}
+        for k,v in d.items():
+            if v == None or v == False:
+                continue
+            elif v == True:
+                n[k] = ""
+            else:
+                n[k] = v
+        return n
+
     #### INSTANCES
     def get_instances(self, expand=False, since=0, limit=None, **kwargs):
         """Return instance record(s). No raw file data.
@@ -117,8 +130,11 @@ class Orthanc:
         """Add DICOM instance.
 
         :param data dicom:
-            The DICOM data
+            DICOM data
         :return:
+            Response status
+        :rtype:
+            dict
         """
         kwargs["auth"] = kwargs.get("auth", self._auth)
         return self.instances.add_instance(data=dicom, **kwargs)
@@ -139,10 +155,42 @@ class Orthanc:
         return self.instances.instance(id_=id_, **kwargs)
 
     def delete_instance(self, id_, **kwargs):
+        """Delete an instance
+
+        :param str id_:
+            Instance UUID
+        :return
+            Success or not
+        :rtype:
+            dict
+        """
         kwargs["auth"] = kwargs.get("auth", self._auth)
         return self.instances.del_instance(id_=id_, **kwargs)
 
-    def anonymize_instance(self, id_, data={}, **kwargs):
+    def anonymize_instance(self, id_, version="2017c", keep_private=False, keep_tags=None, replace_tags=None, **kwargs):
+        """Anonymize the instance by erasing all the tags that are specified in Table E.1-1 from PS 3.15 of the DICOM standard
+
+
+        :param str id_:
+            The instance UUID
+        :param str version:
+            DICOM Standard "2017c" (default) or "2008"
+        :param bool keep_private:
+            Keep manufacturer specific tags (can have patient information) (default False)
+        :param list keep_tags:
+            Keep these tags
+        :param dict replace_tags:
+            Replace these tags with new values {"PatientName": "FakeBob", etc}
+        :return:
+            Anonymized DICOM file
+        :rtype:
+            DICOM file
+        """
+        data = {"DicomVersion": version,
+                "KeepPrivateTags": keep_private,
+                "Keep": keep_tags,
+                "Replace": replace_tags
+                }
         j = self.convert_to_json(data)
         kwargs["auth"] = kwargs.get("auth", self._auth)
         return self.instances.anonymize(id_=id_, data=j, **kwargs)
@@ -201,6 +249,23 @@ class Orthanc:
         kwargs["auth"] = kwargs.get("auth", self._auth)
         return self.instances.file_(id_=id_, **kwargs)
 
+    def get_instance_frame(self, id_, frame, format_, **kwargs):
+        """Get an instance frame in specified format
+
+        :param str id_:
+            The instance UUID
+        :param int frame:
+            Frame number
+        :param str format_:
+            "image-uint8", "image-uint16", "image-int16", "matlab", "raw", or "raw.gz"
+        :return:
+            Frame
+        :return:
+            generator
+        """
+        kwargs["auth"] = kwargs.get("auth", self._auth)
+        return self.instances.frame(id_=id_, frame=frame, format_=format_, **kwargs)
+
     def get_instance_frames(self, id_, **kwargs):
         """Get the list of frame numbers in the instance file.
 
@@ -214,53 +279,53 @@ class Orthanc:
         kwargs["auth"] = kwargs.get("auth", self._auth)
         return self.instances.frames(id_=id_, **kwargs)
 
-    def get_instance_frame_int16(self, id_, frame, **kwargs):
-        kwargs["auth"] = kwargs.get("auth", self._auth)
-        return self.instances.frame_int16(id_=id_, number=frame, **kwargs)
-
-    def get_instance_frame_uint16(self, id_, frame, **kwargs):
-        kwargs["auth"] = kwargs.get("auth", self._auth)
-        return self.instances.frame_uint16(id_=id_, number=frame, **kwargs)
-
-    def get_instance_frame_uint8(self, id_, frame, **kwargs):
-        kwargs["auth"] = kwargs.get("auth", self._auth)
-        return self.instances.frame_uint8(id_=id_, number=frame, **kwargs)
-
-    def get_instance_frame_matlab(self, id_, frame, **kwargs):
-        kwargs["auth"] = kwargs.get("auth", self._auth)
-        return self.instances.frame_matlab(id_=id_, number=frame, **kwargs)
-
     def get_instance_frame_preview(self, id_, frame, **kwargs):
+        """Download preview image of instance frame
+
+        :param str id_:
+            The instance UUID
+        :param int frame:
+            Frame number
+        :return:
+            Image
+        :rtype:
+            generator
+        """
         kwargs["auth"] = kwargs.get("auth", self._auth)
         return self.instances.frame_preview(id_=id_, number=frame, **kwargs)
 
-    def get_instance_frame_raw(self, id_, frame, **kwargs):
-        kwargs["auth"] = kwargs.get("auth", self._auth)
-        return self.instances.frame_raw(id_=id_, number=frame, **kwargs)
+    def get_instance_header(self, id_, simplify=False, short=False, **kwargs):
+        """Get detailed header tags for DICOM instance
 
-    def get_instance_frame_raw_gz(self, id_, frame, **kwargs):
-        kwargs["auth"] = kwargs.get("auth", self._auth)
-        return self.instances.frame_raw_gz(id_=id_, number=frame, **kwargs)
-
-    def get_instance_header(self, id_, **kwargs):
+        :param str id_:
+            Instance UUID
+        :param bool simplify:
+            Equivalent to simplified-tags
+        :param bool short:
+            Shorten values without user-friendly descriptions of the the tag and type. Direct values to tags
+        :return:
+            Detailed tags and values
+        :rtype:
+            dict
+        """
+        kwargs["params"] = self.clean({'simplify': simplify, 'short': short})
         kwargs["auth"] = kwargs.get("auth", self._auth)
         return self.instances.header(id_=id_, **kwargs)
 
-    def get_instance_int16(self, id_, **kwargs):
-        kwargs["auth"] = kwargs.get("auth", self._auth)
-        return self.instances.image_int16(id_=id_, **kwargs)
+    def get_instance_image(self, id_, format_, **kwargs):
+        """Download image of DICOM instance in specified format
 
-    def get_instance_uint16(self, id_, **kwargs):
+        :param str id_:
+            Instance UUID
+        :param str format_:
+            "image-uint8", "image-uint16", "image-int16", "matlab", "raw", or "raw.gz"
+        :return:
+            Image
+        :rtype:
+            generator
+        """
         kwargs["auth"] = kwargs.get("auth", self._auth)
-        return self.instances.image_uint16(id_=id_, **kwargs)
-
-    def get_instance_uint8(self, id_, **kwargs):
-        kwargs["auth"] = kwargs.get("auth", self._auth)
-        return self.instances.image_uint8(id_=id_, **kwargs)
-
-    def get_instance_matlab(self, id_, **kwargs):
-        kwargs["auth"] = kwargs.get("auth", self._auth)
-        return self.instances.matlab(id_=id_, **kwargs)
+        return self.instances.image(id_=id_, format_=format_, **kwargs)
 
     def modify_instance(self, id_, data, **kwargs):
         j = self.convert_to_json(data)
@@ -285,6 +350,14 @@ class Orthanc:
         return self.instances.patient(id_=id_, **kwargs)
 
     def get_instance_pdf(self, id_, **kwargs):
+        """Download embedded PDF of DICOM instance
+        :param str id_:
+            The instance UUID
+        :return:
+            Embedded PDF or error
+        :rtype:
+            generator
+        """
         kwargs["auth"] = kwargs.get("auth", self._auth)
         return self.instances.pdf(id_=id_, **kwargs)
 
@@ -310,6 +383,15 @@ class Orthanc:
         return self.instances.series(id_=id_, **kwargs)
 
     def get_instance_simplified_tags(self, id_, **kwargs):
+        """Get human readable tags for the DICOM instance
+
+        :param str id_:
+            Instance UUID
+        :return:
+            DICOM tags and values
+        :rtype:
+            dict
+        """
         kwargs["auth"] = kwargs.get("auth", self._auth)
         return self.instances.simplified_tags(id_=id_, **kwargs)
 
@@ -330,7 +412,36 @@ class Orthanc:
         kwargs["auth"] = kwargs.get("auth", self._auth)
         return self.instances.study(id_=id_, **kwargs)
 
-    def get_instance_tags(self, id_, **kwargs):
+    def get_instance_tag(self, id_, tag, **kwargs):
+        """Get the value for a single tag of a DICOM instance
+
+        :param str id_:
+            Instance UUID
+        :param str tag:
+            Instance tag
+        :return:
+            Tag value
+        :rtype:
+            dict
+        """
+        kwargs["auth"] = kwargs.get("auth", self._auth)
+        return self.instances.tags(id_=id_, tag=tag, **kwargs)
+
+    def get_instance_tags(self, id_, simplify=False, short=False, **kwargs):
+        """Get the detailed tags for the DICOM instance
+
+        :param str id_:
+            Instance UUID
+        :param bool simplify:
+            Equivalent to simplified-tags
+        :param bool short:
+            Shorten values without user-friendly descriptions of the the tag and type. Direct values to tags
+        :return:
+            Detailed tags and values
+        :rtype:
+            dict
+        """
+        kwargs["params"] = self.clean({'simplify': simplify, 'short': short})
         kwargs["auth"] = kwargs.get("auth", self._auth)
         return self.instances.tags(id_=id_, **kwargs)
 
@@ -881,23 +992,34 @@ class Orthanc:
         kwargs["auth"] = kwargs.get("auth", self._auth)
         return self.server.tools_execute_script(data=j, **kwargs)
 
-    def find(self, query, **kwargs):
-        """Run C-Find with query
+    def find(self, query, level, expand=False, limit=None, **kwargs):
+        """Search for matching items
 
         Example:
 
             >>> orthanc = Orthanc('https://orthanc.example.com')
-            >>> query = {'Level': 'Patient', 'Query': {'PatientName': 'John*'}}
-            >>> orthanc.find(query) #returns the UUIDs of matching records
+            >>> query = {'PatientName': 'John*'}
+            >>> orthanc.find(query, "Patient", False, 3) #returns the UUIDs of matching records
 
         :param dict query:
             Query to run
+        :param str level:
+            "Patient", "Study", "Series", or "Instance"
+        :param bool expand:
+            Return resources not just UUIDs (default: False)
+        :param int limit:
+            Limit number of records returned
         :return:
-            Matching record uuid(s)
+            Matching records
         :rtype:
             list
         """
-        j = self.convert_to_json(query)
+        body = {'Query': query,
+                'Level': level,
+                'Expand': expand,
+                'Limit': limit,
+                }
+        j = self.convert_to_json(body)
         kwargs["auth"] = kwargs.get("auth", self._auth)
         return self.server.tools_find(data=j, **kwargs)
 

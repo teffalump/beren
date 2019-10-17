@@ -42,10 +42,8 @@ Import the pre-defined client and pass the server details
     orthanc.get_changes()
 
     # Find objects by query
-    query = {'Level': 'Patient',
-                'Query': {'PatientName': 'Jon*'},
-            }
-    orthanc.find(query)
+    query = {'PatientName': 'Jon*'}
+    orthanc.find(query, level='Patient', expand=False, limit=2)
 
     # Get previous queries
     orthanc.get_queries()
@@ -66,11 +64,9 @@ Then call functions normally (the auth object is passed automatically).
 
 For example, to save an instance file to local directory:
 
-    def save_dcm_file(instance_id):
-        fileName = '.'.join([instance_id, "dcm"])
-        with open(fileName, 'wb') as dcm:
-            for chunk in orthanc.get_instance_file(instance_id):
-                dcm.write(chunk)
+    with open('test_file.dcm', 'wb') as dcm:
+        for chunk in orthanc.get_instance_file(instance_id):
+            dcm.write(chunk)
 
 To get a zip of DCM files from a series:
 
@@ -89,5 +85,6 @@ You can disable the warning using the `warn_insecure` keyword argument:
 ### Further help
 
 - [apiron](https://github.com/ithaka/apiron)
-- [Orthanc documentation](http://book.orthanc-server.com)
-- [Orthanc REST API](https://docs.google.com/spreadsheets/d/e/2PACX-1vSBEymDKGZgskFEFF6yzge5JovGHPK_FIbEnW5a6SWUbPkX06tkoObUHh6T1XQhgj-HqFd0AWSnVFOv/pubhtml?gid=654036639&single=true)
+- [Orthanc documentation](https://book.orthanc-server.com)
+- [Orthanc OpenAPI](https://api.orthanc-server.com)
+- [Orthanc REST API spreadsheet](https://docs.google.com/spreadsheets/d/e/2PACX-1vSBEymDKGZgskFEFF6yzge5JovGHPK_FIbEnW5a6SWUbPkX06tkoObUHh6T1XQhgj-HqFd0AWSnVFOv/pubhtml?gid=654036639&single=true)

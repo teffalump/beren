@@ -22,7 +22,7 @@ class OrthancInstances(Service):
     add_instance = JsonEndpoint(path="instances/", default_method="POST")
     instance = JsonEndpoint(path="instances/{id_}/")
     del_instance = JsonEndpoint(path="instances/{id_}/", default_method="DELETE")
-    anonymize = JsonEndpoint(path="instances/{id_}/anonymize/", default_method="POST")
+    anonymize = StreamingEndpoint(path="instances/{id_}/anonymize/", default_method="POST")
     attachments = JsonEndpoint(path="instances/{id_}/attachments")
     attachment = JsonEndpoint(path="instances/{id_}/attachment/{name}/")
     del_attachment = JsonEndpoint(
@@ -56,25 +56,16 @@ class OrthancInstances(Service):
         path="instances/{id_}/attachment/{name}/verify-md5", default_method="POST"
     )
     content = JsonEndpoint(path="instances/{id_}/content")
+    content_tag = JsonEndpoint(path="instances/{id_}/content/{tag}")
     content_raw_tag = Endpoint(path="instances/{id_}/content/{group}-{element}/")
     # instance_content_raw_seq = JsonEndpoint(path='instances/{id_}/content/{group}-{element}/{index}/')
     export = JsonEndpoint(path="instances/{id_}/export/", default_method="POST")
     file_ = StreamingEndpoint(path="instances/{id_}/file/")
     frames = JsonEndpoint(path="instances/{id_}/frames/")
-    frame_int16 = StreamingEndpoint(path="instances/{id_}/frames/{number}/image-int16/")
-    frame_uint16 = StreamingEndpoint(
-        path="instances/{id_}/frames/{number}/image-uint16/"
-    )
-    frame_uint8 = StreamingEndpoint(path="instances/{id_}/frames/{number}/image-uint8/")
-    frame_matlab = Endpoint(path="instances/{id_}/frames/{number}/matlab/")
+    frame = StreamingEndpoint(path="instances/{id_}/frames/{number}/{format_}/")
     frame_preview = StreamingEndpoint(path="instances/{id_}/frames/{number}/preview/")
-    frame_raw = StreamingEndpoint(path="instances/{id_}/frames/{number}/raw/")
-    frame_raw_gz = StreamingEndpoint(path="instances/{id_}/frames/{number}/raw.gz/")
     header = JsonEndpoint(path="instances/{id_}/header/")
-    image_int16 = StreamingEndpoint(path="instances/{id_}/image-int16/")
-    image_uint16 = StreamingEndpoint(path="instances/{id_}/image-uint16/")
-    image_uint8 = StreamingEndpoint(path="instances/{id_}/image-uint8/")
-    matlab = Endpoint(path="instances/{id_}/matlab/")
+    image = StreamingEndpoint(path="instances/{id_}/{format_}/")
     list_metadata = JsonEndpoint(path="instances/{id_}/metadata/")
     metadata = JsonEndpoint(path="instances/{id_}/metadata/{name}/")
     del_metadata = JsonEndpoint(
