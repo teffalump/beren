@@ -4,36 +4,36 @@ cache: pip
 notifications:
   email: false
 python:
-    - '3.7'
-    - '3.6'
-    - '3.5'
-    - '3.4'
+- '3.7'
+- '3.6'
+- '3.5'
+- '3.4'
 install:
-    - pip install -r dev-requirements.txt
+- pip install -r dev-requirements.txt
 script:
-    - pytest
+- pytest
 stages:
-    - lint
-    - test
-    - deploy
+- lint
+- test
+- deploy
 jobs:
   include:
-      - stage: lint
-        install:
-            - pip install black
-        script:
-            - black --check orthanc_rest_client tests
-      - stage: deploy
-        deploy:
-            - provider: pypi
-              user: teffalump
-              password:
-                secure: "ookkR2iddYDA0VfuekP1bWigoA1B2M6RldGHntDVz68htwFbsjQnUEhwFMfQZhZqjSilcb7tEdRhSA3Og+4cbKfecyZsj6/McHUG+SymJC1rkXpnNzcya162urNNIWD0kBqw1P+Qd5vWBxM+DLeT7AUWp67VpB2EqvN3iKsh60DfQbQ2FEV0WQoMFdFkCDbL7jdXiHj+gsh2/BM/UPdpVN01eVLh/uWAZK+MM/fp2d2FmEzBpuztZkwrxJ6e/fqHTvQz+MyVrrIxc2nmmB6JhFfKnaEJzL+erdyWEVZ2hIoXueHCAY6PS6AB32DSpPrcIKi1325dy2yv5MHqbFed7IsZen4igOTY/FxjXdZMxtXgHzRMdb5KfwASb6TWggYJWH+v4m4Df9ZdQdtq4k+X/Scq1svlECogeaR4z7nhqt7j+5Rui4ge9gTrKsyvqm6Ih9FKFqubdJBye8lghpmXkNBoxM5v7KSa3dDx5AafApYihydXF1TxxfaXvitRWPNM6OBr//zDkBsiQ30+DNtzAEpP8JvTEduIBqHMabcOWRmN2c8DE6I3Xl3N0b1Z1d4hp3wcg5OVbODXvMg5mx2w2TwGXu+xjUPbHJqLwe2MIgGS6mUXo2EZzuMqwIShgoV0aeN6l3kQWxmKNtEzyM2JFf2MESUq5lIoXDoa0mlxs/A="
-              distributions: "sdist bdist_wheel"
-              skip_cleanup: true
-              skip_existing: true
-              on:
-                repo: teffalump/orthanc_rest_client
-                branch: master
-                tags: true
-                python: "3.7"
+  - stage: lint
+    install:
+    - pip install black
+    script:
+    - black --check beren tests
+  - stage: deploy
+    deploy:
+    - provider: pypi
+      user: __token__
+      password:
+        secure: f44iih9FIK92TxNhwi4daiIx+M7S6lUCfxHGio6Jih2qwWEQdQqDuDxwm3f+FizQhlwtF6WzSoGsgcuVx83iDdHoy6fP5M8d9R+jaC1XXqQ8Hap4rMaiGqD0twG/Zt3lWtvuYhbCuKKGHT8rZxtFhl1zXOPZQzMmwWtJQaslY9/Xsh7/xYmg+hU7SvIF25A3yjuxxLORy8m+sNqxh0/T9BE5brg5/o61CT97BxugT4BLvBluFa7T1j5xV/P793bWlsC3aG/03U8cNzty4tesNla7+kgA+LktsL8tcMS7yQel0Rb8gpE9NXeRTifLUzDfS2LrenbmOS9loDj/u1XeHJ7yvyBHQdUL7oflhxa9oJKzjDCm/m0sc3uFtiiDdgJOTgz7/pWga1nrBOHZn5Rp22fAMKBDSHfRG9GX/OFypoYw+rq7JaE7TmBcotUXxo6dKAyd6ED+J9SZGg2rM2tmGevVgfWamiIplGe0gj+Tdv4z7qP2JDjU6kr9ragI5ZB649RUkge2Jf4d4x3hCZS9U7Bjq6gAINs8ZLj1cbpSqwl9t8dU5M9ZuLBeQ0WrEJxU6TMmgeZbd2ZPMsGmLsYKgTbm9u5W1icrHUu/BTAVkG/ilbi9nlywR+HKHVDDRNgYBLQCyAn1hSAuWWRAkYqlfr+lrf6OFXHBHPUqhHeCAfM=
+      distributions: sdist bdist_wheel
+      skip_cleanup: true
+      skip_existing: true
+      on:
+        repo: teffalump/beren
+        branch: master
+        tags: true
+        python: '3.7'
