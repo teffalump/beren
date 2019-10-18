@@ -1,4 +1,4 @@
-from orthanc_rest_client import Orthanc
+from beren import Orthanc
 from requests.auth import HTTPBasicAuth
 from unittest import mock
 import warnings

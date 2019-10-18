@@ -2,5 +2,5 @@ include README.md
 include LICENSE
 include requirements.txt
 include dev-requirements.txt
-include orthanc_rest_client/VERSION
-recursive-include orthanc_rest_client *.py
+include beren/VERSION
+recursive-include beren *.py

@@ -1,7 +1,7 @@
 # Beren
 
-[![Build Status](https://travis-ci.com/teffalump/orthanc_rest_client.svg?branch=master)](https://travis-ci.com/teffalump/orthanc_rest_client)
-[![PyPI version](https://badge.fury.io/py/orthanc-rest-client.svg)](https://badge.fury.io/py/orthanc-rest-client)
+[![Build Status](https://travis-ci.com/teffalump/beren.svg?branch=master)](https://travis-ci.com/teffalump/beren)
+[![PyPI version](https://badge.fury.io/py/beren.svg)](https://badge.fury.io/py/beren)
 
 Provides a REST client targeted at [Orthanc](https://www.orthanc-server.com) REST API endpoints.
 
@@ -15,7 +15,7 @@ Based on the excellent [apiron](https://github.com/ithaka/apiron) library.
 
 Import the pre-defined client and pass the server details
 
-    from orthanc_rest_client import Orthanc
+    from beren import Orthanc
     orthanc = Orthanc('http://localhost:8042')
 
     # Patient endpoints
