@@ -1,4 +1,4 @@
-# Orthanc REST client
+# Beren
 
 [![Build Status](https://travis-ci.com/teffalump/orthanc_rest_client.svg?branch=master)](https://travis-ci.com/teffalump/orthanc_rest_client)
 [![PyPI version](https://badge.fury.io/py/orthanc-rest-client.svg)](https://badge.fury.io/py/orthanc-rest-client)
@@ -9,7 +9,7 @@ Based on the excellent [apiron](https://github.com/ithaka/apiron) library.
 
 ### Install
 
-    pip install orthanc-rest-client
+    pip install beren
 
 ### How to use
 

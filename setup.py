@@ -1,7 +1,7 @@
 import os
 from setuptools import setup
 
-NAME = 'orthanc_rest_client'
+NAME = 'beren'
 
 with open('README.md') as readme:
     README = readme.read()
@@ -18,10 +18,10 @@ setup(name = NAME,
         description = 'REST client for Orthanc DICOM servers',
         long_description = README,
         long_description_content_type = README_TYPE,
-        url = 'https://github.com/teffalump/orthanc_rest_client',
+        url = 'https://github.com/teffalump/beren',
         author = 'teffalump',
         author_email = 'chris@teffalump.com',
-        packages = ['orthanc_rest_client'],
+        packages = ['beren'],
         install_requires = REQUIREMENTS,
         include_package_data = True,
         zip_safe = False,
