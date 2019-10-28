@@ -455,7 +455,7 @@ class Orthanc:
         return self.instances.tags(id_=id_, **kwargs)
 
     #### PATIENTS
-    def get_patients(self, expand=False, since=0, limit=None, **kwargs):
+    def get_patients(self, expand=False, since=0, limit=None, params=None, **kwargs):
         """Return patient record(s)
 
         Use ``expand`` keyword argument to retrieve expanded information.
@@ -468,21 +468,26 @@ class Orthanc:
             Return since nth patient record. Default ``0``.
         :param int limit:
             Limit to given number of records. Optional.
+        :param dict params:
+            Provide paramaters dict to override other values
         :return:
             A list of records: either UUIDs or dictionary of information
         :rtype:
             list
         """
-        params = {}
-        if expand == True:
-            params["expand"] = True
-        if limit:
-            try:
-                params["since"] = int(since)
-                params["limit"] = int(limit)
-            except:
-                raise TypeError("Must provide valid ints as since and limit")
-        kwargs["params"] = params
+        if params is None:
+            params = {}
+            if expand == True:
+                params["expand"] = True
+            if limit:
+                try:
+                    params["since"] = int(since)
+                    params["limit"] = int(limit)
+                except:
+                    raise TypeError("Must provide valid ints as since and limit")
+            kwargs["params"] = self.clean(params)
+        else:
+            kwargs["params"] = params
         kwargs["auth"] = kwargs.get("auth", self._auth)
         return self.patients.patients(**kwargs)
 
@@ -747,7 +752,39 @@ class Orthanc:
         return self.series.study(id_=id_, **kwargs)
 
     #### STUDIES
-    def get_studies(self, **kwargs):
+    def get_studies(self, expand=False, since=0, limit=None, params=None, **kwargs):
+        """Return study record(s)
+
+        Use ``expand`` keyword argument to retrieve expanded information.
+        Use ``since`` and ``limit`` keyword arguments to specify group of records.
+
+        :param bool expand:
+            Return verbose information about studies. Default ``False``.
+            By default, returns UUIDs.
+        :param int since:
+            Return since nth study record. Default ``0``.
+        :param int limit:
+            Limit to given number of records. Optional.
+        :param dict params:
+            Provide paramaters dict to override other values
+        :return:
+            A list of records: either UUIDs or dictionary of information
+        :rtype:
+            list
+        """
+        if params is None:
+            params = {}
+            if expand == True:
+                params["expand"] = True
+            if limit:
+                try:
+                    params["since"] = int(since)
+                    params["limit"] = int(limit)
+                except:
+                    raise TypeError("Must provide valid ints as since and limit")
+            kwargs["params"] = self.clean(params)
+        else:
+            kwargs["params"] = params
         kwargs["auth"] = kwargs.get("auth", self._auth)
         return self.studies.studies(**kwargs)
 
