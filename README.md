@@ -87,4 +87,4 @@ You can disable the warning using the `warn_insecure` keyword argument:
 - [apiron](https://github.com/ithaka/apiron)
 - [Orthanc documentation](https://book.orthanc-server.com)
 - [Orthanc OpenAPI](https://api.orthanc-server.com)
-- [Orthanc REST API spreadsheet](https://docs.google.com/spreadsheets/d/e/2PACX-1vSBEymDKGZgskFEFF6yzge5JovGHPK_FIbEnW5a6SWUbPkX06tkoObUHh6T1XQhgj-HqFd0AWSnVFOv/pubhtml?gid=654036639&single=true)
+- [Orthanc REST API spreadsheet](https://docs.google.com/spreadsheets/d/1muKHMIb9Br-59wfaQbDeLzAfKYsoWfDSXSmyt6P4EM8/pubhtml#)
