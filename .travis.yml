@@ -4,10 +4,10 @@ cache: pip
 notifications:
   email: false
 python:
+- '3.8'
 - '3.7'
 - '3.6'
 - '3.5'
-- '3.4'
 install:
 - pip install -r dev-requirements.txt
 script:
@@ -36,4 +36,4 @@ jobs:
         repo: teffalump/beren
         branch: master
         tags: true
-        python: '3.7'
+        python: '3.8'
