@@ -222,12 +222,14 @@ class Orthanc:
         :rtype:
             generator
         """
-        data = self.clean({
-            "DicomVersion": version,
-            "KeepPrivateTags": keep_private,
-            "Keep": keep_tags,
-            "Replace": replace_tags,
-        })
+        data = self.clean(
+            {
+                "DicomVersion": version,
+                "KeepPrivateTags": keep_private,
+                "Keep": keep_tags,
+                "Replace": replace_tags,
+            }
+        )
         j = self.convert_to_json(data)
         kwargs["auth"] = kwargs.get("auth", self._auth)
         return self.instances.anonymize(id_=id_, data=j, **kwargs)
@@ -373,7 +375,15 @@ class Orthanc:
         kwargs["auth"] = kwargs.get("auth", self._auth)
         return self.instances.image(id_=id_, format_=format_, **kwargs)
 
-    def modify_instance(self, id_, replace={}, remove=[], remove_private_tags=False, force=False, **kwargs):
+    def modify_instance(
+        self,
+        id_,
+        replace={},
+        remove=[],
+        remove_private_tags=False,
+        force=False,
+        **kwargs
+    ):
         """Modify a set of specified tags in a single DICOM instance and download the resulting modified DICOM file
 
         :param str id_:
@@ -391,12 +401,14 @@ class Orthanc:
         :rtype:
             generator
         """
-        data = self.clean({
+        data = self.clean(
+            {
                 "Replace": replace,
                 "Remove": remove,
                 "RemovePrivateTags": remove_private_tags,
-                "Force": force
-        })
+                "Force": force,
+            }
+        )
         j = self.convert_to_json(data)
         kwargs["auth"] = kwargs.get("auth", self._auth)
         return self.instances.modify(id_=id_, data=j, **kwargs)
