@@ -230,9 +230,8 @@ class Orthanc:
                 "Replace": replace_tags,
             }
         )
-        j = self.convert_to_json(data)
         kwargs["auth"] = kwargs.get("auth", self._auth)
-        return self.instances.anonymize(id_=id_, data=j, **kwargs)
+        return self.instances.anonymize(id_=id_, json=data, **kwargs)
 
     def get_instance_content(self, id_, **kwargs):
         """List first-level DICOM tags.
@@ -409,9 +408,8 @@ class Orthanc:
                 "Force": force,
             }
         )
-        j = self.convert_to_json(data)
         kwargs["auth"] = kwargs.get("auth", self._auth)
-        return self.instances.modify(id_=id_, data=j, **kwargs)
+        return self.instances.modify(id_=id_, json=data, **kwargs)
 
     def get_instance_module(self, id_, **kwargs):
         kwargs["auth"] = kwargs.get("auth", self._auth)
@@ -600,9 +598,8 @@ class Orthanc:
         return self.patients.del_patient(id_=id_, **kwargs)
 
     def anonymize_patient(self, id_, data={}, **kwargs):
-        j = self.convert_to_json(data)
         kwargs["auth"] = kwargs.get("auth", self._auth)
-        return self.patients.anonymize(id_=id_, data=j, **kwargs)
+        return self.patients.anonymize(id_=id_, json=data, **kwargs)
 
     def archive_patient(self, id_, **kwargs):
         kwargs["auth"] = kwargs.get("auth", self._auth)
@@ -626,9 +623,8 @@ class Orthanc:
         return self.patients.instances_tags(id_=id_, **kwargs)
 
     def modify_patient(self, id_, data, **kwargs):
-        j = self.convert_to_json(data)
         kwargs["auth"] = kwargs.get("auth", self._auth)
-        return self.patients.modify(id_=id_, data=j, **kwargs)
+        return self.patients.modify(id_=id_, json=data, **kwargs)
 
     def get_patient_module(self, id_, **kwargs):
         kwargs["auth"] = kwargs.get("auth", self._auth)
@@ -791,9 +787,8 @@ class Orthanc:
         return self.series.del_part(id_=id_, **kwargs)
 
     def anonymize_series(self, id_, data={}, **kwargs):
-        j = self.convert_to_json(data)
         kwargs["auth"] = kwargs.get("auth", self._auth)
-        return self.series.anonymize(id_=id_, data=j, **kwargs)
+        return self.series.anonymize(id_=id_, json=data, **kwargs)
 
     def get_series_archive(self, id_, **kwargs):
         """Create a ZIP archive for media storage with DICOMDIR
@@ -830,9 +825,8 @@ class Orthanc:
         return self.series.media(id_=id_, **kwargs)
 
     def modify_series(self, id_, data, **kwargs):
-        j = self.convert_to_json(data)
         kwargs["auth"] = kwargs.get("auth", self._auth)
-        return self.series.modify(id_=id_, data=j, **kwargs)
+        return self.series.modify(id_=id_, json=data, **kwargs)
 
     def get_series_module(self, id_, **kwargs):
         kwargs["auth"] = kwargs.get("auth", self._auth)
@@ -896,9 +890,8 @@ class Orthanc:
         return self.studies.del_study(id_=id_, **kwargs)
 
     def anonymize_study(self, id_, data={}, **kwargs):
-        j = self.convert_to_json(data)
         kwargs["auth"] = kwargs.get("auth", self._auth)
-        return self.studies.anonymize(id_=id_, data=j, **kwargs)
+        return self.studies.anonymize(id_=id_, json=data, **kwargs)
 
     def get_study_archive(self, id_, **kwargs):
         kwargs["auth"] = kwargs.get("auth", self._auth)
@@ -917,9 +910,8 @@ class Orthanc:
         return self.studies.media(id_=id_, **kwargs)
 
     def modify_study(self, id_, data, **kwargs):
-        j = self.convert_to_json(data)
         kwargs["auth"] = kwargs.get("auth", self._auth)
-        return self.studies.modify(id_=id_, data=j, **kwargs)
+        return self.studies.modify(id_=id_, json=data, **kwargs)
 
     def get_study_module(self, id_, **kwargs):
         kwargs["auth"] = kwargs.get("auth", self._auth)
@@ -963,28 +955,24 @@ class Orthanc:
         return self.modalities.del_modality(dicom=dicom, **kwargs)
 
     def update_modality(self, dicom, data, **kwargs):
-        j = self.convert_to_json(data)
         kwargs["auth"] = kwargs.get("auth", self._auth)
-        return self.modalities.put_modality(dicom=dicom, data=j, **kwargs)
+        return self.modalities.put_modality(dicom=dicom, json=data, **kwargs)
 
     def echo_modality(self, dicom, **kwargs):
         kwargs["auth"] = kwargs.get("auth", self._auth)
         return self.modalities.echo(dicom=dicom, data={}, **kwargs)
 
     def move_modality(self, dicom, data, **kwargs):
-        j = self.convert_to_json(data)
         kwargs["auth"] = kwargs.get("auth", self._auth)
-        return self.modalities.move(dicom=dicom, data=j, **kwargs)
+        return self.modalities.move(dicom=dicom, json=data, **kwargs)
 
     def query_modality(self, dicom, data, **kwargs):
-        j = self.convert_to_json(data)
         kwargs["auth"] = kwargs.get("auth", self._auth)
-        return self.modalities.query(dicom=dicom, data=j, **kwargs)
+        return self.modalities.query(dicom=dicom, json=data, **kwargs)
 
     def store_modality(self, dicom, data, **kwargs):
-        j = self.convert_to_json(data)
         kwargs["auth"] = kwargs.get("auth", self._auth)
-        return self.modalities.store(dicom=dicom, data=j, **kwargs)
+        return self.modalities.store(dicom=dicom, json=data, **kwargs)
 
     #### SERVER-RELATED
     def get_changes(self, since=0, limit=100, last=False, **kwargs):
@@ -1133,9 +1121,8 @@ class Orthanc:
         return self.server.tools_dicom_conformance(**kwargs)
 
     def execute_script(self, script, **kwargs):
-        j = self.convert_to_json(script)
         kwargs["auth"] = kwargs.get("auth", self._auth)
-        return self.server.tools_execute_script(data=j, **kwargs)
+        return self.server.tools_execute_script(json=data, **kwargs)
 
     def find(self, query, level, expand=False, limit=None, **kwargs):
         """Search for matching items
@@ -1160,9 +1147,8 @@ class Orthanc:
             list
         """
         body = {"Query": query, "Level": level, "Expand": expand, "Limit": limit}
-        j = self.convert_to_json(body)
         kwargs["auth"] = kwargs.get("auth", self._auth)
-        return self.server.tools_find(data=j, **kwargs)
+        return self.server.tools_find(json=body, **kwargs)
 
     def generate_uid(self, level, **kwargs):
         """Generate DICOM UID
@@ -1187,7 +1173,7 @@ class Orthanc:
     def lookup(self, lookup, **kwargs):
         """Map DICOM UIDs to Orthanc identifiers
 
-        :param lookup:
+        :param list lookup:
             UID(s) to map
         :return:
             Orthanc identifiers
@@ -1195,7 +1181,7 @@ class Orthanc:
             list
         """
         kwargs["auth"] = kwargs.get("auth", self._auth)
-        return self.server.tools_lookup(data=self.convert_to_json(lookup), **kwargs)
+        return self.server.tools_lookup(json=lookup, **kwargs)
 
     def get_now(self, **kwargs):
         """Get the current universal datetime (UTC) in the ISO 8601 format
