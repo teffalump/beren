@@ -1,11 +1,11 @@
-# Beren
+# beren
 
 [![Build Status](https://travis-ci.com/teffalump/beren.svg?branch=master)](https://travis-ci.com/teffalump/beren)
 [![PyPI version](https://badge.fury.io/py/beren.svg)](https://badge.fury.io/py/beren)
 
-Provides a REST client targeted at [Orthanc](https://www.orthanc-server.com) REST API endpoints.
+`beren` provides a REST client for [Orthanc](https://www.orthanc-server.com), an open-source DICOM server.
 
-Based on the excellent [apiron](https://github.com/ithaka/apiron) library.
+Built using the excellent [apiron](https://github.com/ithaka/apiron) library.
 
 ### Install
 
@@ -13,7 +13,7 @@ Based on the excellent [apiron](https://github.com/ithaka/apiron) library.
 
 ### How to use
 
-Import the pre-defined client and pass the server details
+Import the client and provide the server details
 
     from beren import Orthanc
     orthanc = Orthanc('http://localhost:8042')
@@ -52,23 +52,21 @@ There are many other preconfigured endpoints.
 
 ### Authentication
 
-Pass valid auth object:
+Many servers require authentication to utilize their API. Simply provide a valid authentication object when defining the client:
 
     from requests.auth import HTTPBasicAuth
     auth = HTTPBasicAuth('orthanc', 'orthanc')
     orthanc = Orthanc('https://test.server.com', auth=auth)
 
-Then call functions normally (the auth object is passed automatically).
-
 ### Advanced examples
 
-For example, to save an instance file to local directory:
+For example, to save an instance file to the local directory:
 
     with open('test_file.dcm', 'wb') as dcm:
         for chunk in orthanc.get_instance_file(instance_id):
             dcm.write(chunk)
 
-To get a zip of DCM files from a series:
+To get an archive of a series (DCM files in a zip file):
 
     with open('test.zip', 'wb') as z:
         for chunk in orthanc.get_series_archive(<id>):
@@ -76,9 +74,9 @@ To get a zip of DCM files from a series:
 
 ### Security warning on non-HTTPS endpoints
 
-The rest client will warn when using HTTP endpoints. Strongly consider using HTTPS given the data sensitivity.
+The client will warn when using HTTP endpoints. Medical data is particularly sensitive, consequently, strongly consider using HTTPS.
 
-You can disable the warning using the `warn_insecure` keyword argument:
+You can disable the warning using the `warn_insecure` argument:
 
     orthanc = Orthanc('http://insecure.endpoint.com', warn_insecure=False)
 
