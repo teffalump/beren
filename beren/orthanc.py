@@ -83,46 +83,74 @@ class Orthanc:
 
     @staticmethod
     def clean(d):
-        """Clean the parameter dict for endpoint semantics"""
+        """Clean the parameter dict for endpoint semantics
+
+        Accordingly,
+            True is converted to 1
+            None or False is dropped
+            Keep the other entries
+
+        :param dict d
+            Dictinary to clean
+        :return
+            Cleaned dictionary
+        :rtype:
+            dict
+        """
+
         n = {}
         for k, v in d.items():
             if v == None or v == False:
                 continue
-            elif v == True:
-                n[k] = ""
+            elif v == True and isinstance(v, (bool)):
+                n[k] = 1
             else:
                 n[k] = v
         return n
 
+    @classmethod
+    def build_root_parameters(cls, expand, since, limit, params):
+        """Helper function for root endpoints' (/study, /patient, /instance, /series) parameter logic"""
+        if params is None:
+            passed_params = {}
+            if expand == True:
+                passed_params["expand"] = True
+            if limit is not None or since is not None:
+                try:
+                    passed_params["since"] = int(since)
+                    passed_params["limit"] = int(limit)
+                except:
+                    passed_params.pop("since", None)
+                    passed_params.pop("limit", None)
+                    warn("Must provide valid integers to since AND limit. Ignoring.")
+            return cls.clean(passed_params)
+        else:
+            return params
+
     #### INSTANCES
-    def get_instances(self, expand=False, since=0, limit=None, **kwargs):
+    def get_instances(
+        self, expand=False, since=None, limit=None, params=None, **kwargs
+    ):
         """Return instance record(s). No raw file data.
 
         Use ``expand`` keyword argument to retrieve extensive information.
-        Use ``since`` and ``limit`` keyword arguments to specify group of records.
+        Use ``since`` and ``limit`` keyword arguments to specify a group of records.
 
         :param bool expand:
             Return verbose information about instances. Default ``False``.
             By default, returns UUIDs.
         :param int since:
-            Return since nth instance record. Default ``0``.
+            Return since nth instance record. Optional. Must use with ``limit``.
         :param int limit:
-            Limit to given number of records. Optional.
+            Limit to given number of records. Optional. Must use with ``since``.
+        :param dict params:
+            Provide overriding parameter dictionary
         :return:
             A list of records: either UUIDs or dictionary of information
         :rtype:
             list
         """
-        params = {}
-        if expand == True:
-            params["expand"] = True
-        if limit:
-            try:
-                params["since"] = int(since)
-                params["limit"] = int(limit)
-            except:
-                raise TypeError("Must provide valid ints as since and limit")
-        kwargs["params"] = params
+        kwargs["params"] = self.build_root_parameters(expand, since, limit, params)
         kwargs["auth"] = kwargs.get("auth", self._auth)
         return self.instances.instances(**kwargs)
 
@@ -192,14 +220,14 @@ class Orthanc:
         :return:
             Anonymized DICOM file
         :rtype:
-            DICOM file
+            generator
         """
-        data = {
+        data = self.clean({
             "DicomVersion": version,
             "KeepPrivateTags": keep_private,
             "Keep": keep_tags,
             "Replace": replace_tags,
-        }
+        })
         j = self.convert_to_json(data)
         kwargs["auth"] = kwargs.get("auth", self._auth)
         return self.instances.anonymize(id_=id_, data=j, **kwargs)
@@ -237,6 +265,15 @@ class Orthanc:
         )
 
     def export_instance(self, id_, **kwargs):
+        """Write the DICOM file to the filesystem where Orthanc is running
+
+        :param str id_:
+            The instance UUID
+        :return:
+            Empty list
+        :rtype:
+            list
+        """
         kwargs["auth"] = kwargs.get("auth", self._auth)
         return self.instances.export(id_=id_, data={}, **kwargs)
 
@@ -336,7 +373,30 @@ class Orthanc:
         kwargs["auth"] = kwargs.get("auth", self._auth)
         return self.instances.image(id_=id_, format_=format_, **kwargs)
 
-    def modify_instance(self, id_, data, **kwargs):
+    def modify_instance(self, id_, replace={}, remove=[], remove_private_tags=False, force=False, **kwargs):
+        """Modify a set of specified tags in a single DICOM instance and download the resulting modified DICOM file
+
+        :param str id_:
+            Instance UUID
+        :param dict replace:
+            The dictionary which specifies the substitions to be applied (cf. anonymization). Default empty.
+        :param list remove:
+            List of tags to remove. Default empty.
+        :param bool remove_private_tags:
+            If set to true, the private tags (i.e. manufacturer-specific tags) are removed. Default False.
+        :param bool force:
+            The force option must be set to true in order to allow the modification of the PatientID, as such a modification of the DICOM identifiers might lead to breaking the DICOM model of the real-world. In general, any explicit modification to one of the PatientID, StudyInstanceUID, SeriesInstanceUID, and SOPInstanceUID requires Force to be set to true, in order to prevent any unwanted side effect. Default False.
+        :return:
+            DICOM file
+        :rtype:
+            generator
+        """
+        data = self.clean({
+                "Replace": replace,
+                "Remove": remove,
+                "RemovePrivateTags": remove_private_tags,
+                "Force": force
+        })
         j = self.convert_to_json(data)
         kwargs["auth"] = kwargs.get("auth", self._auth)
         return self.instances.modify(id_=id_, data=j, **kwargs)
@@ -360,6 +420,7 @@ class Orthanc:
 
     def get_instance_pdf(self, id_, **kwargs):
         """Download embedded PDF of DICOM instance
+
         :param str id_:
             The instance UUID
         :return:
@@ -370,11 +431,32 @@ class Orthanc:
         kwargs["auth"] = kwargs.get("auth", self._auth)
         return self.instances.pdf(id_=id_, **kwargs)
 
-    def get_instance_preview(self, id_, **kwargs):
+    def get_instance_preview(self, id_, png=True, **kwargs):
+        """Download a preview image of the DICOM instance. Default "image/png". Other option "image/jpeg"
+
+        :param str id_:
+            Instance UUID
+        :param bool png:
+            Image format. Default png. False is jpeg.
+        :return:
+            DICOM preview
+        :rtype:
+            generator
+        """
+        image_type = "image/png" if png == True else "image/jpeg"
         kwargs["auth"] = kwargs.get("auth", self._auth)
-        return self.instances.preview(id_=id_, **kwargs)
+        return self.instances.preview(id_=id_, headers={"Accept": image_type}, **kwargs)
 
     def reconstruct_instance(self, id_, **kwargs):
+        """Force reconstruction of the main DICOM tags, JSON summary and metadata
+
+        :param str id_:
+            Instance UUID
+        :return:
+            Empty list on success
+        :rtype:
+            List
+        """
         kwargs["auth"] = kwargs.get("auth", self._auth)
         return self.instances.reconstruct(id_=id_, data={}, **kwargs)
 
@@ -405,6 +487,15 @@ class Orthanc:
         return self.instances.simplified_tags(id_=id_, **kwargs)
 
     def get_instance_statistics(self, id_, **kwargs):
+        """Get instance statistics
+
+        :param str id_:
+            Instance UUID
+        :return:
+            Instance statistics
+        :rtype:
+            dict
+        """
         kwargs["auth"] = kwargs.get("auth", self._auth)
         return self.instances.statistics(id_=id_, **kwargs)
 
@@ -455,7 +546,7 @@ class Orthanc:
         return self.instances.tags(id_=id_, **kwargs)
 
     #### PATIENTS
-    def get_patients(self, expand=False, since=0, limit=None, params=None, **kwargs):
+    def get_patients(self, expand=False, since=None, limit=None, params=None, **kwargs):
         """Return patient record(s)
 
         Use ``expand`` keyword argument to retrieve expanded information.
@@ -465,9 +556,9 @@ class Orthanc:
             Return verbose information about patients. Default ``False``.
             By default, returns UUIDs.
         :param int since:
-            Return since nth patient record. Default ``0``.
+            Return since nth patient record. Optional. Must use with ``limit``.
         :param int limit:
-            Limit to given number of records. Optional.
+            Limit to given number of records. Optional. Must use with ``since``.
         :param dict params:
             Provide paramaters dict to override other values
         :return:
@@ -475,19 +566,7 @@ class Orthanc:
         :rtype:
             list
         """
-        if params is None:
-            params = {}
-            if expand == True:
-                params["expand"] = True
-            if limit:
-                try:
-                    params["since"] = int(since)
-                    params["limit"] = int(limit)
-                except:
-                    raise TypeError("Must provide valid ints as since and limit")
-            kwargs["params"] = self.clean(params)
-        else:
-            kwargs["params"] = params
+        kwargs["params"] = self.build_root_parameters(expand, since, limit, params)
         kwargs["auth"] = kwargs.get("auth", self._auth)
         return self.patients.patients(**kwargs)
 
@@ -667,7 +746,27 @@ class Orthanc:
         return self.queries.retrieve(id_=id_, **kwargs)
 
     #### SERIES
-    def get_series(self, **kwargs):
+    def get_series(self, expand=False, since=None, limit=None, params=None, **kwargs):
+        """Return series record(s).
+
+        Use ``expand`` keyword argument to retrieve extensive information.
+        Use ``since`` and ``limit`` keyword arguments to specify a group of records.
+
+        :param bool expand:
+            Return verbose information about series. Default ``False``.
+            By default, returns UUIDs.
+        :param int since:
+            Return since nth series record. Optional. Must use with ``limit``.
+        :param int limit:
+            Limit to given number of records. Optional. Must use with ``since``.
+        :param dict params:
+            Provide overriding parameter dictionary
+        :return:
+            A list of records: either UUIDs or dictionary of information
+        :rtype:
+            list
+        """
+        kwargs["params"] = self.build_root_parameters(expand, since, limit, params)
         kwargs["auth"] = kwargs.get("auth", self._auth)
         return self.series.series(**kwargs)
 
@@ -752,7 +851,7 @@ class Orthanc:
         return self.series.study(id_=id_, **kwargs)
 
     #### STUDIES
-    def get_studies(self, expand=False, since=0, limit=None, params=None, **kwargs):
+    def get_studies(self, expand=False, since=None, limit=None, params=None, **kwargs):
         """Return study record(s)
 
         Use ``expand`` keyword argument to retrieve expanded information.
@@ -762,9 +861,9 @@ class Orthanc:
             Return verbose information about studies. Default ``False``.
             By default, returns UUIDs.
         :param int since:
-            Return since nth study record. Default ``0``.
+            Return since nth study record. Optional. Must use with ``limit``.
         :param int limit:
-            Limit to given number of records. Optional.
+            Limit to given number of records. Optional. Must use with ``since``.
         :param dict params:
             Provide paramaters dict to override other values
         :return:
@@ -772,19 +871,7 @@ class Orthanc:
         :rtype:
             list
         """
-        if params is None:
-            params = {}
-            if expand == True:
-                params["expand"] = True
-            if limit:
-                try:
-                    params["since"] = int(since)
-                    params["limit"] = int(limit)
-                except:
-                    raise TypeError("Must provide valid ints as since and limit")
-            kwargs["params"] = self.clean(params)
-        else:
-            kwargs["params"] = params
+        kwargs["params"] = self.build_root_parameters(expand, since, limit, params)
         kwargs["auth"] = kwargs.get("auth", self._auth)
         return self.studies.studies(**kwargs)
 
