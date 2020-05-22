@@ -9,6 +9,8 @@ Built using the excellent [apiron](https://github.com/ithaka/apiron) library.
 
 ### Install
 
+Use pip:
+
     pip install beren
 
 ### How to use
@@ -63,7 +65,7 @@ Many servers require authentication to utilize their API. Simply provide a valid
 #### Timeouts
 
 Some servers are slow (and some methods can be slow). For example, asking for all instances from a server can cause a timeout before the server responds. To
-modify the timeout of the connection, use `apiron`'s `Timeout` class:
+modify the timeout settings, use `apiron`'s `Timeout` class:
 
     from apiron import Timeout
     t = Timeout(read_timeout=6, connection_timeout=1)   # Modify the timeout
@@ -101,6 +103,7 @@ To save an instance file to the local directory:
 
     from beren import Orthanc
     orthanc = Orthanc('https://example-orthanc-server.com')
+
     with open('test_file.dcm', 'wb') as dcm:
         for chunk in orthanc.get_instance_file(instance_id):
             dcm.write(chunk)
@@ -109,6 +112,7 @@ To get an archive of a series (DCM files in a zip file):
 
     from beren import Orthanc
     orthanc = Orthanc('https://example-orthanc-server.com')
+
     with open('test.zip', 'wb') as z:
         for chunk in orthanc.get_series_archive(<id>):
             z.write(chunk)
