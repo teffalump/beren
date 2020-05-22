@@ -11,7 +11,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-from .endpoints import (
+from beren.endpoints import (
     OrthancInstances,
     OrthancModalities,
     OrthancPatients,
@@ -76,6 +76,23 @@ class Orthanc:
     def __repr__(self):
         return "<Orthanc REST client({})>".format(self._target)
 
+    @classmethod
+    def get_api_methods(cls):
+        """List callable endpoints"""
+        return [
+            func
+            for func in dir(cls)
+            if callable(getattr(cls, func))
+            and not func.startswith("__")
+            and func
+            not in [
+                "clean",
+                "convert_to_json",
+                "build_root_parameters",
+                "get_api_methods",
+            ]
+        ]
+
     @staticmethod
     def convert_to_json(data, **kwargs):
         """Wrapper for ``json.dumps``"""
@@ -86,8 +103,8 @@ class Orthanc:
         """Clean the parameter dict for endpoint semantics
 
         Accordingly,
-            True is converted to 1
-            None or False is dropped
+            Boolean True is converted to 1, False is dropped
+            Values evaluating to None are dropped
             Keep the other entries
 
         :param dict d
@@ -100,10 +117,11 @@ class Orthanc:
 
         n = {}
         for k, v in d.items():
-            if v == None or v == False:
+            if isinstance(v, (bool)):
+                if v == True:
+                    n[k] = 1
+            elif v == None:
                 continue
-            elif v == True and isinstance(v, (bool)):
-                n[k] = 1
             else:
                 n[k] = v
         return n
@@ -394,7 +412,7 @@ class Orthanc:
         :param bool remove_private_tags:
             If set to true, the private tags (i.e. manufacturer-specific tags) are removed. Default False.
         :param bool force:
-            The force option must be set to true in order to allow the modification of the PatientID, as such a modification of the DICOM identifiers might lead to breaking the DICOM model of the real-world. In general, any explicit modification to one of the PatientID, StudyInstanceUID, SeriesInstanceUID, and SOPInstanceUID requires Force to be set to true, in order to prevent any unwanted side effect. Default False.
+            The force option must be set to True in order to allow the modification of the PatientID, as such a modification of the DICOM identifiers might lead to breaking the DICOM model of the real-world. In general, any explicit modification to one of the PatientID, StudyInstanceUID, SeriesInstanceUID, and SOPInstanceUID requires Force to be set to True, in order to prevent any unwanted side effect. Default False.
         :return:
             DICOM file
         :rtype:
