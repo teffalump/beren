@@ -58,27 +58,51 @@ Many servers require authentication to utilize their API. Simply provide a valid
     auth = HTTPBasicAuth('orthanc', 'orthanc')
     orthanc = Orthanc('https://test.server.com', auth=auth)
 
-### Advanced examples
+### Advanced Configuration
 
-For example, to save an instance file to the local directory:
+#### Timeouts
 
-    with open('test_file.dcm', 'wb') as dcm:
-        for chunk in orthanc.get_instance_file(instance_id):
-            dcm.write(chunk)
+Some servers are slow (and some methods can be slow). For example, asking for all instances from a server can cause a timeout before the server responds. To
+modify the timeout of the connection, use `apiron`'s `Timeout` class:
 
-To get an archive of a series (DCM files in a zip file):
+    from apiron import Timeout
+    t = Timeout(read_timeout=6, connection_timeout=1)
+    orthanc.slow_endpoint(timeout_spec=t)
 
-    with open('test.zip', 'wb') as z:
-        for chunk in orthanc.get_series_archive(<id>):
-            z.write(chunk)
+Increase the read timeout if the endpoint is slow. Increase the connection timeout for slow servers.
 
-### Security warning on non-HTTPS endpoints
+#### Disable Certificate Checks
+
+To disable TLS certificate checking, use sessions:
+
+    import requests
+    session = requests.sessions.Session()       # New session
+    session.verify = False                      # Disable certificate checking
+    orthanc.get_patients(session=session)       # Use session
+
+#### Non-HTTPS endpoints
 
 The client will warn when using HTTP endpoints. Medical data is particularly sensitive, consequently, strongly consider using HTTPS.
 
 You can disable the warning using the `warn_insecure` argument:
 
     orthanc = Orthanc('http://insecure.endpoint.com', warn_insecure=False)
+
+### Examples
+
+To save an instance file to the local directory:
+
+    orthanc = Orthanc('https://example-server.com')
+    with open('test_file.dcm', 'wb') as dcm:
+        for chunk in orthanc.get_instance_file(instance_id):
+            dcm.write(chunk)
+
+To get an archive of a series (DCM files in a zip file):
+
+    orthanc = Orthanc('https://example-server.com')
+    with open('test.zip', 'wb') as z:
+        for chunk in orthanc.get_series_archive(<id>):
+            z.write(chunk)
 
 ### Further help
 
