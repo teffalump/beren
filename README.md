@@ -16,7 +16,7 @@ Built using the excellent [apiron](https://github.com/ithaka/apiron) library.
 Import the client and provide the server details
 
     from beren import Orthanc
-    orthanc = Orthanc('http://localhost:8042')
+    orthanc = Orthanc('https://example-orthanc-server.com')
 
     # Patient endpoints
     orthanc.get_patients()
@@ -66,8 +66,11 @@ Some servers are slow (and some methods can be slow). For example, asking for al
 modify the timeout of the connection, use `apiron`'s `Timeout` class:
 
     from apiron import Timeout
-    t = Timeout(read_timeout=6, connection_timeout=1)
-    orthanc.slow_endpoint(timeout_spec=t)
+    t = Timeout(read_timeout=6, connection_timeout=1)   # Modify the timeout
+
+    from beren import Orthanc
+    orthanc = Orthanc('https://example-orthanc-server.com')
+    orthanc.slow_endpoint(timeout_spec=t)               # Use new timeout
 
 Increase the read timeout if the endpoint is slow. Increase the connection timeout for slow servers.
 
@@ -78,6 +81,9 @@ To disable TLS certificate checking, use sessions:
     import requests
     session = requests.sessions.Session()       # New session
     session.verify = False                      # Disable certificate checking
+
+    from beren import Orthanc
+    orthanc = Orthanc('https://example-orthanc-server.com')
     orthanc.get_patients(session=session)       # Use session
 
 #### Non-HTTPS endpoints
@@ -86,20 +92,23 @@ The client will warn when using HTTP endpoints. Medical data is particularly sen
 
 You can disable the warning using the `warn_insecure` argument:
 
+    from beren import Orthanc
     orthanc = Orthanc('http://insecure.endpoint.com', warn_insecure=False)
 
 ### Examples
 
 To save an instance file to the local directory:
 
-    orthanc = Orthanc('https://example-server.com')
+    from beren import Orthanc
+    orthanc = Orthanc('https://example-orthanc-server.com')
     with open('test_file.dcm', 'wb') as dcm:
         for chunk in orthanc.get_instance_file(instance_id):
             dcm.write(chunk)
 
 To get an archive of a series (DCM files in a zip file):
 
-    orthanc = Orthanc('https://example-server.com')
+    from beren import Orthanc
+    orthanc = Orthanc('https://example-orthanc-server.com')
     with open('test.zip', 'wb') as z:
         for chunk in orthanc.get_series_archive(<id>):
             z.write(chunk)
