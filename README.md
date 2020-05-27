@@ -105,7 +105,7 @@ To save an instance file to the local directory:
     orthanc = Orthanc('https://example-orthanc-server.com')
 
     with open('test_file.dcm', 'wb') as dcm:
-        for chunk in orthanc.get_instance_file(instance_id):
+        for chunk in orthanc.get_instance_file(<instance_id>):
             dcm.write(chunk)
 
 To get an archive of a series (DCM files in a zip file):
@@ -114,7 +114,7 @@ To get an archive of a series (DCM files in a zip file):
     orthanc = Orthanc('https://example-orthanc-server.com')
 
     with open('test.zip', 'wb') as z:
-        for chunk in orthanc.get_series_archive(<id>):
+        for chunk in orthanc.get_series_archive(<instance_id>):
             z.write(chunk)
 
 ### Further help
