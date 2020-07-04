@@ -72,7 +72,7 @@ modify the timeout settings, use `apiron`'s `Timeout` class:
 
     from beren import Orthanc
     orthanc = Orthanc('https://example-orthanc-server.com')
-    orthanc.slow_endpoint(timeout_spec=t)               # Use new timeout
+    orthanc.get_instances(timeout_spec=t)               # Use new timeout
 
 Increase the read timeout if the endpoint is slow. Increase the connection timeout for slow servers.
 
