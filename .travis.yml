@@ -33,6 +33,6 @@ jobs:
       skip_existing: true
       on:
         repo: teffalump/beren
-        branch: master
+        branch: main 
         tags: true
         python: '3.8'

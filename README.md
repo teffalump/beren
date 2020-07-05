@@ -1,6 +1,6 @@
 # beren
 
-[![Build Status](https://travis-ci.com/teffalump/beren.svg?branch=master)](https://travis-ci.com/teffalump/beren)
+[![Build Status](https://travis-ci.com/teffalump/beren.svg?branch=main)](https://travis-ci.com/teffalump/beren)
 [![PyPI version](https://badge.fury.io/py/beren.svg)](https://badge.fury.io/py/beren)
 
 `beren` provides a REST client for [Orthanc](https://www.orthanc-server.com), an open-source DICOM server.
