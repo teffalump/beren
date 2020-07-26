@@ -27,10 +27,14 @@ class TestClass:
         assert orthanc.queries.domain == URL
         assert orthanc.modalities.domain == URL
 
-    def test_auth_wrapper(self):
-        orthanc.patients.patients = mock.MagicMock()
-        orthanc.get_patients()
-        assert orthanc.patients.patients.call_args[1]["auth"] == auth
+    def test_auth_passing(self):
+        assert orthanc.instances.auth == auth
+        assert orthanc.series.auth == auth
+        assert orthanc.studies.auth == auth
+        assert orthanc.server.auth == auth
+        assert orthanc.patients.auth == auth
+        assert orthanc.queries.auth == auth
+        assert orthanc.modalities.auth == auth
 
     def test_connection_warning(self):
         with pytest.warns(UserWarning):
