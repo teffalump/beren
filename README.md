@@ -60,6 +60,11 @@ Many servers require authentication to utilize their API. Simply provide a valid
     auth = HTTPBasicAuth('orthanc', 'orthanc')
     orthanc = Orthanc('https://test.server.com', auth=auth)
 
+To override the default authentication, provide a new authentication object when calling the endpoint:
+
+    new_auth = HTTPBasicAuth('new_user', 'new_password')
+    orthanc.get_patients(auth=auth)
+
 ### Advanced Configuration
 
 #### Timeouts
