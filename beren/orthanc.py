@@ -763,7 +763,7 @@ class Orthanc:
         return self.series.archive(id_=id_, **kwargs)
 
     def get_series_instances(self, id_, **kwargs):
-        """"Retrieve all the instances of this series in a single REST call
+        """Retrieve all the instances of this series in a single REST call
 
         :param str id_:
             Series UUID
