@@ -127,3 +127,9 @@ To get an archive of a series (DCM files in a zip file):
 - [Orthanc documentation](https://book.orthanc-server.com)
 - [Orthanc OpenAPI](https://api.orthanc-server.com)
 - [Orthanc REST API spreadsheet](https://docs.google.com/spreadsheets/d/1muKHMIb9Br-59wfaQbDeLzAfKYsoWfDSXSmyt6P4EM8/pubhtml#)
+
+### Future goals
+
+- Asynchronous requests
+- Document every function
+- Better test coverage
