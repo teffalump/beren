@@ -1,5 +1,4 @@
-name: Python application
-
+name: Checks
 on:
   push:
     branches: [ main ]
