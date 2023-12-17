@@ -1,3 +1,4 @@
+### NOTE: I am no longer updating this project. I recommend using [PyOrthanc](https://github.com/gacou54/pyorthanc) instead as it maintained.
 # beren
 
 [![PyPI version](https://badge.fury.io/py/beren.svg)](https://badge.fury.io/py/beren)
